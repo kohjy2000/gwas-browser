@@ -1,0 +1,102 @@
+[
+  {
+    "trait": "coronary heart disease",
+    "shortForm": "EFO_0001645",
+    "uri": ""
+  },
+  {
+    "trait": "type 2 diabetes",
+    "shortForm": "EFO_0001360",
+    "uri": ""
+  },
+  {
+    "trait": "breast cancer",
+    "shortForm": "MONDO_0007254",
+    "uri": ""
+  },
+  {
+    "trait": "alzheimer's disease",
+    "shortForm": "MONDO_0004975",
+    "uri": ""
+  },
+  {
+    "trait": "hypertension",
+    "shortForm": "EFO_0000537",
+    "uri": ""
+  },
+  {
+    "trait": "colorectal cancer",
+    "shortForm": "MONDO_0005575",
+    "uri": ""
+  },
+  {
+    "trait": "prostate cancer",
+    "shortForm": "MONDO_0008315",
+    "uri": ""
+  },
+  {
+    "trait": "lung cancer",
+    "shortForm": "MONDO_0008903",
+    "uri": ""
+  },
+  {
+    "trait": "rheumatoid arthritis",
+    "shortForm": "MONDO_0008383",
+    "uri": ""
+  },
+  {
+    "trait": "asthma",
+    "shortForm": "MONDO_0004979",
+    "uri": ""
+  },
+  {
+    "trait": "crohn's disease",
+    "shortForm": "MONDO_0005011",
+    "uri": ""
+  },
+  {
+    "trait": "ulcerative colitis",
+    "shortForm": "MONDO_0005101",
+    "uri": ""
+  },
+  {
+    "trait": "obesity",
+    "shortForm": "EFO_0001073",
+    "uri": ""
+  },
+  {
+    "trait": "body mass index",
+    "shortForm": "EFO_0004340",
+    "uri": ""
+  },
+  {
+    "trait": "cholesterol",
+    "shortForm": "EFO_0004574",
+    "uri": ""
+  },
+  {
+    "trait": "triglycerides",
+    "shortForm": "EFO_0004530",
+    "uri": ""
+  },
+  {
+    "trait": "hdl cholesterol",
+    "shortForm": "EFO_0004611",
+    "uri": ""
+  },
+  {
+    "trait": "ldl cholesterol",
+    "shortForm": "EFO_0004612",
+    "uri": ""
+  },
+  {
+    "trait": "blood pressure",
+    "shortForm": "EFO_0004325",
+    "uri": ""
+  },
+  {
+    "trait": "stroke",
+    "shortForm": "MONDO_0005071",
+    "uri": ""
+  }
+]
