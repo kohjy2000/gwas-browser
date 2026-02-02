@@ -343,6 +343,27 @@ def fetch_gwas_associations_by_efo(efo_id: str, config: dict) -> List[Dict]:
     logger.info(f"Successfully fetched {len(all_associations)} GWAS associations for EFO ID: {efo_id}")
     return all_associations
 
+def _normalize_pubmed_id(raw_pmid) -> str:
+    """Normalize a PubMed ID to a clean string integer.
+
+    Examples:
+        29878757   -> "29878757"
+        29878757.0 -> "29878757"
+        "29878757" -> "29878757"
+        None / NaN -> ""
+    """
+    if raw_pmid is None:
+        return ""
+    s = str(raw_pmid).strip()
+    if not s or s.lower() in ("none", "nan", ""):
+        return ""
+    # Strip trailing .0 from float-like strings (e.g. "29878757.0")
+    try:
+        return str(int(float(s)))
+    except (ValueError, OverflowError):
+        return s
+
+
 def parse_gwas_association_data(raw_associations: List[Dict], trait_name: str, config: dict) -> pd.DataFrame:
     """
     Parses raw GWAS association data by first extracting rsID/risk-allele, then fetching
@@ -416,6 +437,11 @@ def parse_gwas_association_data(raw_associations: List[Dict], trait_name: str, c
                             'GWAS_Association_ID': association_id,
                             'GWAS_Ancestry_Info_Raw': ancestry_info  # Store extracted ancestry information
                         }
+                    else:
+                        # C6.B3: prefer non-empty PubMed_ID from later records
+                        existing = gwas_info_by_rsid_alt[key]
+                        if pubmed_id and not existing.get('PubMed_ID'):
+                            existing['PubMed_ID'] = pubmed_id
 
     if not all_rsids:
         logger.warning(f"No valid rsIDs with risk alleles found for trait: {trait_name}")
@@ -426,14 +452,18 @@ def parse_gwas_association_data(raw_associations: List[Dict], trait_name: str, c
     logger.info(f"Sample rsIDs: {list(all_rsids)[:5]}")
 
     snp_locations = _fetch_snp_locations_from_ensembl(list(all_rsids), config)
- 
+
     final_parsed_data = []
     for (rsid, alt), gwas_info in gwas_info_by_rsid_alt.items():
         location_info = snp_locations.get(rsid)
         if location_info:
+            # C6.B3: normalize PubMed_ID to string integer
+            raw_pmid = gwas_info['PubMed_ID']
+            normalized_pmid = _normalize_pubmed_id(raw_pmid)
+
             final_parsed_data.append({
                 'SNP_ID': rsid,
-                'PubMed_ID': gwas_info['PubMed_ID'],
+                'PubMed_ID': normalized_pmid,
                 'Odds_Ratio': gwas_info['Odds_Ratio'],
                 'P_Value': gwas_info['P_Value'],
                 'GWAS_Association_ID': gwas_info.get('GWAS_Association_ID'),

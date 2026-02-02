@@ -1,0 +1,13 @@
+{
+  "archive_id": "GWAS_BROWSER_policy_fix_20260202_123426",
+  "created_at_local": "20260202_123426",
+  "project_root": "/Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser",
+  "workflow_root": "/Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow",
+  "prefix": "GWAS_BROWSER",
+  "tag": "policy_fix",
+  "git": {
+    "is_repo": true,
+    "head": "31b88e1c84b8ec35231bd246ad8716c9629734ef",
+    "dirty": true
+  }
+}

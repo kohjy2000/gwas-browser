@@ -5,6 +5,7 @@ import argparse
 import datetime as dt
 import shutil
 import subprocess
+import json
 from pathlib import Path
 
 
@@ -56,6 +57,20 @@ def _copy_current(workflow_root: Path, out_dir: Path) -> None:
         if src_dir.exists() and src_dir.is_dir():
             shutil.copytree(src_dir, out_dir / name, dirs_exist_ok=True)
 
+def _copy_flat_with_suffix(workflow_root: Path, out_dir: Path, suffix: str) -> None:
+    """
+    Create a flat folder with suffix-renamed copies for quick grepping/comparison.
+    Example output name: 01_PROJECT_BRIEF_TEMPLATE__GWAS_BROWSER_cycle6_20260202_112000.md
+    """
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for name in DOCSET_FILES:
+        src = workflow_root / name
+        if not src.exists():
+            continue
+        stem = src.stem
+        dst_name = f"{stem}__{suffix}{src.suffix}"
+        shutil.copy2(src, out_dir / dst_name)
+
 
 def _write_head_snapshot(project_root: Path, workflow_root: Path, out_dir: Path) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -105,6 +120,35 @@ def _write_head_snapshot(project_root: Path, workflow_root: Path, out_dir: Path)
                 dst.parent.mkdir(parents=True, exist_ok=True)
                 dst.write_text(file_proc.stdout, encoding="utf-8")
 
+def _git_head_sha(project_root: Path) -> str | None:
+    proc = subprocess.run(
+        "git rev-parse HEAD",
+        cwd=str(project_root),
+        shell=True,
+        executable="/bin/bash",
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    if proc.returncode != 0:
+        return None
+    return proc.stdout.strip() or None
+
+
+def _git_dirty(project_root: Path) -> bool:
+    proc = subprocess.run(
+        "git status --porcelain",
+        cwd=str(project_root),
+        shell=True,
+        executable="/bin/bash",
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    if proc.returncode != 0:
+        return False
+    return bool(proc.stdout.strip())
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Archive ai_workflow docset (current + optional git HEAD snapshot).")
@@ -121,13 +165,30 @@ def main() -> int:
         raise SystemExit(f"Missing workflow root: {workflow_root}")
 
     tag_part = f"_{args.tag}" if args.tag else ""
-    archive_id = f"{args.prefix}{tag_part}_{_timestamp()}"
+    ts = _timestamp()
+    archive_id = f"{args.prefix}{tag_part}_{ts}"
     base = workflow_root / "_archive" / archive_id
 
     _copy_current(workflow_root, base / "current")
+    _copy_flat_with_suffix(workflow_root, base / "flat", f"{args.prefix}{tag_part}_{ts}".strip("_"))
 
     if not args.no_head and _is_git_repo(project_root):
         _write_head_snapshot(project_root, workflow_root, base / "head")
+
+    meta = {
+        "archive_id": archive_id,
+        "created_at_local": ts,
+        "project_root": str(project_root),
+        "workflow_root": str(workflow_root),
+        "prefix": args.prefix,
+        "tag": args.tag,
+        "git": {
+            "is_repo": _is_git_repo(project_root),
+            "head": _git_head_sha(project_root) if _is_git_repo(project_root) else None,
+            "dirty": _git_dirty(project_root) if _is_git_repo(project_root) else None,
+        },
+    }
+    (base / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
     print(f"ARCHIVE_OK: {base}")
     return 0
@@ -135,4 +196,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
