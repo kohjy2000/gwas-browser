@@ -859,6 +859,14 @@ Make reference URLs human-meaningful:
 - If PubMed_ID exists, reference must be a **direct PubMed article URL** (`/12345678/`), not a `?term=` search URL.
 - If PubMed_ID is missing, reference should fall back to a GWAS Catalog stable URL (variant/study), not a vague placeholder.
 
+Important (real GWAS Catalog API behavior, verified):
+- Association objects from `/efoTraits/<EFO>/associations` and `/associations/<id>` typically **do NOT** include `publicationInfo`.
+- PubMed lives on the **study** resource:
+  - `/associations/<association_id>/study` → returns a study JSON with `publicationInfo.pubmedId`
+  - `/studies/<GCST...>` → also has `publicationInfo.pubmedId`
+- Many association objects also omit `associationId`; you must parse it from `_links.self.href`
+  (example: `.../associations/13733` → association_id=`13733`).
+
 This block is allowed to touch both:
 - PubMed_ID extraction (parsing / study JSON keys)
 - Reference URL formatting (customer-friendly layer)

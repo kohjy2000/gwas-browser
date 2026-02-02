@@ -682,6 +682,12 @@ Backend Output Contract (Customer-Friendly Variants)
 2. If PubMed_ID is present, `variants[].reference` MUST NOT contain `pubmed.ncbi.nlm.nih.gov/?term=`.
 3. If PubMed_ID is missing but rsid is known, `variants[].reference` must fall back to a stable GWAS Catalog URL (variant/study), not a PubMed `?term=` search.
 
+Implementation note (real GWAS Catalog API):
+- Association payloads commonly do not include `publicationInfo` at all.
+- PubMed must be taken from the study resource:
+  - `/associations/<id>/study` (returns a study JSON with `publicationInfo.pubmedId`)
+  - `/studies/<GCST...>` (also has `publicationInfo.pubmedId`)
+
 ### Test File
 
 /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_url_quality_contract.py
