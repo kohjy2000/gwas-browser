@@ -204,21 +204,18 @@
                 <h2><span class="step-number">2</span>Search for Diseases or Traits</h2>
                 <p>Enter any disease or symptom you're interested in. Our system will find related conditions.</p>
 
-                <!-- Contract-required elements (C1.B5) -->
-                <input type="text" id="trait-search-input" style="display:none" aria-hidden="true">
-                <div id="trait-search-results" style="display:none" aria-hidden="true"></div>
                 <input type="hidden" id="selected-efo-id" value="">
 
                 <div class="search-container">
                     <input type="text"
-                           id="diseaseSearch"
+                           id="trait-search-input"
                            class="search-box"
                            placeholder="e.g., diabetes, heart disease, dementia, breast cancer..."
                            oninput="searchPhenotypes()">
                     <span class="search-icon">🔍</span>
                 </div>
 
-                <div id="searchSuggestions" class="suggestions"></div>
+                <div id="trait-search-results" class="suggestions"></div>
 
                 <div>
                     <h3>📋 Popular Diseases & Traits</h3>
@@ -269,8 +266,15 @@
                 <div id="pgx-ready" style="display:none;">
                     <h2>Pharmacogenomics (PGx) Summary</h2>
                     <p>Get a summary of pharmacogenomic recommendations based on your genetic data.</p>
+                    <div style="margin:15px 0;">
+                        <label><strong>Data Source:</strong></label>
+                        <select id="pgx-source" style="padding:8px 12px;border-radius:8px;border:2px solid #e9ecef;font-size:14px;margin-left:8px;">
+                            <option value="foregenomics">ForeGenomics PGx Report (39 drugs)</option>
+                            <option value="toy">Toy PGx Data (basic)</option>
+                        </select>
+                    </div>
                     <button class="btn btn-primary" id="run-pgx-btn" onclick="runPgxSummary()">
-                        💊 Run PGx Summary
+                        Run PGx Summary
                     </button>
                     <div id="pgx-results" style="margin-top:15px;"></div>
                 </div>
@@ -364,58 +368,56 @@
             }
         }
 
-        // Natural language disease search
+        // Disease/trait search — uses /api/search-traits (fuzzy + remote GWAS Catalog fallback)
         let searchTimeout;
         async function searchPhenotypes() {
-            const query = document.getElementById('diseaseSearch').value.trim();
-            
-            if (query.length < 2) {
-                document.getElementById('searchSuggestions').style.display = 'none';
+            const query = document.getElementById('trait-search-input').value.trim();
+
+            if (query.length < 3) {
+                document.getElementById('trait-search-results').style.display = 'none';
                 return;
             }
 
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(async () => {
                 try {
-                    const response = await fetch('/api/search-phenotypes', {
+                    const response = await fetch('/api/search-traits', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ 
-                            query: query,
-                            use_llm: false,
-                            top_k: 5
-                        })
+                        body: JSON.stringify({ query: query, top_k: 10 })
                     });
 
                     const result = await response.json();
-                    displaySearchSuggestions(result);
+                    displaySearchSuggestions(result, query);
                 } catch (error) {
                     console.error('Search error:', error);
-                    document.getElementById('searchSuggestions').innerHTML = 
+                    document.getElementById('trait-search-results').innerHTML =
                         '<p>Search service temporarily unavailable. Please select from the popular diseases below.</p>';
-                    document.getElementById('searchSuggestions').style.display = 'block';
+                    document.getElementById('trait-search-results').style.display = 'block';
                 }
             }, 300);
         }
 
-        function displaySearchSuggestions(result) {
-            const container = document.getElementById('searchSuggestions');
-            
-            if (!result.success || result.results.length === 0) {
+        function displaySearchSuggestions(result, query) {
+            const container = document.getElementById('trait-search-results');
+
+            if (!result.success || !result.results || result.results.length === 0) {
                 container.innerHTML = `
-                    <p>😕 No diseases found matching "${result.query || ''}"</p>
-                    <p>💡 Try different keywords or select from the popular diseases below.</p>
+                    <p>No traits found matching "${query || ''}"</p>
+                    <p>Try different keywords or select from the popular diseases below.</p>
                 `;
                 container.style.display = 'block';
                 return;
             }
 
-            let html = '<h4>🔍 Related Diseases Found:</h4>';
-            result.results.forEach(phenotype => {
+            let html = '<h4>Related Traits Found:</h4>';
+            result.results.forEach(item => {
+                const scoreLabel = item.score >= 1.0 ? 'Exact' : item.score >= 0.8 ? 'Close' : 'Partial';
+                const safeTrait = item.trait.replace(/'/g, "\\'");
                 html += `
-                    <div class="suggestion-item" onclick="selectPhenotype('${phenotype.efo_id}', '${phenotype.name}')">
-                        <strong>${phenotype.name}</strong>
-                        <br><small>🎯 ${phenotype.description}</small>
+                    <div class="suggestion-item" onclick="selectPhenotype('${item.efo_id}', '${safeTrait}')">
+                        <strong>${item.trait}</strong>
+                        <br><small>${scoreLabel} match | ${item.efo_id}</small>
                     </div>
                 `;
             });
@@ -426,8 +428,9 @@
 
         function selectPhenotype(efoId, name) {
             selectedPhenotype = { efo_id: efoId, name: name };
-            document.getElementById('diseaseSearch').value = name;
-            document.getElementById('searchSuggestions').style.display = 'none';
+            document.getElementById('trait-search-input').value = name;
+            document.getElementById('selected-efo-id').value = efoId;
+            document.getElementById('trait-search-results').style.display = 'none';
             checkAnalysisReady();
         }
 
@@ -683,29 +686,34 @@
         // --- PGx summary ---
         async function runPgxSummary() {
             if (!sessionId) { alert('Please upload a VCF file first.'); return; }
+            const pgxSource = document.getElementById('pgx-source').value;
             const resultsDiv = document.getElementById('pgx-results');
             resultsDiv.innerHTML = '<div class="status loading"><span class="loading-spinner"></span> Running PGx summary...</div>';
             try {
                 const resp = await fetch('/api/pgx-summary', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ source: 'toy', session_id: sessionId })
+                    body: JSON.stringify({ source: pgxSource, session_id: sessionId })
                 });
                 const data = await resp.json();
                 if (data.success) {
                     const s = data.summary || {};
                     let html = '<div class="status success">';
-                    html += '<strong>PGx Summary</strong><br>';
+                    html += '<strong>PGx Summary (' + pgxSource + ')</strong><br>';
                     html += 'Total entries: ' + (s.total_rows || 0) + '<br>';
                     html += 'Genes: ' + (s.genes ? s.genes.join(', ') : '-') + '<br>';
-                    html += 'Drugs: ' + (s.drugs ? s.drugs.join(', ') : '-') + '<br>';
+                    html += 'Drugs (' + (s.drugs ? s.drugs.length : 0) + '): ' + (s.drugs ? s.drugs.join(', ') : '-') + '<br>';
                     if (s.by_gene && s.by_gene.length > 0) {
+                        // ForeGenomics uses "genotypes", toy uses "diplotypes"
+                        const hasDiplotypes = s.by_gene[0].diplotypes !== undefined;
+                        const genoHeader = hasDiplotypes ? 'Diplotypes' : 'Genotypes';
                         html += '<table style="width:100%;margin-top:10px;border-collapse:collapse;">';
-                        html += '<tr style="background:#e9ecef;"><th style="padding:8px;text-align:left;">Gene</th><th style="padding:8px;text-align:left;">Diplotypes</th><th style="padding:8px;text-align:left;">Phenotypes</th><th style="padding:8px;text-align:left;">Drugs</th></tr>';
+                        html += '<tr style="background:#e9ecef;"><th style="padding:8px;text-align:left;">Gene</th><th style="padding:8px;text-align:left;">' + genoHeader + '</th><th style="padding:8px;text-align:left;">Phenotypes</th><th style="padding:8px;text-align:left;">Drugs</th></tr>';
                         s.by_gene.forEach(g => {
+                            const genoValues = hasDiplotypes ? g.diplotypes : (g.genotypes || []);
                             html += '<tr style="border-bottom:1px solid #e9ecef;">';
                             html += '<td style="padding:8px;">' + g.gene + '</td>';
-                            html += '<td style="padding:8px;">' + g.diplotypes.join(', ') + '</td>';
+                            html += '<td style="padding:8px;">' + genoValues.join(', ') + '</td>';
                             html += '<td style="padding:8px;">' + g.phenotypes.join(', ') + '</td>';
                             html += '<td style="padding:8px;">' + g.drugs.join(', ') + '</td>';
                             html += '</tr>';
