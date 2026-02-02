@@ -626,10 +626,23 @@ def load_gwas_data_from_cache(efo_id: str, config: dict) -> Optional[pd.DataFram
     # Load parquet (legacy path if no meta, or valid meta)
     logger.info(f"Loading GWAS data for {efo_id} from cache: {cache_file}")
     try:
-        return pd.read_parquet(cache_file)
+        df = pd.read_parquet(cache_file)
     except Exception as e:
         logger.error(f"Failed to read cache file {cache_file}: {e}")
-    return None
+        return None
+
+    # C8.B3: PubMed self-heal — treat cache as stale if PubMed info is absent
+    if os.environ.get("GWAS_CACHE_REQUIRE_PUBMED") == "1" and df is not None and not df.empty:
+        has_pubmed_col = "PubMed_ID" in df.columns
+        if not has_pubmed_col:
+            logger.info(f"Cache for {efo_id} missing PubMed_ID column (self-heal), treating as stale")
+            return None
+        non_empty = df["PubMed_ID"].dropna().astype(str).str.strip().loc[lambda s: s != ""]
+        if non_empty.empty:
+            logger.info(f"Cache for {efo_id} has all-empty PubMed_ID (self-heal), treating as stale")
+            return None
+
+    return df
 
 def save_gwas_data_to_cache(df: pd.DataFrame, efo_id: str, config: dict):
     """Save the given DataFrame to a local cache file corresponding to the EFO ID.
