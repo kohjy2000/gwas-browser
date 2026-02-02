@@ -22,7 +22,7 @@ from gwas_variant_analyzer.data_processor import merge_variant_data
 from gwas_variant_analyzer.clinvar_matcher import match_user_variants_to_clinvar
 from gwas_variant_analyzer.pgx_parser import parse_pgx_final_tsv
 from gwas_variant_analyzer.pgx_summary import summarize_pgx
-from gwas_variant_analyzer.pgx_foregenomics import parse_foregenomics_report_tsv
+from gwas_variant_analyzer.pgx_foregenomics import parse_foregenomics_report_tsv, find_foregenomics_report
 from gwas_variant_analyzer.pgx_cpic import parse_cpic_toy_tsv
 from gwas_variant_analyzer.chat_facts import collect_facts, get_fact_ids
 
@@ -877,9 +877,19 @@ def pgx_summary():
         project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 
         if source == "foregenomics":
-            tsv_path = os.environ.get("FOREGENOMICS_PGX_REPORT_PATH") or os.path.join(
-                project_root, "data", "pgx", "foregenomics_report.tsv"
-            )
+            # C10.B2: per-session report selection via FOREGENOMICS_PGX_ROOT + sample_id
+            pgx_root = os.environ.get("FOREGENOMICS_PGX_ROOT", "").strip()
+            session_id = str(data.get("session_id", "")).strip()
+            sample_id = ""
+            if session_id and session_id in UPLOADS:
+                sample_id = str(UPLOADS[session_id].get("sample_id", "")).strip()
+            tsv_path = None
+            if pgx_root and sample_id:
+                tsv_path = find_foregenomics_report(pgx_root, sample_id)
+            if not tsv_path:
+                tsv_path = os.environ.get("FOREGENOMICS_PGX_REPORT_PATH") or os.path.join(
+                    project_root, "data", "pgx", "foregenomics_report.tsv"
+                )
             fg_df = parse_foregenomics_report_tsv(tsv_path)
             summary = _summarize_foregenomics(fg_df)
         elif source == "cpic":
@@ -1101,6 +1111,7 @@ def chat():
 
         # C9.B2: Suggest trait analysis when user mentions a trait but no GWAS facts
         suggested_actions = []
+        trait_risk_guarded = False
         has_gwas_facts = any(f.domain == "gwas" for f in facts_list) if facts_list else False
         if not has_gwas_facts:
             detected_trait = _extract_trait_from_message(message)
@@ -1110,6 +1121,10 @@ def chat():
                     "label": f"Analyze {detected_trait}",
                     "trait": detected_trait,
                 })
+                # C10.B3: Trait-Risk Guard — do not produce medium/high risk
+                # from PGx-only facts when the user asks about a disease trait.
+                risk_level = "low"
+                trait_risk_guarded = True
 
         # C6.B2: Ollama mode — call local LLM if enabled and facts exist
         answer = None
@@ -1126,6 +1141,14 @@ def chat():
         # Fallback to deterministic answer
         if answer is None:
             answer = _build_answer(message, facts_list)
+
+        # C10.B3: prepend guard notice when trait-risk was suppressed
+        if trait_risk_guarded:
+            guard_msg = (
+                "I cannot assess disease-specific risk from pharmacogenomic (PGx) data alone. "
+                "Please run a GWAS trait analysis first using the suggested action below."
+            )
+            answer = guard_msg + "\n\n" + answer
 
         # C8.B4: LLM transparency — report which model was used
         if llm_used:

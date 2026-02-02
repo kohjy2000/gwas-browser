@@ -746,3 +746,29 @@ API Endpoint
 ### Test File
 
 /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_chat_trait_risk_guard_contract.py
+
+---
+
+## Contract: Func_GWAS_PubMed_From_StudyLink_v1
+
+### Type
+
+Function (parsing correctness, real API shape)
+
+### Specification
+
+| Field | Value |
+|-------|-------|
+| Module | /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py |
+| Function | parse_gwas_association_data(raw_associations, trait_name, config) |
+| Output Columns | PubMed_ID, GWAS_Association_ID |
+
+### Validation Rules
+
+1. If the association payload lacks `publicationInfo`, the parser must fetch the study JSON via `_links.study.href` and read `publicationInfo.pubmedId`.
+2. If the association payload lacks `associationId`, the parser must parse the numeric id from `_links.self.href` (e.g., `.../associations/13733` → `13733`) and store it in `GWAS_Association_ID`.
+3. Contract tests must not perform network calls; they monkeypatch `requests.get` and assert it was called with the study href.
+
+### Test File
+
+/Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_gwas_pubmed_from_study_link_contract.py

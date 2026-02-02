@@ -788,6 +788,7 @@ Cycle 4 is high-risk domain. Disclaimers and citations are mandatory and must be
 | 28 | C10.B1 References: PubMed Direct URL + Robust PubMed ID Extraction | C6.B3 PubMed Meta Enrichment (Prefer PubMed When Available) |
 | 29 | C10.B2 ForeGenomics PGx: Per-Session Report Selection (Different Individuals ≠ Same Output) | C7.B2 PGx Summary API Supports ForeGenomics Source |
 | 30 | C10.B3 Chat: Trait-Risk Guard (Do Not Answer Disease Risk From PGx-Only Facts) | C9.B2 Chat: Suggest Trait Analysis When Missing Facts |
+| 31 | C10.B4 GWAS PubMed: Extract From Association Study Link (Real API Shape) | C10.B1 References: PubMed Direct URL + Robust PubMed ID Extraction |
 
 ---
 
@@ -1014,6 +1015,68 @@ git status --porcelain
 2. suggested_actions includes analyze_trait for the detected trait.
 3. New contract test passes:
    - /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_chat_trait_risk_guard_contract.py
+
+### Allow NOOP
+
+- false
+
+---
+
+## Block: C10.B4 GWAS PubMed: Extract From Association Study Link (Real API Shape)
+
+### Description
+
+Fix the root cause: PubMed_ID is often missing because the GWAS Catalog association payload does not include publicationInfo.
+
+Real API behavior (verified):
+- `/efoTraits/<EFO>/associations` returns association objects with no `publicationInfo` and often no `associationId`.
+- PubMed is available via the study resource:
+  - `_links.study.href` points to `/associations/<id>/study`
+  - the returned study JSON contains `publicationInfo.pubmedId`.
+- Association id must be parsed from `_links.self.href` (e.g., `.../associations/13733`).
+
+This block adds a contract test that models this exact shape, so we stop “passing tests but failing UX”.
+
+### Dependencies
+
+- Depends on: C10.B1 References: PubMed Direct URL + Robust PubMed ID Extraction
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_gwas_pubmed_from_study_link_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_fix_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pubmed_meta_enrichment_contract.py
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_gwas_pubmed_from_study_link_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py contract_tests/test_gwas_pubmed_from_study_link_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. Given a raw association dict with:
+   - no `publicationInfo`
+   - no `associationId`
+   - `_links.self.href = .../associations/<id>`
+   - `_links.study.href = .../associations/<id>/study`
+   and a mocked `requests.get(study_href)` returning `{"publicationInfo": {"pubmedId": <id>}}`,
+   `parse_gwas_association_data(...)` outputs a DataFrame with non-empty `PubMed_ID` and `GWAS_Association_ID=<id>`.
+2. New contract test passes:
+   - /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_gwas_pubmed_from_study_link_contract.py
 
 ### Allow NOOP
 

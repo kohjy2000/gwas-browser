@@ -569,6 +569,24 @@ allow_missing_targets: true
 
 ---
 
+### Block: C10.B4 GWAS PubMed: Extract From Association Study Link (Real API Shape)
+
+target_files:
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_gwas_pubmed_from_study_link_contract.py
+
+read_files:
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_fix_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pubmed_meta_enrichment_contract.py
+
+do_not_touch:
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+
+allow_missing_targets: true
+
+---
+
 ## Global Do-Not-Touch List
 
 - /Users/june-young/Research_Local/08_GWAS_browser/venv
