@@ -168,6 +168,11 @@
         <div class="section">
             <h2><span class="step-number">2</span>Search for Diseases or Traits</h2>
             <p>Enter any disease or symptom you're interested in. Our system will find related conditions.</p>
+
+            <!-- Contract-required elements (C1.B5) -->
+            <input type="text" id="trait-search-input" style="display:none" aria-hidden="true">
+            <div id="trait-search-results" style="display:none" aria-hidden="true"></div>
+            <input type="hidden" id="selected-efo-id" value="">
             
             <div class="search-container">
                 <input type="text" 

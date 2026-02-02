@@ -3,12 +3,65 @@
 let currentResults = []; // 분석 결과를 저장할 전역 변수
 
 document.addEventListener('DOMContentLoaded', function() {
+    initializeTraitSearchContract();
     initializeTabSystem();
     initializeFormHandlers();
     setupDownloadButtons();
     // 초기에는 다운로드 버튼 비활성화
     document.querySelectorAll('.download-results-btn').forEach(btn => btn.disabled = true);
 });
+
+function initializeTraitSearchContract() {
+    const input = document.getElementById('trait-search-input');
+    const results = document.getElementById('trait-search-results');
+    const selectedEfoId = document.getElementById('selected-efo-id');
+
+    if (!input || !results || !selectedEfoId) return;
+
+    let timer = null;
+    input.addEventListener('input', () => {
+        if (timer) window.clearTimeout(timer);
+        timer = window.setTimeout(async () => {
+            const query = (input.value || '').trim();
+            if (query.length < 3) {
+                results.style.display = 'none';
+                results.innerHTML = '';
+                return;
+            }
+
+            try {
+                const resp = await fetch('/api/search-traits', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query, top_k: 10 }),
+                });
+                const data = await resp.json();
+                if (!data || !data.success || !Array.isArray(data.results)) {
+                    results.style.display = 'none';
+                    results.innerHTML = '';
+                    return;
+                }
+
+                results.innerHTML = data.results
+                    .slice(0, 10)
+                    .map(r => `<div class="suggestion-item" data-efo="${r.efo_id || ''}">${r.trait || ''}</div>`)
+                    .join('');
+                results.style.display = results.innerHTML ? 'block' : 'none';
+
+                results.querySelectorAll('[data-efo]').forEach(el => {
+                    el.addEventListener('click', () => {
+                        const efoId = el.getAttribute('data-efo') || '';
+                        selectedEfoId.value = efoId;
+                        results.style.display = 'none';
+                    });
+                });
+            } catch (_e) {
+                results.style.display = 'none';
+                results.innerHTML = '';
+            }
+        }, 250);
+    });
+}
 
 function initializeTabSystem() {
     const tabButtons = document.querySelectorAll('.tab-button');
