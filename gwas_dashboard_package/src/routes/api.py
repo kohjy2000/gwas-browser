@@ -17,6 +17,8 @@ from gwas_variant_analyzer.vcf_parser import load_vcf_reader, extract_user_varia
 from gwas_variant_analyzer.gwas_catalog_handler import fetch_gwas_associations_by_efo, parse_gwas_association_data, load_gwas_data_from_cache, save_gwas_data_to_cache
 from gwas_variant_analyzer.data_processor import process_variants, merge_variant_data
 from gwas_variant_analyzer.clinvar_matcher import match_user_variants_to_clinvar
+from gwas_variant_analyzer.pgx_parser import parse_pgx_final_tsv
+from gwas_variant_analyzer.pgx_summary import summarize_pgx
 
 # Import new features
 from gwas_variant_analyzer.customer_friendly_processor import format_customer_friendly_results
@@ -513,4 +515,43 @@ def clinvar_match():
         return jsonify({
             'success': False,
             'message': f'ClinVar match error: {str(e)}'
+        }), 500
+
+
+@api_bp.route('/pgx-summary', methods=['POST'])
+def pgx_summary():
+    """POST /api/pgx-summary — return deterministic PGx summary from toy TSV."""
+    try:
+        data = request.get_json(silent=True) or {}
+        source = str(data.get("source", "toy")).strip().lower()
+
+        if source != "toy":
+            return jsonify({
+                'success': False,
+                'message': 'Invalid source. Use source=\"toy\".'
+            }), 400
+
+        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+        tsv_path = os.path.join(project_root, "data", "pgx", "final.tsv")
+
+        df = parse_pgx_final_tsv(tsv_path)
+        summary = summarize_pgx(df)
+
+        disclaimer_tags = [
+            "pharmacogenomics",
+            "toy_data",
+            "not_medical_advice",
+            "consult_professional",
+        ]
+
+        return jsonify({
+            'success': True,
+            'summary': summary,
+            'disclaimer_tags': disclaimer_tags,
+        }), 200
+    except Exception as e:
+        current_app.logger.error(f"Error in pgx-summary: {e}", exc_info=True)
+        return jsonify({
+            'success': False,
+            'message': f'PGx summary error: {str(e)}'
         }), 500
