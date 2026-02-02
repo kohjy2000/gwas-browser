@@ -16,6 +16,7 @@ from gwas_variant_analyzer.utils import load_app_config, get_efo_id_for_trait
 from gwas_variant_analyzer.vcf_parser import load_vcf_reader, extract_user_variants
 from gwas_variant_analyzer.gwas_catalog_handler import fetch_gwas_associations_by_efo, parse_gwas_association_data, load_gwas_data_from_cache, save_gwas_data_to_cache
 from gwas_variant_analyzer.data_processor import process_variants, merge_variant_data
+from gwas_variant_analyzer.clinvar_matcher import match_user_variants_to_clinvar
 
 # Import new features
 from gwas_variant_analyzer.customer_friendly_processor import format_customer_friendly_results
@@ -455,4 +456,61 @@ def analyze():
         return jsonify({
             'success': False, 
             'message': f'Unexpected error during analysis: {str(e)}'
+        }), 500
+
+
+@api_bp.route('/clinvar-match', methods=['POST'])
+def clinvar_match():
+    """POST /api/clinvar-match — match uploaded session variants to the toy ClinVar TSV."""
+    try:
+        data = request.get_json(silent=True) or {}
+        session_id = str(data.get('session_id', '')).strip()
+        significance_filter = data.get('significance_filter')
+
+        if not session_id or session_id not in UPLOADS:
+            return jsonify({
+                'success': False,
+                'message': 'Missing or invalid session_id.'
+            }), 400
+
+        user_variants_df = UPLOADS[session_id].get('variants')
+        if user_variants_df is None or getattr(user_variants_df, "empty", True):
+            return jsonify({
+                'success': True,
+                'summary': {
+                    'session_id': session_id,
+                    'variants_count': 0,
+                    'matches_count': 0,
+                },
+                'matches': [],
+            }), 200
+
+        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+        clinvar_tsv_path = os.path.join(project_root, "data", "clinvar", "clinvar_toy.tsv")
+
+        if isinstance(significance_filter, str) and significance_filter.strip():
+            significance_filter = [significance_filter.strip()]
+        elif not isinstance(significance_filter, (list, tuple)):
+            significance_filter = None
+
+        matches = match_user_variants_to_clinvar(
+            user_variants_df=user_variants_df,
+            clinvar_tsv_path=clinvar_tsv_path,
+            significance_filter=significance_filter,
+        )
+
+        return jsonify({
+            'success': True,
+            'summary': {
+                'session_id': session_id,
+                'variants_count': int(len(user_variants_df)),
+                'matches_count': int(len(matches)),
+            },
+            'matches': matches,
+        }), 200
+    except Exception as e:
+        current_app.logger.error(f"Error in clinvar-match: {e}", exc_info=True)
+        return jsonify({
+            'success': False,
+            'message': f'ClinVar match error: {str(e)}'
         }), 500
