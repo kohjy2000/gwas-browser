@@ -1,0 +1,4 @@
+chrom	pos	ref	alt	clinical_significance	condition	gene	variation_id	rsid
+1	1000	A	G	pathogenic	Familial hypercholesterolemia	LDLR	12345	rs121913529
+7	140453136	A	T	likely_pathogenic	Cystic fibrosis	CFTR	56789	rs113993960
+17	43071077	C	T	benign	Breast cancer	BRCA1	98765	rs80357065
