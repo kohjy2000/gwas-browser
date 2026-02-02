@@ -1,0 +1,5 @@
+gene	diplotype	phenotype	drug	recommendation
+CYP2C19	*1/*2	Intermediate metabolizer	clopidogrel	Consider alternative antiplatelet therapy.
+CYP2C19	*2/*2	Poor metabolizer	clopidogrel	Avoid clopidogrel; use alternative therapy.
+CYP2D6	*1/*1	Normal metabolizer	codeine	Use standard dosing.
+CYP2D6	*4/*4	Poor metabolizer	codeine	Avoid codeine; consider alternative analgesic.
