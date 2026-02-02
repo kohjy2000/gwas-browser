@@ -8,7 +8,9 @@ import os
 import tempfile
 import json
 import logging
+from datetime import datetime, timezone
 import pandas as pd
+import requests as http_requests
 from flask import Blueprint, request, jsonify, current_app
 
 from gwas_variant_analyzer.utils import load_app_config, get_efo_id_for_trait
@@ -38,10 +40,59 @@ nlp_matcher = None
 _trait_list = None  # List[dict] with keys: trait, shortForm, uri
 
 
+def _extract_gwas_associations_for_facts(filtered_data: pd.DataFrame, trait_name: str, max_items: int = 50) -> list[dict]:
+    """
+    Build a small GWAS association list for chat facts from the filtered GWAS×user merge.
+
+    Output schema matches gwas_variant_analyzer.chat_facts.collect_facts:
+      trait, variant, p_value, pubmed_id
+    """
+    if getattr(filtered_data, "empty", True):
+        return []
+
+    out: list[dict] = []
+    for _, row in filtered_data.head(max_items).iterrows():
+        rsid = row.get("SNP_ID")
+        if not rsid or str(rsid).strip() in ("nan", ".", ""):
+            rsid = row.get("GWAS_SNP_ID")
+
+        chrom = row.get("GWAS_CHROM")
+        pos = row.get("GWAS_POS")
+        alt = row.get("GWAS_ALT")
+
+        variant = ""
+        if rsid and str(rsid).strip() not in ("nan", ".", ""):
+            variant = str(rsid).strip()
+            if alt and str(alt).strip() not in ("nan", ".", ""):
+                variant = f"{variant}-{str(alt).strip()}"
+        elif chrom and pos:
+            variant = f"chr{str(chrom).strip()}:{str(pos).strip()}"
+            if alt and str(alt).strip() not in ("nan", ".", ""):
+                variant = f"{variant}-{str(alt).strip()}"
+
+        pubmed_id = row.get("PubMed_ID")
+        if pubmed_id is None or (isinstance(pubmed_id, float) and pd.isna(pubmed_id)):
+            pubmed_id = ""
+
+        assoc_trait = row.get("GWAS_Trait") or trait_name
+        p_value = row.get("P_Value")
+
+        out.append({
+            "trait": str(assoc_trait) if assoc_trait is not None else str(trait_name),
+            "variant": str(variant),
+            "p_value": str(p_value) if p_value is not None else "",
+            "pubmed_id": str(pubmed_id).strip(),
+        })
+
+    out.sort(key=lambda a: (a.get("trait", ""), a.get("variant", ""), a.get("p_value", "")))
+    return out
+
+
 def _load_trait_list():
     """Load trait list from data/trait_list.json, fallback to efo_mapping.json."""
     global _trait_list
-    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    # api.py is at gwas_dashboard_package/src/routes/api.py — 4 levels up = project root
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
     trait_list_path = os.path.join(project_root, "data", "trait_list.json")
     fallback_path = os.path.join(project_root, "gwas_dashboard_package", "config", "efo_mapping.json")
 
@@ -79,6 +130,76 @@ def _get_trait_list():
     if _trait_list is None:
         _load_trait_list()
     return _trait_list
+
+
+# --- C6.B1: Remote GWAS Catalog trait search + local cache update ---
+
+REMOTE_GWAS_TRAIT_URL = "https://www.ebi.ac.uk/gwas/rest/api/efoTraits/search/findByEfoTrait"
+REMOTE_SCORE_THRESHOLD = 0.4  # If top local score below this, trigger remote
+
+
+def _fetch_remote_traits(query: str):
+    """Query the GWAS Catalog REST API for traits matching *query*.
+
+    Returns a list of dicts with keys: trait, shortForm, uri.
+    Raises on network / parse errors so callers can handle gracefully.
+    """
+    resp = http_requests.get(
+        REMOTE_GWAS_TRAIT_URL,
+        params={"trait": query},
+        timeout=10,
+    )
+    resp.raise_for_status()
+    data = resp.json()
+
+    traits_out = []
+    embedded = data.get("_embedded", {})
+    for item in embedded.get("efoTraits", []):
+        trait_name = item.get("trait", "")
+        short_form = item.get("shortForm", "")
+        uri = item.get("_links", {}).get("self", {}).get("href", "")
+        if trait_name and short_form:
+            traits_out.append({
+                "trait": trait_name,
+                "shortForm": short_form,
+                "uri": uri,
+            })
+    return traits_out
+
+
+def _merge_remote_into_cache(remote_traits):
+    """Append *remote_traits* into data/trait_list.json (dedupe) and update meta."""
+    global _trait_list
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+    trait_list_path = os.path.join(project_root, "data", "trait_list.json")
+    meta_path = os.path.join(project_root, "data", "trait_list.meta.json")
+
+    current = _get_trait_list()
+    existing_keys = {(e["trait"].lower(), e["shortForm"]) for e in current}
+
+    added = 0
+    for rt in remote_traits:
+        key = (rt["trait"].lower(), rt["shortForm"])
+        if key not in existing_keys:
+            current.append(rt)
+            existing_keys.add(key)
+            added += 1
+
+    if added > 0:
+        try:
+            with open(trait_list_path, "w", encoding="utf-8") as f:
+                json.dump(current, f, ensure_ascii=False, indent=2)
+            with open(meta_path, "w", encoding="utf-8") as f:
+                json.dump({
+                    "updated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    "total_traits": len(current),
+                }, f, indent=2)
+            _trait_list = current
+            logger.info(f"Merged {added} remote traits into cache (total {len(current)})")
+        except Exception as e:
+            logger.warning(f"Failed to persist remote traits: {e}")
+
+    return added
 
 
 def _fuzzy_search_traits(query: str, top_k: int = 10):
@@ -143,7 +264,13 @@ def get_nlp_matcher():
 # --- Block 2: New fuzzy search endpoint ---
 @api_bp.route('/search-traits', methods=['POST'])
 def search_traits():
-    """POST /api/search-traits — fuzzy search over full GWAS Catalog trait list."""
+    """POST /api/search-traits — fuzzy search over full GWAS Catalog trait list.
+
+    C6.B1: When local results are empty or the top score is below the
+    configured threshold, attempt a remote GWAS Catalog search, merge
+    results into the response, and persist new traits into the local cache.
+    Remote is controlled by GWAS_REMOTE_SEARCH env var (default OFF).
+    """
     try:
         data = request.get_json()
         query = (data.get('query', '') if data else '').strip()
@@ -156,6 +283,20 @@ def search_traits():
             }), 400
 
         results = _fuzzy_search_traits(query, top_k)
+
+        # C6.B1: remote fallback when local results are empty or weak
+        remote_enabled = os.environ.get("GWAS_REMOTE_SEARCH", "").lower() in ("1", "true", "yes")
+        top_score = results[0]["score"] if results else 0.0
+
+        if remote_enabled and (not results or top_score < REMOTE_SCORE_THRESHOLD):
+            try:
+                remote_traits = _fetch_remote_traits(query)
+                if remote_traits:
+                    _merge_remote_into_cache(remote_traits)
+                    # Re-run local fuzzy search which now includes the merged traits
+                    results = _fuzzy_search_traits(query, top_k)
+            except Exception as remote_err:
+                logger.warning(f"Remote GWAS trait search failed: {remote_err}")
 
         return jsonify({
             'success': True,
@@ -450,6 +591,16 @@ def analyze():
         analysis_results['analysis_info']['analyzed_trait'] = trait_name
         analysis_results['analysis_info']['efo_id'] = efo_id
         analysis_results['analysis_info']['filters_applied'] = filters
+
+        # Persist GWAS facts for chat so chat isn't PGx-only (C5.B3/Cycle 6).
+        try:
+            UPLOADS[session_id]["gwas_associations"] = _extract_gwas_associations_for_facts(
+                filtered_data=filtered_data,
+                trait_name=trait_name,
+                max_items=50,
+            )
+        except Exception as persist_err:
+            current_app.logger.warning(f"Failed to persist gwas_associations for chat: {persist_err}")
         
         return jsonify(json.loads(json.dumps(analysis_results, default=str)))
 
@@ -613,6 +764,58 @@ def _build_answer(message, facts_list):
     return "\n".join(lines)
 
 
+# --- C6.B2: Ollama local LLM mode for chat ---
+
+def _ollama_enabled():
+    """Check whether Ollama mode is enabled via environment variables."""
+    host = os.environ.get("OLLAMA_HOST", "").strip()
+    model = os.environ.get("OLLAMA_MODEL_CHAT", "").strip()
+    return bool(host and model)
+
+
+def _call_ollama(message, facts_list):
+    """Call the Ollama HTTP API to generate a counseling answer.
+
+    Returns the raw LLM text. Raises on network/API errors.
+    """
+    host = os.environ["OLLAMA_HOST"].rstrip("/")
+    model = os.environ["OLLAMA_MODEL_CHAT"]
+
+    facts_text = "\n".join(f"- [{f.id}] {f.text}" for f in facts_list[:20])
+    system_prompt = (
+        "You are a genetic counseling assistant. Answer the user's question "
+        "based ONLY on the provided genetic facts. Always include disclaimers "
+        "that this is not medical advice. Reference fact IDs in your answer."
+    )
+    user_prompt = f"Facts:\n{facts_text}\n\nUser question: {message}"
+
+    resp = http_requests.post(
+        f"{host}/api/generate",
+        json={
+            "model": model,
+            "prompt": user_prompt,
+            "system": system_prompt,
+            "stream": False,
+        },
+        timeout=60,
+    )
+    resp.raise_for_status()
+    return resp.json().get("response", "")
+
+
+def _validate_ollama_answer(raw_answer, fact_ids):
+    """Ensure the Ollama answer references at least one known fact ID.
+
+    Returns the (possibly augmented) answer.
+    """
+    if not raw_answer or not raw_answer.strip():
+        return None
+    # Check if at least one fact ID is referenced
+    if fact_ids and not any(fid in raw_answer for fid in fact_ids):
+        raw_answer += "\n\nReferenced facts: " + ", ".join(fact_ids[:5])
+    return raw_answer
+
+
 @api_bp.route('/chat', methods=['POST'])
 def chat():
     """POST /api/chat — facts-based counseling chat with mandatory disclaimers and citations."""
@@ -635,6 +838,8 @@ def chat():
         # C5.B3: If session_id provided, derive facts from stored session results
         if session_id and session_id in UPLOADS:
             session_data = UPLOADS[session_id]
+            if not gwas_associations:
+                gwas_associations = session_data.get("gwas_associations") or []
             if not clinvar_matches:
                 clinvar_matches = session_data.get("clinvar_matches") or []
             if not pgx_summary_data:
@@ -646,9 +851,21 @@ def chat():
             pgx_summary=pgx_summary_data or None,
         )
 
-        answer = _build_answer(message, facts_list)
         fact_ids = get_fact_ids(facts_list)
         risk_level = _assess_risk_level(facts_list)
+
+        # C6.B2: Ollama mode — call local LLM if enabled and facts exist
+        answer = None
+        if _ollama_enabled() and facts_list:
+            try:
+                raw = _call_ollama(message, facts_list)
+                answer = _validate_ollama_answer(raw, fact_ids)
+            except Exception as ollama_err:
+                logger.warning(f"Ollama call failed, falling back to deterministic: {ollama_err}")
+
+        # Fallback to deterministic answer
+        if answer is None:
+            answer = _build_answer(message, facts_list)
 
         return jsonify({
             'success': True,

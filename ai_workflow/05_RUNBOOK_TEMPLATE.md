@@ -118,7 +118,7 @@ If your Executor can edit files + run commands (IDE agent / CLI agent), it can r
 
 ```bash
 cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
-/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python ai_workflow/tools/run_block_gate1.py --block C1.B2 --attempt 1 --skip-apply --copy-handoff --handoff-only
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python ai_workflow/tools/run_block_gate1.py --block C1.B2 --attempt 1 --skip-apply --copy-handoff --handoff-packet --executor-mode tool
 ```
 
 This mode assumes the Executor already applied the code edits on disk, so Gate1 only runs tools + scope check + prompt generation.
@@ -191,11 +191,73 @@ cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
 /Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_dashboard_package/src gwas_variant_analyzer/gwas_variant_analyzer
 ```
 
+### Gate 2 (recommended: single command)
+
+Gate2 목적: “각 블록이 자기 테스트만 통과하는 수준(Gate1)”을 넘어, **프로젝트 전체가 실행/통합 관점에서도 깨끗한 상태**인지 최종 판정.
+
+역할 규칙(반드시 준수):
+- Definer/Strategy-Reviewer는 **실행 금지**(명령 실행/판정 금지). 진단/문서만.
+- Executor만 Gate1/Gate2를 실행하고 PASS/FAIL을 도구 결과로 확정한다.
+
+아래 한 줄로 Gate2를 실행한다 (로그/summary 자동 저장):
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python ai_workflow/tools/run_gate2.py
+```
+
+PASS 조건(도구 기준):
+- `pytest -q contract_tests` 전체 PASS
+- `ruff check gwas_dashboard_package/src gwas_variant_analyzer/gwas_variant_analyzer` 전체 PASS
+- import smoke PASS (api 모듈/핵심 모듈 import)
+
+아티팩트:
+- `ai_workflow/_runs/GATE2_*/summary.json`
+- `ai_workflow/_runs/GATE2_*/logs/*.log`
+
 Optional smoke test:
 
 ```bash
 cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
 /Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python gwas_dashboard_package/src/main.py
+```
+
+Recommended automated smoke test (local server + HTTP checks, then exit):
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python ai_workflow/tools/run_smoke_app.py
+```
+
+---
+
+## Phase 2 (Product UX): Cycle 5 Blocks (when Gate2 PASS but “the app still feels broken”)
+
+Gate2가 PASS여도, 실제 UI가 기대대로 동작하지 않으면(검색 품질/레퍼런스/ClinVar·PGx 노출/챗봇 facts) **Cycle 5로 들어간다**.
+
+역할 규칙(반드시 준수):
+- Definer/Strategy-Reviewer는 “정의/진단만” (실행/판정 금지)
+- Executor만 파일 수정 + Gate1 실행
+
+Cycle 5 블록 순서(권장):
+1) C5.B1 Visible Trait Search Uses /api/search-traits
+2) C5.B2 ClinVar and PGx Panels Visible and Wired
+3) C5.B3 Chat Must Use Session Facts (No Manual Facts Paste)
+4) C5.B4 References Must Be URLs (PubMed or Study URL)
+
+각 블록은 Gate1 1줄 커맨드로 실행한다(Executor tool-mode가 직접 실행하는 것이 최적):
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python ai_workflow/tools/run_block_gate1.py --block C5.B1 --attempt 1 --skip-apply --copy-handoff --handoff-packet --executor-mode tool
+```
+
+모든 Cycle 5 블록이 PASS하면, 다시 Gate2 + smoke를 실행한다:
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python ai_workflow/tools/run_gate2.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python ai_workflow/tools/run_smoke_app.py
 ```
 
 ---
@@ -206,3 +268,56 @@ cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
 cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
 git checkout -- .
 ```
+
+---
+
+## Phase 3 (Online + Local LLM): Cycle 6
+
+Cycle 6는 “원격 trait 보강”과 “로컬 LLM(ollama) 연결”을 추가한다.
+
+### Remote trait search (GWAS Catalog)
+
+- 기본 원칙: 테스트는 네트워크 금지. 런타임에서만 원격 호출 허용(옵션).
+- 권장: 원격 결과는 로컬 캐시(data/trait_list.json)에 합쳐서 다음부터는 로컬만으로도 검색 가능하게 한다.
+
+### Ollama (local LLM) for chat
+
+Executor가 아래를 확인/설정한다 (Definer/Reviewer는 실행 금지):
+
+```bash
+ollama --version || true
+ollama list || true
+```
+
+권장 모델(예시, 하나만 골라 pull):
+
+```bash
+ollama pull llama3.1:8b-instruct
+```
+
+또는:
+
+```bash
+ollama pull qwen2.5:7b-instruct
+```
+
+환경변수(예시):
+
+```bash
+export OLLAMA_HOST=http://127.0.0.1:11434
+export OLLAMA_MODEL_CHAT=deepseek-r1:32b
+```
+
+주의: contract_tests에서는 Ollama가 없어도 PASS해야 한다(테스트는 monkeypatch/mock로만 검증).
+
+### C6.B2 Ollama chat mode contract test
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_chat_ollama_mode_contract.py
+```
+
+구현 요약:
+- `/api/chat`에서 OLLAMA_HOST + OLLAMA_MODEL_CHAT 환경변수가 설정되고 facts가 존재하면, Ollama HTTP API(`/api/generate`)를 호출.
+- Ollama 실패 시 기존 deterministic 모드로 자동 fallback.
+- 응답에는 항상 disclaimer_tags(비어있지 않음) + citations(비어있지 않음, 알려진 fact ID 참조)이 포함.

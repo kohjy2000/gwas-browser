@@ -911,3 +911,162 @@ git status --porcelain
 ### Allow NOOP
 
 - false
+
+---
+
+## Block: C6.B3 PubMed Meta Enrichment (Prefer PubMed When Available)
+
+### Description
+
+Fix GWAS meta parsing so that PubMed IDs are recovered whenever the GWAS Catalog metadata provides them.
+
+Observed failure mode:
+- For the same rsID/alt key, the first association record may lack PubMed metadata but a later one has it.
+- Current parsing can “lock in” an empty PubMed_ID and never update it.
+
+This block makes PubMed_ID prefer non-empty values and ensures we do not drop PubMed metadata in downstream processing.
+
+### Dependencies
+
+- Depends on: C6.B2 Counseling Chat (Ollama Local LLM Mode)
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pubmed_meta_enrichment_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_fix_contract.py
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_pubmed_meta_enrichment_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py contract_tests/test_pubmed_meta_enrichment_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. If multiple association records map to the same (rsid, alt) key and at least one has a PubMed ID, the final parsed DataFrame must carry a non-empty PubMed_ID for that key.
+2. PubMed_ID must be normalized to a string integer when possible (e.g., 29878757.0 → "29878757").
+3. New contract test passes without network:
+   - /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pubmed_meta_enrichment_contract.py
+
+### Allow NOOP
+
+- false
+
+---
+
+## Cycle 7 (Phase 4): ForeGenomics_PGx Ingest (Richer PGx)
+
+Cycle 3 PGx was toy-only. Cycle 7 ingests a real local PGx report TSV (ForeGenomics_PGx output)
+into our PGx summary schema so the drug list is much richer.
+
+Important rule:
+- Contract tests must not depend on reading external folders.
+- Therefore, the Executor must copy a small “snapshot” TSV into this project under data/pgx/.
+
+## Block: C7.B1 ForeGenomics PGx Report Snapshot + Parser
+
+### Description
+
+Add a parser for the ForeGenomics PGx report TSV format and a small snapshot file under data/pgx/.
+
+Input source (read-only, outside project):
+- /Users/june-young/Research_Local/08_GWAS_browser/ForeGenomics_PGx/trial/GINS-AAM4-0007-10AD/GINS-AAM4-0007-10AD.PGx.out.report.tsv
+
+Snapshot destination (inside project, used by tests):
+- data/pgx/foregenomics_report.tsv
+
+### Dependencies
+
+- Depends on: C6.B3 PubMed Meta Enrichment (Prefer PubMed When Available)
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/pgx/foregenomics_report.tsv
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/pgx_foregenomics.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pgx_foregenomics_parser_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_pgx_foregenomics_parser_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_variant_analyzer/gwas_variant_analyzer/pgx_foregenomics.py contract_tests/test_pgx_foregenomics_parser_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_variant_analyzer/gwas_variant_analyzer/pgx_foregenomics.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. Snapshot TSV exists at data/pgx/foregenomics_report.tsv and is a faithful copy of the source report (header preserved).
+2. Parser returns a normalized DataFrame with at minimum these logical fields:
+   - gene, drug, genotype, phenotype, recommendation, guideline_ids
+3. New contract test passes and demonstrates that the parsed snapshot yields “many drugs” (e.g., >= 10 unique drugs).
+
+### Allow NOOP
+
+- false
+
+---
+
+## Block: C7.B2 PGx Summary API Supports ForeGenomics Source
+
+### Description
+
+Extend POST /api/pgx-summary so that it can return a richer summary from the ForeGenomics snapshot (source="foregenomics"),
+store it in session, and make it available to chat facts.
+
+### Dependencies
+
+- Depends on: C7.B1 ForeGenomics PGx Report Snapshot + Parser
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pgx_endpoint_foregenomics_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/pgx_foregenomics.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_pgx_endpoint_foregenomics_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_dashboard_package/src/routes/api.py contract_tests/test_pgx_endpoint_foregenomics_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_dashboard_package/src/routes/api.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. /api/pgx-summary accepts source="foregenomics" and returns success true with summary and disclaimer_tags.
+2. Summary must include a drugs list with >= 10 unique drugs for the foregenomics source (derived from snapshot).
+3. Session storage works: for a provided session_id, the PGx summary is stored in UPLOADS[session_id]['pgx_summary'] for chat facts.
+4. New contract test passes:
+   - /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pgx_endpoint_foregenomics_contract.py

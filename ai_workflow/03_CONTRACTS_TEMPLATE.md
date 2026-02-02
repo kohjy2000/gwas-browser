@@ -530,3 +530,105 @@ API Endpoint (local LLM optional)
 ### Test File
 
 /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_chat_ollama_mode_contract.py
+
+---
+
+## Contract: Func_PubMed_Meta_Enrichment_v2
+
+### Type
+
+Function (parsing correctness)
+
+### Specification
+
+| Field | Value |
+|-------|-------|
+| Module | /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py |
+| Function | parse_gwas_association_data(raw_associations, trait_name, config) |
+| Output Column | PubMed_ID |
+
+### Validation Rules
+
+1. If multiple association records map to the same (rsid, alt) key and any record has PubMed metadata, the output PubMed_ID must be non-empty.
+2. PubMed_ID must be normalized to a string integer when possible.
+3. No network calls in contract test (use crafted raw_associations list; no HTTP).
+
+### Test File
+
+/Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pubmed_meta_enrichment_contract.py
+
+---
+
+## Contract: Data_PGx_ForeGenomics_Report_v1
+
+### Type
+
+Data File
+
+### Specification
+
+| Field | Value |
+|-------|-------|
+| Snapshot Path | /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/pgx/foregenomics_report.tsv |
+| Format | TSV (UTF-8, header row) |
+
+### Validation Rules
+
+1. Must include at least these columns: Sample, Drug, Gene, Genotype, Phenotype, Recommendation.
+2. Must contain >= 10 unique Drug values (to guarantee “richer than toy”).
+
+### Test File
+
+/Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pgx_foregenomics_parser_contract.py
+
+---
+
+## Contract: Func_PGx_ForeGenomics_Parser_v1
+
+### Type
+
+Function
+
+### Specification
+
+| Field | Value |
+|-------|-------|
+| Module | /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/pgx_foregenomics.py |
+| Function | parse_foregenomics_report_tsv(path) |
+| Output | Normalized DataFrame with gene/drug rows |
+
+### Validation Rules
+
+1. Returns deterministic results from the snapshot TSV.
+2. Normalized output must expose at minimum: gene, drug, genotype, phenotype, recommendation, guideline_ids.
+
+### Test File
+
+/Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pgx_foregenomics_parser_contract.py
+
+---
+
+## Contract: API_PGxSummary_ForeGenomics_v2
+
+### Type
+
+API Endpoint
+
+### Specification
+
+| Field | Value |
+|-------|-------|
+| Method | POST |
+| Path | /api/pgx-summary |
+| Input | JSON: {"source": "foregenomics", "session_id": "..."} |
+| Output | JSON: {"success": bool, "summary": {...}, "disclaimer_tags": [...]} |
+
+### Validation Rules
+
+1. For source="foregenomics", summary.drugs must include >= 10 unique drugs (derived from the snapshot).
+2. For a valid session_id, the summary is stored into UPLOADS[session_id]["pgx_summary"] for chat facts.
+3. No network calls in contract tests.
+
+### Test File
+
+/Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pgx_endpoint_foregenomics_contract.py
