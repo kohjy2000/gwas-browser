@@ -552,24 +552,65 @@ def standardize_gwas_ethnicity(ancestry_info_raw: Any) -> str:
     return "; ".join(ancestry_components)
 
 def load_gwas_data_from_cache(efo_id: str, config: dict) -> Optional[pd.DataFrame]:
-    """Load GWAS data for the specified EFO ID from local cache."""
+    """Load GWAS data for the specified EFO ID from local cache.
+
+    Contract (Func_Cache_Load_v1):
+    - If gwas_cache_directory is missing or empty, return None.
+    - If parquet exists and meta is missing, load parquet (legacy support).
+    - If meta exists, enforce expiry using fetched_at and gwas_cache_expiry_days;
+      expired returns None.
+    - Malformed meta must not crash; treat as expired and return None.
+    """
     cache_dir = config.get('gwas_cache_directory')
     if not cache_dir:
         return None
-    
-    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    cache_file = os.path.join(project_root, cache_dir, f"{efo_id}.parquet")
 
-    if os.path.exists(cache_file):
-        logger.info(f"Loading GWAS data for {efo_id} from cache: {cache_file}")
+    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    cache_abs = os.path.join(project_root, cache_dir)
+    cache_file = os.path.join(cache_abs, f"{efo_id}.parquet")
+    meta_file = os.path.join(cache_abs, f"{efo_id}.meta.json")
+
+    if not os.path.exists(cache_file):
+        return None
+
+    # If meta exists, enforce expiry
+    if os.path.exists(meta_file):
         try:
-            return pd.read_parquet(cache_file)
+            with open(meta_file, "r", encoding="utf-8") as f:
+                meta = json.load(f)
+            fetched_at_str = meta.get("fetched_at", "")
+            if not fetched_at_str:
+                # Malformed: treat as expired
+                return None
+            from datetime import datetime, timezone
+            fetched_at = datetime.fromisoformat(fetched_at_str)
+            expiry_days = int(config.get("gwas_cache_expiry_days", 90))
+            from datetime import timedelta
+            if datetime.now(timezone.utc) - fetched_at > timedelta(days=expiry_days):
+                logger.info(f"Cache for {efo_id} expired (fetched_at={fetched_at_str})")
+                return None
         except Exception as e:
-            logger.error(f"Failed to read cache file {cache_file}: {e}")
+            # Malformed meta: treat as expired
+            logger.warning(f"Malformed meta for {efo_id}, treating as expired: {e}")
+            return None
+
+    # Load parquet (legacy path if no meta, or valid meta)
+    logger.info(f"Loading GWAS data for {efo_id} from cache: {cache_file}")
+    try:
+        return pd.read_parquet(cache_file)
+    except Exception as e:
+        logger.error(f"Failed to read cache file {cache_file}: {e}")
     return None
 
 def save_gwas_data_to_cache(df: pd.DataFrame, efo_id: str, config: dict):
-    """Save the given DataFrame to a local cache file corresponding to the EFO ID."""
+    """Save the given DataFrame to a local cache file corresponding to the EFO ID.
+
+    Contract (Func_Cache_Save_v1):
+    - If gwas_cache_directory is missing or empty, perform no writes.
+    - Writes a parquet file named by efo_id.
+    - Writes a meta JSON file with keys efo_id, trait, fetched_at, association_count.
+    - association_count equals number of rows in the saved DataFrame.
+    """
     cache_dir = config.get('gwas_cache_directory')
     if not cache_dir:
         return
@@ -580,19 +621,40 @@ def save_gwas_data_to_cache(df: pd.DataFrame, efo_id: str, config: dict):
         if 'GWAS_Ancestry_Info_Raw' in df_to_save.columns:
             df_to_save['GWAS_Ethnicity_Processed'] = df_to_save['GWAS_Ancestry_Info_Raw'].apply(standardize_gwas_ethnicity)
             df_to_save = df_to_save.drop(columns=['GWAS_Ancestry_Info_Raw'])
-        
+
         logger.info("Data cleaned for caching. Now saving...")
     except Exception as e:
         logger.error(f"Error during pre-cache data cleaning: {e}")
         df_to_save = df
 
     project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    cache_dir = os.path.join(project_root, cache_dir)
-    os.makedirs(cache_dir, exist_ok=True)
-    cache_file = os.path.join(cache_dir, f"{efo_id}.parquet")
+    cache_abs = os.path.join(project_root, cache_dir)
+    os.makedirs(cache_abs, exist_ok=True)
+    cache_file = os.path.join(cache_abs, f"{efo_id}.parquet")
 
     try:
-        df.to_parquet(cache_file, index=False)
+        df_to_save.to_parquet(cache_file, index=False)
         logger.info(f"Saved GWAS data for {efo_id} to cache: {cache_file}")
     except Exception as e:
         logger.error(f"Failed to save cache file {cache_file}: {e}")
+        return
+
+    # Write meta JSON
+    from datetime import datetime, timezone
+    trait = ""
+    if "GWAS_Trait" in df.columns and not df.empty:
+        trait = str(df["GWAS_Trait"].iloc[0])
+
+    meta = {
+        "efo_id": efo_id,
+        "trait": trait,
+        "fetched_at": datetime.now(timezone.utc).isoformat(),
+        "association_count": len(df),
+    }
+    meta_file = os.path.join(cache_abs, f"{efo_id}.meta.json")
+    try:
+        with open(meta_file, "w", encoding="utf-8") as f:
+            json.dump(meta, f, ensure_ascii=False, indent=2)
+        logger.info(f"Saved meta for {efo_id}: {meta_file}")
+    except Exception as e:
+        logger.error(f"Failed to write meta file {meta_file}: {e}")
