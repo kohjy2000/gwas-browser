@@ -777,6 +777,17 @@
                             : 'deterministic (no LLM)';
                         html += '<p style="color:#6c757d;font-size:12px;margin-top:8px;">Model: ' + modelLabel + '</p>';
                     }
+                    if (data.suggested_actions && data.suggested_actions.length > 0) {
+                        html += '<div id="chat-suggested-actions" style="margin-top:12px;padding:12px;background:#e3f2fd;border-radius:10px;">';
+                        html += '<strong>Suggested:</strong> ';
+                        data.suggested_actions.forEach(function(action) {
+                            if (action.type === 'analyze_trait') {
+                                const safeTrait = (action.trait || '').replace(/'/g, "\\'");
+                                html += '<button class="btn btn-primary" style="margin:4px;" onclick="handleSuggestedAnalyze(\'' + safeTrait + '\')">' + (action.label || 'Analyze') + '</button>';
+                            }
+                        });
+                        html += '</div>';
+                    }
                     html += '</div>';
                     responseDiv.innerHTML = html;
                 } else {
@@ -784,6 +795,25 @@
                 }
             } catch (e) {
                 responseDiv.innerHTML = '<div class="status error">Chat error: ' + e.message + '</div>';
+            }
+        }
+
+        // C9.B2: Handle suggested trait analysis from chat
+        async function handleSuggestedAnalyze(traitName) {
+            try {
+                const resp = await fetch('/api/search-traits', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query: traitName, top_k: 1 })
+                });
+                const result = await resp.json();
+                if (result.success && result.results && result.results.length > 0) {
+                    const top = result.results[0];
+                    selectPhenotype(top.efo_id, top.trait);
+                    switchTab('gwas');
+                }
+            } catch (e) {
+                console.error('handleSuggestedAnalyze error:', e);
             }
         }
 
