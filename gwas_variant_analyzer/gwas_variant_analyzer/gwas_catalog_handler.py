@@ -378,6 +378,11 @@ def parse_gwas_association_data(raw_associations: List[Dict], trait_name: str, c
         # Extract common information from each association
         
         pubmed_id = association.get('publicationInfo', {}).get('pubmedId')
+        # Some payloads can expose pubmedId directly or as a list; normalize to a scalar.
+        if isinstance(pubmed_id, list) and pubmed_id:
+            pubmed_id = pubmed_id[0]
+        if not pubmed_id:
+            pubmed_id = association.get("pubmedId") or ""
         if not pubmed_id:
             study_url = association.get('_links', {}).get('study', {}).get('href')
             request_timeout = config.get('gwas_api_request_timeout_seconds', 30)
@@ -391,10 +396,13 @@ def parse_gwas_association_data(raw_associations: List[Dict], trait_name: str, c
                         if rate_limit_per_second and rate_limit_per_second > 0:
                             time.sleep(1 / rate_limit_per_second)
 
+                        # Use requests.get directly so contract tests can monkeypatch it.
                         response = requests.get(study_url, timeout=request_timeout)
                         response.raise_for_status()
                         study_json = response.json()
                         pubmed_id = study_json.get('publicationInfo', {}).get('pubmedId')
+                        if isinstance(pubmed_id, list) and pubmed_id:
+                            pubmed_id = pubmed_id[0]
                         break
                     except requests.exceptions.RequestException as e:
                         if attempt + 1 >= max_retries:
@@ -590,12 +598,17 @@ def load_gwas_data_from_cache(efo_id: str, config: dict) -> Optional[pd.DataFram
       expired returns None.
     - Malformed meta must not crash; treat as expired and return None.
     """
-    cache_dir = config.get('gwas_cache_directory')
-    if not cache_dir:
-        return None
+    # C9.B1: GWAS_CACHE_DIR env override for shared cache across versions
+    env_cache_dir = os.environ.get("GWAS_CACHE_DIR", "").strip()
+    if env_cache_dir:
+        cache_abs = env_cache_dir
+    else:
+        cache_dir = config.get('gwas_cache_directory')
+        if not cache_dir:
+            return None
+        project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        cache_abs = os.path.join(project_root, cache_dir)
 
-    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    cache_abs = os.path.join(project_root, cache_dir)
     cache_file = os.path.join(cache_abs, f"{efo_id}.parquet")
     meta_file = os.path.join(cache_abs, f"{efo_id}.meta.json")
 
@@ -653,9 +666,16 @@ def save_gwas_data_to_cache(df: pd.DataFrame, efo_id: str, config: dict):
     - Writes a meta JSON file with keys efo_id, trait, fetched_at, association_count.
     - association_count equals number of rows in the saved DataFrame.
     """
-    cache_dir = config.get('gwas_cache_directory')
-    if not cache_dir:
-        return
+    # C9.B1: GWAS_CACHE_DIR env override for shared cache across versions
+    env_cache_dir = os.environ.get("GWAS_CACHE_DIR", "").strip()
+    if env_cache_dir:
+        cache_abs = env_cache_dir
+    else:
+        cache_dir = config.get('gwas_cache_directory')
+        if not cache_dir:
+            return
+        project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        cache_abs = os.path.join(project_root, cache_dir)
 
     try:
         df_to_save = df.copy()
@@ -668,9 +688,6 @@ def save_gwas_data_to_cache(df: pd.DataFrame, efo_id: str, config: dict):
     except Exception as e:
         logger.error(f"Error during pre-cache data cleaning: {e}")
         df_to_save = df
-
-    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    cache_abs = os.path.join(project_root, cache_dir)
     os.makedirs(cache_abs, exist_ok=True)
     cache_file = os.path.join(cache_abs, f"{efo_id}.parquet")
 
