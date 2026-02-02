@@ -20,6 +20,7 @@ from gwas_variant_analyzer.data_processor import merge_variant_data
 from gwas_variant_analyzer.clinvar_matcher import match_user_variants_to_clinvar
 from gwas_variant_analyzer.pgx_parser import parse_pgx_final_tsv
 from gwas_variant_analyzer.pgx_summary import summarize_pgx
+from gwas_variant_analyzer.pgx_foregenomics import parse_foregenomics_report_tsv
 from gwas_variant_analyzer.chat_facts import collect_facts, get_fact_ids
 
 # Import new features
@@ -673,24 +674,67 @@ def clinvar_match():
         }), 500
 
 
+def _summarize_foregenomics(df):
+    """Build a summary dict from a ForeGenomics parsed DataFrame.
+
+    The ForeGenomics parser returns columns:
+        gene, drug, genotype, phenotype, recommendation, guideline_ids
+    which differs from the toy PGx schema (diplotype instead of genotype).
+    """
+    if df is None or df.empty:
+        return {
+            "total_rows": 0,
+            "genes": [],
+            "drugs": [],
+            "by_gene": [],
+        }
+
+    genes = sorted(df["gene"].dropna().loc[df["gene"] != ""].unique().tolist())
+    drugs = sorted(df["drug"].dropna().loc[df["drug"] != ""].unique().tolist())
+
+    by_gene = []
+    for gene in genes:
+        sub = df[df["gene"] == gene]
+        by_gene.append({
+            "gene": gene,
+            "rows": int(len(sub)),
+            "genotypes": sorted(set(sub["genotype"].tolist())),
+            "phenotypes": sorted(set(sub["phenotype"].tolist())),
+            "drugs": sorted(set(sub["drug"].tolist())),
+        })
+    by_gene.sort(key=lambda x: x["gene"])
+
+    return {
+        "total_rows": int(len(df)),
+        "genes": genes,
+        "drugs": drugs,
+        "by_gene": by_gene,
+    }
+
+
 @api_bp.route('/pgx-summary', methods=['POST'])
 def pgx_summary():
-    """POST /api/pgx-summary — return deterministic PGx summary from toy TSV."""
+    """POST /api/pgx-summary — return deterministic PGx summary from toy or foregenomics TSV."""
     try:
         data = request.get_json(silent=True) or {}
         source = str(data.get("source", "toy")).strip().lower()
 
-        if source != "toy":
+        if source not in ("toy", "foregenomics"):
             return jsonify({
                 'success': False,
-                'message': 'Invalid source. Use source=\"toy\".'
+                'message': 'Invalid source. Use source="toy" or source="foregenomics".'
             }), 400
 
         project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
-        tsv_path = os.path.join(project_root, "data", "pgx", "final.tsv")
 
-        df = parse_pgx_final_tsv(tsv_path)
-        summary = summarize_pgx(df)
+        if source == "foregenomics":
+            tsv_path = os.path.join(project_root, "data", "pgx", "foregenomics_report.tsv")
+            fg_df = parse_foregenomics_report_tsv(tsv_path)
+            summary = _summarize_foregenomics(fg_df)
+        else:
+            tsv_path = os.path.join(project_root, "data", "pgx", "final.tsv")
+            df = parse_pgx_final_tsv(tsv_path)
+            summary = summarize_pgx(df)
 
         # Store pgx summary in session for chat facts derivation (C5.B3)
         session_id = str(data.get("session_id", "")).strip()
@@ -699,7 +743,7 @@ def pgx_summary():
 
         disclaimer_tags = [
             "pharmacogenomics",
-            "toy_data",
+            "foregenomics_data" if source == "foregenomics" else "toy_data",
             "not_medical_advice",
             "consult_professional",
         ]

@@ -81,5 +81,26 @@ if __name__ == '__main__':
                 shutil.copy2(src_file, dst_file)
                 app.logger.info(f"Copied config file: {config_file}")
     
+    # Auto-detect Ollama for chat LLM mode
+    if not os.environ.get("OLLAMA_HOST"):
+        try:
+            import requests as _req
+            _r = _req.get("http://127.0.0.1:11434/api/tags", timeout=2)
+            if _r.status_code == 200:
+                os.environ["OLLAMA_HOST"] = "http://127.0.0.1:11434"
+                models = [m["name"] for m in _r.json().get("models", [])]
+                if not os.environ.get("OLLAMA_MODEL_CHAT"):
+                    preferred = ["deepseek-r1:32b", "llama3.1:8b-instruct", "qwen2.5:7b-instruct"]
+                    chosen = next((p for p in preferred if p in models), models[0] if models else "")
+                    if chosen:
+                        os.environ["OLLAMA_MODEL_CHAT"] = chosen
+                app.logger.info(f"Ollama auto-detected: host=127.0.0.1:11434, model={os.environ.get('OLLAMA_MODEL_CHAT', 'none')}")
+        except Exception:
+            pass
+
+    # Enable remote GWAS trait search by default
+    if not os.environ.get("GWAS_REMOTE_SEARCH"):
+        os.environ["GWAS_REMOTE_SEARCH"] = "1"
+
     # Run the app
     app.run(host='0.0.0.0', port=1111, debug=True)

@@ -1,0 +1,1072 @@
+# B2C Spec (Block-to-Code Specification)
+
+Blocks execute sequentially. Block count is fixed to 11 blocks for Cycle 1 to 4.
+Cycle 5 (Phase 2) is allowed to add additional blocks when Gate2 passes but the real UI/UX is still unacceptable.
+
+## Global Settings
+
+| Setting | Value |
+|---------|-------|
+| max_attempts_per_block | 3 |
+| loop_breaker_N | 3 |
+| auto_strategist_on_fail | true |
+
+---
+
+## Block: C1.B1 Search Traits Endpoint Contract
+
+### Description
+
+Ensure POST /api/search-traits meets the contract expected by existing contract tests.
+
+### Dependencies
+
+- Depends on: none
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_search_traits_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/main.py
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_cache_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_fix_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_frontend_contract.py
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_search_traits_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_dashboard_package/src/routes/api.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_dashboard_package/src/routes/api.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. Query shorter than 3 returns HTTP 400 with success false and a message string.
+2. Valid query returns HTTP 200 with success true and a results list.
+3. Each result item contains only trait, efo_id, score with correct types.
+4. Existing contract test passes: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_search_traits_contract.py
+
+### Allow NOOP
+
+- true
+
+### Notes
+
+If the endpoint already passes contract tests, NOOP is allowed.
+
+---
+
+## Block: C1.B2 Cache Contract Meta and Expiry
+
+### Description
+
+Make cache load and save behavior comply with cache contract tests: support legacy parquet without meta, enforce expiry when meta exists, and write meta on save.
+
+### Dependencies
+
+- Depends on: C1.B1 Search Traits Endpoint Contract
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_cache_contract.py
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_search_traits_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_fix_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_frontend_contract.py
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_cache_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. Legacy cache file with only parquet loads successfully.
+2. Cache with meta loads when fetched_at is within expiry days.
+3. Cache with meta returns None when fetched_at is older than expiry days.
+4. Save writes meta JSON containing efo_id, trait, fetched_at, association_count.
+5. Existing contract test passes: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_cache_contract.py
+
+### Allow NOOP
+
+- false
+
+### Notes
+
+Contract tests create cache dirs under data with a _contract_cache_ prefix.
+
+---
+
+## Block: C1.B3 Reference Fix PubMed Fill and Association ID
+
+### Description
+
+Update GWAS parsing to fill missing PubMed ID by fetching study JSON via the study link and preserve GWAS association ID as a DataFrame column.
+
+### Dependencies
+
+- Depends on: C1.B2 Cache Contract Meta and Expiry
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_fix_contract.py
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_search_traits_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_cache_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_frontend_contract.py
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_reference_fix_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. When publicationInfo pubmedId is missing, code calls requests.get on the study link and fills PubMed_ID.
+2. Output DataFrame includes GWAS_Association_ID and preserves associationId.
+3. Existing contract test passes: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_fix_contract.py
+
+### Allow NOOP
+
+- false
+
+### Notes
+
+The contract test monkeypatches requests.get and expects it to be called.
+
+---
+
+## Block: C1.B4 Trait List Local File Contract
+
+### Description
+
+Add stable local trait list files under project data and add a contract test that validates the on-disk schema. Align the trait list updater output directory with the dashboard reader.
+
+### Dependencies
+
+- Depends on: C1.B3 Reference Fix PubMed Fill and Association ID
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/trait_list.json
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/trait_list.meta.json
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/scripts/update_trait_list.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_trait_list_file_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/config/efo_mapping.json
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_search_traits_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_cache_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_fix_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_frontend_contract.py
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_trait_list_file_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_variant_analyzer/scripts/update_trait_list.py contract_tests/test_trait_list_file_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_variant_analyzer/scripts/update_trait_list.py contract_tests/test_trait_list_file_contract.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. data/trait_list.json exists and is valid JSON list with keys trait, shortForm, uri.
+2. data/trait_list.meta.json exists and includes updated_at and total_traits.
+3. New contract test passes without network.
+4. Updater script output directory is the project-root data directory.
+
+### Allow NOOP
+
+- false
+
+### Notes
+
+The updater script may use network, but the contract test must only validate local files.
+
+---
+
+## Block: C1.B5 Frontend Gating Contract
+
+### Description
+
+Ensure the frontend includes required DOM IDs and references the search endpoint and hidden EFO field expected by existing frontend contract tests.
+
+### Dependencies
+
+- Depends on: C1.B4 Trait List Local File Contract
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/static/index.html
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/static/js/dashboard.js
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_frontend_contract.py
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_frontend_contract.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. index.html contains trait-search-input, trait-search-results, selected-efo-id.
+2. dashboard.js references /api/search-traits or search-traits and uses selected-efo-id.
+3. Existing contract test passes: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_frontend_contract.py
+
+### Allow NOOP
+
+- true
+
+### Notes
+
+If the frontend already passes, NOOP is allowed.
+
+---
+
+## Block: C2.B1 ClinVar Toy TSV and Matcher Library
+
+### Description
+
+Add a toy ClinVar TSV database and a matcher library that matches variants using a normalized chrom pos ref alt key, with optional rsID as secondary. Add a contract test for the matcher and TSV schema.
+
+### Dependencies
+
+- Depends on: C1.B5 Frontend Gating Contract
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/clinvar/clinvar_toy.tsv
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/clinvar_matcher.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_clinvar_matcher_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/vcf_parser.py
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_clinvar_matcher_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_variant_analyzer/gwas_variant_analyzer/clinvar_matcher.py contract_tests/test_clinvar_matcher_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_variant_analyzer/gwas_variant_analyzer/clinvar_matcher.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. Toy ClinVar TSV exists and has required header columns defined in contracts.
+2. Primary match uses a normalized chrom pos ref alt key.
+3. Secondary rsID match is optional and does not override primary matches.
+4. New contract test passes without network.
+
+### Allow NOOP
+
+- false
+
+### Notes
+
+This is toy data. No real ClinVar downloads.
+
+---
+
+## Block: C2.B2 ClinVar Match API Endpoint Contract
+
+### Description
+
+Add a new endpoint POST /api/clinvar-match that uses uploaded session variants and returns a deterministic pathogenic match report. Add an endpoint contract test.
+
+### Dependencies
+
+- Depends on: C2.B1 ClinVar Toy TSV and Matcher Library
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_clinvar_endpoint_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/clinvar_matcher.py
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_search_traits_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_cache_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_fix_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_frontend_contract.py
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_clinvar_endpoint_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_dashboard_package/src/routes/api.py contract_tests/test_clinvar_endpoint_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_dashboard_package/src/routes/api.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. POST /api/clinvar-match exists and returns 400 on missing or invalid session_id.
+2. Success response includes success, summary, matches and is deterministic.
+3. New endpoint contract test passes without network.
+
+### Allow NOOP
+
+- false
+
+### Notes
+
+Endpoint reads variants from the existing upload session store.
+
+---
+
+## Block: C3.B1 PGx Toy final TSV Parser Contract
+
+### Description
+
+Add a toy PGx final TSV data file and deterministic parser and summary logic. Add a parser contract test. This block must follow minimal-context execution.
+
+### Dependencies
+
+- Depends on: C2.B2 ClinVar Match API Endpoint Contract
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/pgx/final.tsv
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/pgx_parser.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/pgx_summary.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pgx_parser_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_pgx_parser_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_variant_analyzer/gwas_variant_analyzer/pgx_parser.py gwas_variant_analyzer/gwas_variant_analyzer/pgx_summary.py contract_tests/test_pgx_parser_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_variant_analyzer/gwas_variant_analyzer/pgx_parser.py gwas_variant_analyzer/gwas_variant_analyzer/pgx_summary.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. Toy final TSV exists with required columns described in contracts.
+2. Parser produces deterministic structured output from the toy file.
+3. New parser contract test passes without network.
+
+### Allow NOOP
+
+- false
+
+### Notes
+
+Minimal-context rule: only provide the necessary files to the Executor for this block.
+
+---
+
+## Block: C3.B2 PGx Summary API Endpoint Contract
+
+### Description
+
+Add a new endpoint POST /api/pgx-summary that returns a deterministic summary and includes disclaimer tags. Add an endpoint contract test.
+
+### Dependencies
+
+- Depends on: C3.B1 PGx Toy final TSV Parser Contract
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pgx_endpoint_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/pgx_parser.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/pgx_summary.py
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_search_traits_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_cache_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_fix_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_frontend_contract.py
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_pgx_endpoint_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_dashboard_package/src/routes/api.py contract_tests/test_pgx_endpoint_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_dashboard_package/src/routes/api.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. POST /api/pgx-summary exists and returns deterministic output.
+2. Response includes disclaimer_tags and disclaimer_tags is non-empty.
+3. New endpoint contract test passes without network.
+
+### Allow NOOP
+
+- false
+
+### Notes
+
+If any optional LLM mode exists, contract tests must force deterministic non-LLM mode.
+
+---
+
+## Block: C4.B1 Chat Facts Model Contract
+
+### Description
+
+Add a deterministic facts model that collects GWAS, ClinVar, and PGx facts into a single structure with stable citation IDs. Add a facts contract test.
+
+### Dependencies
+
+- Depends on: C3.B2 PGx Summary API Endpoint Contract
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/chat_facts.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_chat_facts_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_chat_facts_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_variant_analyzer/gwas_variant_analyzer/chat_facts.py contract_tests/test_chat_facts_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_variant_analyzer/gwas_variant_analyzer/chat_facts.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. Facts model produces stable citation IDs referencing concrete items from inputs.
+2. New facts contract test passes without network.
+
+### Allow NOOP
+
+- false
+
+### Notes
+
+This is pure deterministic logic.
+
+---
+
+## Block: C4.B2 Counseling Chat API Contract
+
+### Description
+
+Add a counseling chat endpoint POST /api/chat that is facts-based and enforces disclaimer_tags and citations on every response. Add an endpoint contract test. Add minimal frontend wiring if needed.
+
+### Dependencies
+
+- Depends on: C4.B1 Chat Facts Model Contract
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_chat_endpoint_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/static/index.html
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/static/js/dashboard.js
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/chat_facts.py
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_search_traits_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_cache_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_fix_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_frontend_contract.py
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_chat_endpoint_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_dashboard_package/src/routes/api.py contract_tests/test_chat_endpoint_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_dashboard_package/src/routes/api.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. POST /api/chat exists and returns success, answer, disclaimer_tags, citations, risk_level.
+2. disclaimer_tags is always present and non-empty.
+3. citations is always present and references known IDs produced by the facts model.
+4. New endpoint contract test passes without network.
+
+### Allow NOOP
+
+- false
+
+### Notes
+
+Cycle 4 is high-risk domain. Disclaimers and citations are mandatory and must be enforced by contract tests.
+
+---
+
+## Execution Order Summary
+
+| Order | Block Name | Depends On |
+|-------|-----------|------------|
+| 1 | C1.B1 Search Traits Endpoint Contract | none |
+| 2 | C1.B2 Cache Contract Meta and Expiry | C1.B1 Search Traits Endpoint Contract |
+| 3 | C1.B3 Reference Fix PubMed Fill and Association ID | C1.B2 Cache Contract Meta and Expiry |
+| 4 | C1.B4 Trait List Local File Contract | C1.B3 Reference Fix PubMed Fill and Association ID |
+| 5 | C1.B5 Frontend Gating Contract | C1.B4 Trait List Local File Contract |
+| 6 | C2.B1 ClinVar Toy TSV and Matcher Library | C1.B5 Frontend Gating Contract |
+| 7 | C2.B2 ClinVar Match API Endpoint Contract | C2.B1 ClinVar Toy TSV and Matcher Library |
+| 8 | C3.B1 PGx Toy final TSV Parser Contract | C2.B2 ClinVar Match API Endpoint Contract |
+| 9 | C3.B2 PGx Summary API Endpoint Contract | C3.B1 PGx Toy final TSV Parser Contract |
+| 10 | C4.B1 Chat Facts Model Contract | C3.B2 PGx Summary API Endpoint Contract |
+| 11 | C4.B2 Counseling Chat API Contract | C4.B1 Chat Facts Model Contract |
+
+---
+
+## Cycle 5 (Phase 2): Product UX Activation (UI + Session Facts)
+
+These blocks exist because Gate2 passing is not enough: the user-facing UI must actually expose and wire the features.
+
+## Block: C5.B1 Visible Trait Search Uses /api/search-traits
+
+### Description
+
+Make the *visible* search box use POST /api/search-traits (not /api/search-phenotypes) so partial inputs behave as expected (e.g., "Obes" → obesity at the top). Remove or demote the NLP phenotype search in the default UI flow (it may remain as optional fallback).
+
+### Dependencies
+
+- Depends on: C4.B2 Counseling Chat API Contract
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/static/index.html
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_ui_visible_trait_search_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_search_traits_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_cache_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_fix_contract.py
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_ui_visible_trait_search_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check contract_tests/test_ui_visible_trait_search_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile contract_tests/test_ui_visible_trait_search_contract.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. The visible UI search input uses POST /api/search-traits on typing (or debounced typing).
+2. For query "Obes" / "obes", the suggestion list includes "obesity" as the top suggestion (UI-level behavior, not hidden inputs).
+3. Selected phenotype/efo_id used for /api/analyze is the chosen /api/search-traits result (no mismatch).
+4. New contract test passes: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_ui_visible_trait_search_contract.py
+
+### Allow NOOP
+
+- false
+
+---
+
+## Block: C5.B2 ClinVar and PGx Panels Visible and Wired
+
+### Description
+
+Expose ClinVar(rare variant) and PGx as **UI tabs** and wire them to the existing API endpoints using the current session_id from upload.
+
+Tab names (fixed):
+- GWAS
+- ClinVar (rare variant)
+- PGx
+- Chat
+
+Visibility rule (fixed):
+- Tabs for ClinVar/PGx/Chat are hidden (or disabled) until VCF upload succeeds (session_id exists).
+- After upload succeeds, those tabs become visible/clickable and can call their endpoints.
+
+### Dependencies
+
+- Depends on: C5.B1 Visible Trait Search Uses /api/search-traits
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/static/index.html
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_ui_panels_clinvar_pgx_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_ui_panels_clinvar_pgx_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check contract_tests/test_ui_panels_clinvar_pgx_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile contract_tests/test_ui_panels_clinvar_pgx_contract.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. UI contains a tab system (buttons + panels) with stable DOM IDs defined in contracts (tabs, panels, and result containers).
+2. Before upload (no session_id), ClinVar/PGx/Chat tabs are not shown or are disabled and show a clear “upload first” message.
+3. After upload (session_id exists), UI can trigger:
+   - POST /api/clinvar-match with session_id
+   - POST /api/pgx-summary with session_id
+4. UI renders returned results to the page inside the relevant tab panel (not only console logs).
+5. New contract test passes: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_ui_panels_clinvar_pgx_contract.py
+
+### Allow NOOP
+
+- false
+
+---
+
+## Block: C5.B3 Chat Must Use Session Facts (No Manual Facts Paste)
+
+### Description
+
+Make chat usable from the UI by ensuring the UI sends session_id and the backend can derive facts from that session (GWAS/ClinVar/PGx results stored or computed). "No genetic facts are currently loaded..." must not happen after the user has uploaded a VCF and run at least one analysis step.
+
+### Dependencies
+
+- Depends on: C5.B2 ClinVar and PGx Panels Visible and Wired
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/static/index.html
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_chat_session_facts_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/chat_facts.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_chat_session_facts_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_dashboard_package/src/routes/api.py contract_tests/test_chat_session_facts_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_dashboard_package/src/routes/api.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. UI chat request includes session_id when available.
+2. Backend /api/chat accepts session_id and uses session-derived facts when facts are not explicitly provided.
+3. Response always includes disclaimer_tags and citations, and is not the "no facts loaded" message when session facts exist.
+4. New contract test passes: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_chat_session_facts_contract.py
+
+### Allow NOOP
+
+- false
+
+---
+
+## Block: C5.B4 References Must Be URLs (PubMed or Study URL)
+
+### Description
+
+Stop emitting "No publication reference available" as the default reference string. If PubMed_ID is missing, use a deterministic study URL (GWAS Catalog link) when available, so the UI can always render a clickable reference.
+
+### Dependencies
+
+- Depends on: C5.B3 Chat Must Use Session Facts (No Manual Facts Paste)
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/customer_friendly_processor.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_url_fallback_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/static/index.html
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_fix_contract.py
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_reference_url_fallback_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py gwas_variant_analyzer/gwas_variant_analyzer/customer_friendly_processor.py contract_tests/test_reference_url_fallback_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py gwas_variant_analyzer/gwas_variant_analyzer/customer_friendly_processor.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. Customer-facing variant items have reference as a URL string when any study link is available.
+2. The literal string "No publication reference available" must not appear in end-user variant outputs.
+3. New contract test passes: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_url_fallback_contract.py
+
+### Allow NOOP
+
+- false
+
+---
+
+## Cycle 6 (Phase 3): Online Traits + Local LLM (Ollama)
+
+Cycle 6 adds two capabilities you explicitly asked for:
+- If a trait is not in local cache, trait search must query a remote API (GWAS Catalog REST) and then cache it locally.
+- Chat must support a local LLM via Ollama (configurable model), while still enforcing disclaimer_tags + citations and keeping tests network-free (mock remote calls).
+
+## Block: C6.B1 Remote Trait Search (GWAS Catalog) + Local Cache Update
+
+### Description
+
+Extend POST /api/search-traits so that when local results are empty or too weak, it queries the GWAS Catalog REST API trait search endpoint, merges the results into the response, and updates the local trait cache file (data/trait_list.json + meta).
+
+### Dependencies
+
+- Depends on: C5.B4 References Must Be URLs (PubMed or Study URL)
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/trait_list.json
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/trait_list.meta.json
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_search_traits_remote_cache_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_search_traits_remote_cache_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_dashboard_package/src/routes/api.py contract_tests/test_search_traits_remote_cache_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_dashboard_package/src/routes/api.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. When local trait cache produces no results for a query, /api/search-traits calls the configured GWAS Catalog trait search endpoint.
+2. Remote calls are OPTIONAL and must be disabled by default in tests; contract tests must monkeypatch the HTTP client and prove it is called.
+3. Remote results are merged into the response with the same schema (trait, efo_id, score).
+4. New traits from remote are appended/merged into data/trait_list.json (dedupe by shortForm or trait+shortForm), and meta updated_at/total_traits is updated.
+5. New contract test passes: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_search_traits_remote_cache_contract.py
+
+### Allow NOOP
+
+- false
+
+---
+
+## Block: C6.B2 Counseling Chat (Ollama Local LLM Mode)
+
+### Description
+
+Add an Ollama-backed mode to /api/chat so that after facts exist (session_id or explicit facts), the backend can call a local LLM to produce a better answer — while still enforcing disclaimer_tags + citations and keeping contract tests network-free by mocking the Ollama call.
+
+### Dependencies
+
+- Depends on: C6.B1 Remote Trait Search (GWAS Catalog) + Local Cache Update
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_chat_ollama_mode_contract.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/05_RUNBOOK_TEMPLATE.md
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/chat_facts.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_chat_ollama_mode_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_dashboard_package/src/routes/api.py contract_tests/test_chat_ollama_mode_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_dashboard_package/src/routes/api.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. /api/chat supports a configuration flag to use local LLM via Ollama (host + model via env vars).
+2. Contract tests must not require a running Ollama; instead they monkeypatch the Ollama call and assert it was invoked and the response is validated.
+3. Regardless of LLM mode, response MUST include disclaimer_tags (non-empty) + citations (non-empty) and must reference known fact IDs.
+4. New contract test passes: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_chat_ollama_mode_contract.py
+
+### Allow NOOP
+
+- false
+
+---
+
+## Block: C6.B3 PubMed Meta Enrichment (Prefer PubMed When Available)
+
+### Description
+
+Fix GWAS meta parsing so that PubMed IDs are recovered whenever the GWAS Catalog metadata provides them.
+
+Observed failure mode:
+- For the same rsID/alt key, the first association record may lack PubMed metadata but a later one has it.
+- Current parsing can “lock in” an empty PubMed_ID and never update it.
+
+This block makes PubMed_ID prefer non-empty values and ensures we do not drop PubMed metadata in downstream processing.
+
+### Dependencies
+
+- Depends on: C6.B2 Counseling Chat (Ollama Local LLM Mode)
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pubmed_meta_enrichment_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_fix_contract.py
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_pubmed_meta_enrichment_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py contract_tests/test_pubmed_meta_enrichment_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. If multiple association records map to the same (rsid, alt) key and at least one has a PubMed ID, the final parsed DataFrame must carry a non-empty PubMed_ID for that key.
+2. PubMed_ID must be normalized to a string integer when possible (e.g., 29878757.0 → "29878757").
+3. New contract test passes without network:
+   - /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pubmed_meta_enrichment_contract.py
+
+### Allow NOOP
+
+- false
+
+---
+
+## Cycle 7 (Phase 4): ForeGenomics_PGx Ingest (Richer PGx)
+
+Cycle 3 PGx was toy-only. Cycle 7 ingests a real local PGx report TSV (ForeGenomics_PGx output)
+into our PGx summary schema so the drug list is much richer.
+
+Important rule:
+- Contract tests must not depend on reading external folders.
+- Therefore, the Executor must copy a small “snapshot” TSV into this project under data/pgx/.
+
+## Block: C7.B1 ForeGenomics PGx Report Snapshot + Parser
+
+### Description
+
+Add a parser for the ForeGenomics PGx report TSV format and a small snapshot file under data/pgx/.
+
+Input source (read-only, outside project):
+- /Users/june-young/Research_Local/08_GWAS_browser/ForeGenomics_PGx/trial/GINS-AAM4-0007-10AD/GINS-AAM4-0007-10AD.PGx.out.report.tsv
+
+Snapshot destination (inside project, used by tests):
+- data/pgx/foregenomics_report.tsv
+
+### Dependencies
+
+- Depends on: C6.B3 PubMed Meta Enrichment (Prefer PubMed When Available)
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/pgx/foregenomics_report.tsv
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/pgx_foregenomics.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pgx_foregenomics_parser_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_pgx_foregenomics_parser_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_variant_analyzer/gwas_variant_analyzer/pgx_foregenomics.py contract_tests/test_pgx_foregenomics_parser_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_variant_analyzer/gwas_variant_analyzer/pgx_foregenomics.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. Snapshot TSV exists at data/pgx/foregenomics_report.tsv and is a faithful copy of the source report (header preserved).
+2. Parser returns a normalized DataFrame with at minimum these logical fields:
+   - gene, drug, genotype, phenotype, recommendation, guideline_ids
+3. New contract test passes and demonstrates that the parsed snapshot yields “many drugs” (e.g., >= 10 unique drugs).
+
+### Allow NOOP
+
+- false
+
+---
+
+## Block: C7.B2 PGx Summary API Supports ForeGenomics Source
+
+### Description
+
+Extend POST /api/pgx-summary so that it can return a richer summary from the ForeGenomics snapshot (source="foregenomics"),
+store it in session, and make it available to chat facts.
+
+### Dependencies
+
+- Depends on: C7.B1 ForeGenomics PGx Report Snapshot + Parser
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pgx_endpoint_foregenomics_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/pgx_foregenomics.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_pgx_endpoint_foregenomics_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_dashboard_package/src/routes/api.py contract_tests/test_pgx_endpoint_foregenomics_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_dashboard_package/src/routes/api.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. /api/pgx-summary accepts source="foregenomics" and returns success true with summary and disclaimer_tags.
+2. Summary must include a drugs list with >= 10 unique drugs for the foregenomics source (derived from snapshot).
+3. Session storage works: for a provided session_id, the PGx summary is stored in UPLOADS[session_id]['pgx_summary'] for chat facts.
+4. New contract test passes:
+   - /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pgx_endpoint_foregenomics_contract.py

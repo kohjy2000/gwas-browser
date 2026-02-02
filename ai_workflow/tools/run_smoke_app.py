@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 import threading
 import time
 from dataclasses import dataclass
@@ -47,8 +48,8 @@ def _write_fixture_vcf(path: Path) -> None:
     path.write_text(
         "##fileformat=VCFv4.2\n"
         "##contig=<ID=1>\n"
-        "#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n"
-        "1\t1000\trs121913529\tA\tG\t.\tPASS\t.\n",
+        "#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\tFORMAT\tsample1\n"
+        "1\t1000\trs121913529\tA\tG\t.\tPASS\t.\tGT\t0/1\n",
         encoding="utf-8",
     )
 
@@ -62,6 +63,12 @@ def main() -> int:
     args = parser.parse_args()
 
     project_root = _project_root_from_arg(args.project_root)
+
+    # Ensure the project root is importable even when running this script by path
+    # (otherwise sys.path[0] becomes ai_workflow/tools and imports like
+    # `gwas_dashboard_package...` fail).
+    if str(project_root) not in sys.path:
+        sys.path.insert(0, str(project_root))
 
     try:
         import requests  # type: ignore
@@ -116,7 +123,7 @@ def main() -> int:
                 r = requests.post(base_url + "/api/upload-vcf", files={"vcfFile": ("fixture.vcf", f)}, timeout=20)
             j = r.json()
             session_id = j.get("session_id")
-            ok = r.status_code == 200 and j.get("success") is True and isinstance(session_id, str) and session_id
+            ok = bool(r.status_code == 200 and j.get("success") is True and isinstance(session_id, str) and session_id)
             checks.append(Check("POST /api/upload-vcf", ok, f"status={r.status_code}, session_id={session_id!r}"))
 
             if ok:
@@ -169,4 +176,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

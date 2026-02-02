@@ -600,6 +600,15 @@ Cycle 4 is high-risk domain. Disclaimers and citations are mandatory and must be
 | 9 | C3.B2 PGx Summary API Endpoint Contract | C3.B1 PGx Toy final TSV Parser Contract |
 | 10 | C4.B1 Chat Facts Model Contract | C3.B2 PGx Summary API Endpoint Contract |
 | 11 | C4.B2 Counseling Chat API Contract | C4.B1 Chat Facts Model Contract |
+| 12 | C5.B1 Visible Trait Search Uses /api/search-traits | C4.B2 Counseling Chat API Contract |
+| 13 | C5.B2 ClinVar and PGx Panels Visible and Wired | C5.B1 Visible Trait Search Uses /api/search-traits |
+| 14 | C5.B3 Chat Must Use Session Facts (No Manual Facts Paste) | C5.B2 ClinVar and PGx Panels Visible and Wired |
+| 15 | C5.B4 References Must Be URLs (PubMed or Study URL) | C5.B3 Chat Must Use Session Facts (No Manual Facts Paste) |
+| 16 | C6.B1 Remote Trait Search (GWAS Catalog) + Local Cache Update | C5.B4 References Must Be URLs (PubMed or Study URL) |
+| 17 | C6.B2 Chat Ollama Local LLM Mode | C6.B1 Remote Trait Search (GWAS Catalog) + Local Cache Update |
+| 18 | C6.B3 PubMed Meta Enrichment (Prefer PubMed When Available) | C6.B2 Chat Ollama Local LLM Mode |
+| 19 | C7.B1 ForeGenomics PGx Report Snapshot + Parser | C6.B3 PubMed Meta Enrichment (Prefer PubMed When Available) |
+| 20 | C7.B2 PGx Summary API Supports ForeGenomics Source | C7.B1 ForeGenomics PGx Report Snapshot + Parser |
 
 ---
 
@@ -1070,3 +1079,214 @@ git status --porcelain
 3. Session storage works: for a provided session_id, the PGx summary is stored in UPLOADS[session_id]['pgx_summary'] for chat facts.
 4. New contract test passes:
    - /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pgx_endpoint_foregenomics_contract.py
+
+---
+
+## Cycle 8 (Phase 5): Real-World Behavior Fixes (PubMed / ForeGenomics / Ollama)
+
+These blocks exist because **Gate2 PASS ≠ user acceptance**.
+We are now targeting the exact gaps observed in manual UI testing:
+- Trait search must use `/api/search-traits` (if still using `/api/search-phenotypes`, results will look unrelated).
+- PGx must not be “toy-only”; UI must be able to request ForeGenomics source.
+- PubMed references must be real paper links whenever possible (and cache must not freeze “missing PubMed forever”).
+- Chat must transparently report whether it used Ollama and which model.
+
+## Block: C8.B1 UI PGx Summary Defaults to ForeGenomics Source
+
+### Description
+
+Update the UI so the PGx tab calls POST `/api/pgx-summary` with `source="foregenomics"` by default (or provides a visible toggle),
+so the drug list is not trivially small.
+
+### Dependencies
+
+- Depends on: C7.B2 PGx Summary API Supports ForeGenomics Source
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/static/index.html
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_ui_pgx_source_foregenomics_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_ui_pgx_source_foregenomics_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check contract_tests/test_ui_pgx_source_foregenomics_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile contract_tests/test_ui_pgx_source_foregenomics_contract.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. The PGx UI calls `/api/pgx-summary` with `source="foregenomics"` by default (or via explicit toggle).
+2. The UI renders the returned `summary.drugs` and it is visibly “not tiny” (>= 10 unique drugs in the foregenomics source).
+3. New contract test passes:
+   - /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_ui_pgx_source_foregenomics_contract.py
+
+### Allow NOOP
+
+- false
+
+---
+
+## Block: C8.B2 ForeGenomics Report Path Override (Env)
+
+### Description
+
+Make the ForeGenomics ingest **not be hardcoded to a snapshot file only**.
+Add an environment-variable override so the backend can ingest a real local report produced by ForeGenomics runs.
+
+Env contract:
+- If `FOREGENOMICS_PGX_REPORT_PATH` is set, use that path for `source="foregenomics"`.
+- Else, fall back to `data/pgx/foregenomics_report.tsv` (snapshot).
+
+### Dependencies
+
+- Depends on: C8.B1 UI PGx Summary Defaults to ForeGenomics Source
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pgx_foregenomics_env_path_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/pgx_foregenomics.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_pgx_foregenomics_env_path_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_dashboard_package/src/routes/api.py contract_tests/test_pgx_foregenomics_env_path_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_dashboard_package/src/routes/api.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. When `FOREGENOMICS_PGX_REPORT_PATH` is set, `/api/pgx-summary` with `source="foregenomics"` reads from that path.
+2. When env var is not set, it falls back to `data/pgx/foregenomics_report.tsv`.
+3. New contract test passes:
+   - /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pgx_foregenomics_env_path_contract.py
+
+### Allow NOOP
+
+- false
+
+---
+
+## Block: C8.B3 GWAS Cache Self-Heal for PubMed (Stale If Missing)
+
+### Description
+
+Fix the “PubMed ID is always empty forever” failure mode:
+old cached parquet files can freeze missing PubMed fields even after parser fixes.
+
+Add a cache health rule to `load_gwas_data_from_cache`:
+- If cache loads but is missing `PubMed_ID` column OR has PubMed empty for all rows, treat it as stale and return `None` (so the caller refetches).
+- Provide an explicit opt-in toggle via env:
+  - `GWAS_CACHE_REQUIRE_PUBMED=1` enables the self-heal rule (default OFF for backward compatibility).
+
+### Dependencies
+
+- Depends on: C6.B3 PubMed Meta Enrichment (Prefer PubMed When Available)
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_cache_pubmed_selfheal_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_cache_contract.py
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_cache_pubmed_selfheal_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py contract_tests/test_cache_pubmed_selfheal_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. With `GWAS_CACHE_REQUIRE_PUBMED=1`, a cache file that has no PubMed information is treated as stale (returns `None`).
+2. With env var unset, legacy behavior stays unchanged (cache loads if not expired).
+3. New contract test passes:
+   - /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_cache_pubmed_selfheal_contract.py
+
+### Allow NOOP
+
+- false
+
+---
+
+## Block: C8.B4 Chat Transparency: Report Ollama Model Used
+
+### Description
+
+Expose which model was used for chat so users can debug quality:
+- If Ollama mode is enabled and used, return `llm: {enabled: true, provider: "ollama", model: "<tag>"}`.
+- If falling back to deterministic, return `llm: {enabled: false, provider: "deterministic", model: ""}`.
+
+Also update the UI to show this in the Chat panel under the answer.
+
+### Dependencies
+
+- Depends on: C6.B2 Chat Ollama Local LLM Mode
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/static/index.html
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_chat_llm_info_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_chat_llm_info_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_dashboard_package/src/routes/api.py contract_tests/test_chat_llm_info_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_dashboard_package/src/routes/api.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. `/api/chat` responses always include `llm` object with provider + model transparency.
+2. New contract test passes:
+   - /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_chat_llm_info_contract.py
+
+### Allow NOOP
+
+- false

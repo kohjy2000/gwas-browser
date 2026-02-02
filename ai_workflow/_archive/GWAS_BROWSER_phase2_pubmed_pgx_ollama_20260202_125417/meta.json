@@ -1,0 +1,13 @@
+{
+  "archive_id": "GWAS_BROWSER_phase2_pubmed_pgx_ollama_20260202_125417",
+  "created_at_local": "20260202_125417",
+  "project_root": "/Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser",
+  "workflow_root": "/Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow",
+  "prefix": "GWAS_BROWSER",
+  "tag": "phase2_pubmed_pgx_ollama",
+  "git": {
+    "is_repo": true,
+    "head": "31c8ccc9e21959b2dc1b240e67a81efdedb4006f",
+    "dirty": true
+  }
+}

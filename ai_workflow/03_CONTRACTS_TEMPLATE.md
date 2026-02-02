@@ -59,6 +59,8 @@ Function
 2. If parquet exists and meta is missing, load parquet (legacy support).
 3. If meta exists, enforce expiry using fetched_at and gwas_cache_expiry_days; expired returns None.
 4. Malformed meta must not crash; treat as expired and return None.
+5. (Optional extension, C8.B3) If `GWAS_CACHE_REQUIRE_PUBMED=1` env var is set:
+   - If loaded parquet is missing `PubMed_ID` column OR all `PubMed_ID` values are empty, treat as stale and return None.
 
 ### Test File
 
@@ -324,6 +326,7 @@ API Endpoint
 - disclaimer_tags
 - citations
 - risk_level
+ - (Optional extension, C8.B4) llm
 
 ### Validation Rules
 
@@ -628,6 +631,7 @@ API Endpoint
 1. For source="foregenomics", summary.drugs must include >= 10 unique drugs (derived from the snapshot).
 2. For a valid session_id, the summary is stored into UPLOADS[session_id]["pgx_summary"] for chat facts.
 3. No network calls in contract tests.
+4. (Optional extension, C8.B2) If `FOREGENOMICS_PGX_REPORT_PATH` is set, the backend must read that file for source="foregenomics" instead of the snapshot path.
 
 ### Test File
 
