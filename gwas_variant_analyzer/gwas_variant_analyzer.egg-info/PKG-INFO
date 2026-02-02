@@ -1,0 +1,142 @@
+Metadata-Version: 2.2
+Name: gwas_variant_analyzer
+Version: 0.1.0
+Summary: A package for analyzing SNPs from user VCF files in relation to GWAS Catalog data
+Home-page: https://github.com/example/gwas_variant_analyzer
+Author: GWAS Variant Analyzer Team
+Author-email: example@example.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering :: Bio-Informatics
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+Requires-Dist: pandas>=1.0.0
+Requires-Dist: cyvcf2>=0.30.0
+Requires-Dist: requests>=2.25.0
+Requires-Dist: pyyaml>=5.1.0
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# GWAS Variant Analyzer
+
+GWAS Variant Analyzer는 사용자의 WGS VCF 파일과 GWAS Catalog 정보를 활용하여 특정 질병/형질 연관 SNP를 분석하고, 그 결과를 지정된 기준에 따라 정렬하여 제공하는 Python 패키지입니다.
+
+## 개요
+
+이 패키지는 "소프트 코딩" 원칙에 따라 설계되었으며, 설정 값, 경로, 특정 로직 등을 유연하게 변경할 수 있어 유지보수성과 확장성이 뛰어납니다. 주요 기능은 다음과 같습니다:
+
+- 사용자 VCF 파일 파싱 및 관련 변이 정보 추출
+- 지정된 질병/형질에 대한 GWAS Catalog API 질의 및 연관 SNP 정보 추출
+- 사용자 VCF에서 GWAS Catalog 유래 SNP 필터링
+- 필터링된 SNP 정보를 GWAS 정보와 병합
+- 결과를 Odds Ratio 내림차순 및 인종 정보 기준으로 정렬하여 출력
+
+## 설치
+
+```bash
+# 저장소 클론
+git clone https://github.com/example/gwas_variant_analyzer.git
+cd gwas_variant_analyzer
+
+# 패키지 설치
+pip install -e .
+```
+
+## 사용 방법
+
+### 명령줄 인터페이스 (CLI)
+
+```bash
+# 기본 사용법
+gwas-analyzer --vcf_file <VCF_FILE_PATH> --efo_ids <EFO_ID> --output_file <OUTPUT_FILE_PATH>
+
+# 예시: 코로나리 심장병(EFO_0000378)에 대한 분석
+gwas-analyzer --vcf_file sample.vcf.gz --efo_ids EFO_0000378 --output_file results.tsv
+
+# 질병/형질 이름으로 분석 (매핑 파일 필요)
+gwas-analyzer --vcf_file sample.vcf.gz --traits "coronary heart disease" --mapping_file efo_mapping.json --output_file results.tsv
+
+# 추가 필터링 옵션 사용
+gwas-analyzer --vcf_file sample.vcf.gz --efo_ids EFO_0000378 --max_p_value 1e-5 --min_odds_ratio 1.5 --ethnicity European --output_file results.tsv
+```
+
+### Python API
+
+```python
+from gwas_variant_analyzer.vcf_parser import load_vcf_reader, extract_user_variants
+from gwas_variant_analyzer.gwas_catalog_handler import fetch_gwas_associations_by_efo, parse_gwas_association_data
+from gwas_variant_analyzer.data_processor import merge_variant_data, apply_ethnicity_standardization, sort_results
+from gwas_variant_analyzer.utils import load_app_config
+
+# 설정 로드
+config = load_app_config('config.yaml')
+
+# GWAS 데이터 가져오기
+raw_associations = fetch_gwas_associations_by_efo('EFO_0000378', config)
+gwas_data = parse_gwas_association_data(raw_associations, 'Coronary Heart Disease')
+
+# VCF 데이터 처리
+vcf_reader = load_vcf_reader('sample.vcf.gz')
+user_variants = extract_user_variants(vcf_reader, set(gwas_data['SNP_ID']))
+
+# 데이터 병합 및 처리
+merged_data = merge_variant_data(user_variants, gwas_data)
+processed_data = apply_ethnicity_standardization(merged_data)
+sorted_data = sort_results(processed_data, config)
+
+# 결과 저장
+sorted_data.to_csv('results.tsv', sep='\t', index=False)
+```
+
+## 설정
+
+설정은 YAML 또는 JSON 파일을 통해 제공할 수 있습니다:
+
+```yaml
+# config.yaml 예시
+gwas_catalog_api_base_url: 'https://www.ebi.ac.uk/gwas/rest/api'
+gwas_api_page_size: 100
+primary_sort_column: 'Odds_Ratio'
+primary_sort_ascending: false
+secondary_sort_column: 'GWAS_Ethnicity_Processed'
+secondary_sort_ascending: true
+```
+
+## 패키지 구조
+
+```
+gwas_variant_analyzer/
+├── gwas_variant_analyzer/      # 실제 패키지 소스 코드
+│   ├── __init__.py             # 패키지 초기화 및 버전 정보
+│   ├── vcf_parser.py           # VCF 파일 처리 모듈
+│   ├── gwas_catalog_handler.py # GWAS Catalog API 연동 및 데이터 처리 모듈
+│   ├── data_processor.py       # 데이터 병합, 필터링, 정렬 모듈
+│   ├── utils.py                # 공통 유틸리티 함수 모듈 (설정 로딩, 로깅 등)
+│   └── cli.py                  # 커맨드라인 인터페이스 (CLI) 처리 모듈
+├── tests/                      # 단위 테스트 코드
+├── config/                     # 설정 파일 디렉토리
+├── setup.py                    # 패키지 설치 스크립트
+├── requirements.txt            # 의존성 패키지 목록
+└── README.md                   # 패키지 설명 및 사용법
+```
+
+## 의존성
+
+- Python 3.6 이상
+- pandas>=1.0.0
+- PyVCF>=0.6.8
+- requests>=2.25.0
+- pyyaml>=5.1.0
+
+## 라이센스
+
+MIT License

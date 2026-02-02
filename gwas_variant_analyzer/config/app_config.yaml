@@ -1,0 +1,46 @@
+# GWAS Variant Analyzer 기본 설정 파일
+
+# GWAS Catalog API 설정
+gwas_catalog_api_base_url: 'https://www.ebi.ac.uk/gwas/rest/api'
+gwas_api_page_size: 500
+gwas_api_max_retries: 5
+gwas_api_retry_delay_seconds: 3
+gwas_api_request_timeout_seconds: 60
+gwas_api_request_delay_seconds: 0.5
+
+# 정렬 설정
+primary_sort_column: 'Odds_Ratio'
+primary_sort_ascending: false
+secondary_sort_column: 'GWAS_Ethnicity_Processed'
+secondary_sort_ascending: true
+nan_handling: 'drop'
+nan_fill_value: 1.0
+
+# 필터링 설정
+default_filter_criteria:
+  max_p_value: 0.05
+  min_odds_ratio: 0.3
+
+# 로깅 설정
+log_level: 'INFO'
+log_to_file: false
+log_file_path: 'gwas_variant_analyzer.log'
+
+ensembl_api_request_timeout_seconds: 120
+ensembl_api_max_retries: 5
+ensembl_api_retry_delay_seconds: 5
+genome_build: 'GRCh38'  # 또는 GRCh37 (VCF와 일치시켜야 함)
+
+# 로컬 GWAS 캐시 사용 여부 (true로 설정하면 캐시를 우선적으로 사용)
+use_local_gwas_cache: true
+
+# 캐시 파일이 저장될 디렉토리 경로
+gwas_cache_directory: "data/gwas_cache"
+
+# create_gwas_cache.py 스크립트가 미리 다운로드할 질병/형질 목록
+traits_to_cache:
+  - "coronary heart disease"
+  - "type 2 diabetes mellitus"
+  - "alzheimer's disease"
+  - "asthma"
+  # ... (필요한 다른 질병 추가) ...

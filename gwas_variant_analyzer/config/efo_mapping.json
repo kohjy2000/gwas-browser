@@ -1,0 +1,25 @@
+{
+  "obesity": "EFO_0001073",
+  "height growth": "OBA_2045231",
+  "coronary heart disease": "EFO_0001645",
+  "hypertension": "EFO_0000537",
+  "type 2 diabetes": "MONDO_0005148",
+  "male fertility": "EFO_0004803",
+  "androgenetic alopecia": "EFO_0004191"
+  "asthma": "MONDO_0004979",
+  "psoriasis": "EFO_0000676",
+  "breast cancer": "EFO_0000305",
+  "prostate cancer": "EFO_0001663|MONDO_0008315",
+  "colorectal cancer": "MONDO_0005575|EFO_1001951",
+  "lung cancer": "EFO_0001071",
+  "depression": "MONDO_0002050",
+  "bipolar disorder": "MONDO_0004985",
+  "autism spectrum disorder": "EFO_0003758",
+  "schizophrenia": "MONDO_0005090",
+  "alzheimer's disease": "MONDO_0004975",
+  "parkinson's disease": "MONDO_0005180",
+  "crohn's disease": "EFO_0000384",
+  "ulcerative colitis": "EFO_0000729",
+  "rheumatoid arthritis": "EFO_0000685"
+}
+

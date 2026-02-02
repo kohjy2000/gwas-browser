@@ -1,0 +1,9 @@
+flask
+flask-cors
+pandas>=1.0.0
+cyvcf2>=0.30.0
+requests>=2.25.0
+pyyaml>=5.1.0
+pytest>=6.0.0
+openai>=1.0.0
+python-dotenv

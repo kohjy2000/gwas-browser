@@ -1,0 +1,95 @@
+# Updated config/app_config.yaml file - replace with this content
+
+# GWAS Variant Analyzer configuration file
+
+# GWAS Catalog API settings
+gwas_catalog_api_base_url: 'https://www.ebi.ac.uk/gwas/rest/api'
+gwas_api_page_size: 100
+gwas_api_max_retries: 3
+gwas_api_retry_delay_seconds: 2
+gwas_api_request_timeout_seconds: 30
+gwas_api_request_delay_seconds: 1
+
+# Ensembl REST API settings (newly added)
+ensembl_api_request_timeout_seconds: 120
+ensembl_api_max_retries: 3
+ensembl_api_retry_delay_seconds: 5
+genome_build: 'GRCh38'
+
+# Sorting settings
+primary_sort_column: 'Odds_Ratio'
+primary_sort_ascending: false
+secondary_sort_column: 'GWAS_Ethnicity_Processed'
+secondary_sort_ascending: true
+nan_handling: 'drop'
+nan_fill_value: 1.0
+
+# Filtering settings (modified: customer-friendly with relaxed thresholds)
+default_filter_criteria:
+  max_p_value: 0.05
+  min_odds_ratio: 0.5  # Changed from 1.0 to 0.5 (includes protective effects)
+
+# Logging settings
+log_level: 'INFO'
+log_to_file: false
+log_file_path: 'gwas_variant_analyzer.log'
+
+# Use local GWAS cache (set to true to prioritize cache usage)
+use_local_gwas_cache: true
+
+# Directory path where cache files will be saved
+gwas_cache_directory: "data/gwas_cache"
+
+# ============================================================================
+# Newly added Customer-Friendly and NLP feature settings
+# ============================================================================
+
+# Natural Language Processing (NLP) settings
+nlp_search_enabled: true
+fallback_to_keyword_search: true
+similarity_threshold: 0.3
+max_search_results: 5
+
+# OpenAI API settings (optional - recommend using environment variable OPENAI_API_KEY)
+openai_api_key: null  # Keep as null when using environment variable
+openai_model: 'gpt-3.5-turbo'
+openai_max_tokens: 500
+openai_temperature: 0.3
+
+# Customer-Friendly risk categorization thresholds
+risk_categorization:
+  high_risk_threshold: 3.0        # OR >= 3.0: "High Risk"
+  medium_risk_threshold: 2.0      # OR >= 2.0: "Medium Risk"
+  low_risk_threshold: 1.5         # OR >= 1.5: "Slightly Elevated" (or Low Risk)
+  caution_threshold: 1.1          # OR >= 1.1: "Slightly Elevated"
+
+# Confidence level thresholds
+confidence_levels:
+  genome_wide_significance: 5e-8  # p < 5e-8: "Very High"
+  high_significance: 1e-5         # p < 1e-5: "High"
+  medium_significance: 0.001      # p < 0.001: "Medium"
+  low_significance: 0.05          # p < 0.05: "Moderate" (or Low)
+
+# Overall risk calculation weights
+overall_risk_weights:
+  high_risk: 4
+  medium_risk: 3
+  low_risk: 2
+  caution: 1
+  protective: 0
+
+# EFO mapping file path
+efo_mapping_file: 'config/efo_mapping.json'
+
+# List of diseases/traits for create_gwas_cache.py script to pre-download
+traits_to_cache:
+  - "coronary heart disease"
+  - "type 2 diabetes mellitus"
+  - "alzheimer's disease"
+  - "asthma"
+  - "breast cancer"
+  - "hypertension"
+  - "rheumatoid arthritis"
+  - "parkinson's disease"
+  - "depression"
+  - "obesity"

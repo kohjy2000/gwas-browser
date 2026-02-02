@@ -1,0 +1,1167 @@
+2025-09-04 16:30:43,683 - INFO - Loading configuration from: gwas_variant_analyzer/config/app_config.yaml
+2025-09-04 16:30:43,684 - INFO - Successfully loaded configuration with 23 settings
+2025-09-04 16:30:43,684 - INFO - Cache directory: data/gwas_cache
+2025-09-04 16:30:50,865 - INFO - Loading configuration from: gwas_variant_analyzer/config/app_config.yaml
+2025-09-04 16:30:50,866 - INFO - Successfully loaded configuration with 23 settings
+2025-09-04 16:30:50,866 - INFO - Cache directory: data/gwas_cache
+2025-09-04 16:30:51,213 - INFO - 
+============================================================
+2025-09-04 16:30:51,213 - INFO - Processing: obesity (EFO_0001073)
+2025-09-04 16:30:51,214 - INFO - ============================================================
+2025-09-04 16:30:51,214 - INFO - Fetching GWAS associations from API...
+2025-09-04 16:30:51,214 - INFO - Fetching GWAS associations for EFO ID: EFO_0001073
+2025-09-04 16:31:23,283 - INFO - Successfully fetched 1311 GWAS associations for EFO ID: EFO_0001073
+2025-09-04 16:31:23,283 - INFO - Found 1311 raw associations
+2025-09-04 16:31:23,283 - INFO - Parsing association data...
+2025-09-04 16:31:23,283 - INFO - Parsing 1311 GWAS associations to extract rsID and risk allele.
+2025-09-04 16:31:23,287 - INFO - === DEBUG: Found 964 unique rsIDs ===
+2025-09-04 16:31:23,287 - INFO - Sample rsIDs: ['rs17698720', 'rs9328321', 'rs6934973', 'rs9507876', 'rs11874286']
+2025-09-04 16:31:23,287 - INFO - Fetching locations for 964 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 16:33:05,818 - INFO - Successfully fetched locations for 964 rsIDs.
+2025-09-04 16:33:05,824 - INFO - === DEBUG: Created DataFrame with 972 rows ===
+2025-09-04 16:33:05,824 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 16:33:05,824 - INFO - Sample DataFrame rows:
+2025-09-04 16:33:05,825 - INFO - Row 0:
+2025-09-04 16:33:05,825 - INFO -   SNP_ID: rs297325
+2025-09-04 16:33:05,825 - INFO -   PubMed_ID: None
+2025-09-04 16:33:05,825 - INFO -   GWAS_Trait: obesity
+2025-09-04 16:33:05,825 - INFO -   Odds_Ratio: nan
+2025-09-04 16:33:05,825 - INFO -   P_Value: 4e-07
+2025-09-04 16:33:05,825 - INFO - Row 1:
+2025-09-04 16:33:05,826 - INFO -   SNP_ID: rs4756846
+2025-09-04 16:33:05,826 - INFO -   PubMed_ID: None
+2025-09-04 16:33:05,826 - INFO -   GWAS_Trait: obesity
+2025-09-04 16:33:05,826 - INFO -   Odds_Ratio: nan
+2025-09-04 16:33:05,826 - INFO -   P_Value: 5e-07
+2025-09-04 16:33:05,826 - INFO - Row 2:
+2025-09-04 16:33:05,826 - INFO -   SNP_ID: rs1558902
+2025-09-04 16:33:05,826 - INFO -   PubMed_ID: None
+2025-09-04 16:33:05,826 - INFO -   GWAS_Trait: obesity
+2025-09-04 16:33:05,826 - INFO -   Odds_Ratio: 0.09
+2025-09-04 16:33:05,826 - INFO -   P_Value: 1e-07
+2025-09-04 16:33:05,827 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 16:33:05,829 - INFO - Successfully parsed and mapped 972 SNP records for trait obesity
+2025-09-04 16:33:05,829 - INFO - Saving 972 parsed variants to cache...
+2025-09-04 16:33:05,829 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 16:33:05,851 - INFO - Saved GWAS data for EFO_0001073 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250813_claude_/data/gwas_cache/EFO_0001073.parquet
+2025-09-04 16:33:05,851 - INFO - ✅ Successfully cached 972 variants for obesity
+2025-09-04 16:33:05,851 - INFO -    Time taken: 134.6 seconds
+2025-09-04 16:33:06,853 - INFO - 
+============================================================
+2025-09-04 16:33:06,854 - INFO - Processing: height growth (OBA_2045231)
+2025-09-04 16:33:06,854 - INFO - ============================================================
+2025-09-04 16:33:06,854 - INFO - Fetching GWAS associations from API...
+2025-09-04 16:33:06,854 - INFO - Fetching GWAS associations for EFO ID: OBA_2045231
+2025-09-04 16:33:13,630 - INFO - Successfully fetched 252 GWAS associations for EFO ID: OBA_2045231
+2025-09-04 16:33:13,630 - INFO - Found 252 raw associations
+2025-09-04 16:33:13,631 - INFO - Parsing association data...
+2025-09-04 16:33:13,631 - INFO - Parsing 252 GWAS associations to extract rsID and risk allele.
+2025-09-04 16:33:13,632 - INFO - === DEBUG: Found 233 unique rsIDs ===
+2025-09-04 16:33:13,632 - INFO - Sample rsIDs: ['rs12702364', 'rs370809767', 'rs4720605', 'rs11899250', 'rs148867624']
+2025-09-04 16:33:13,632 - INFO - Fetching locations for 233 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 16:33:58,228 - INFO - Successfully fetched locations for 233 rsIDs.
+2025-09-04 16:33:58,230 - INFO - === DEBUG: Created DataFrame with 231 rows ===
+2025-09-04 16:33:58,231 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 16:33:58,231 - INFO - Sample DataFrame rows:
+2025-09-04 16:33:58,231 - INFO - Row 0:
+2025-09-04 16:33:58,232 - INFO -   SNP_ID: rs9469890
+2025-09-04 16:33:58,232 - INFO -   PubMed_ID: None
+2025-09-04 16:33:58,232 - INFO -   GWAS_Trait: height growth
+2025-09-04 16:33:58,232 - INFO -   Odds_Ratio: 0.12
+2025-09-04 16:33:58,232 - INFO -   P_Value: 9e-08
+2025-09-04 16:33:58,232 - INFO - Row 1:
+2025-09-04 16:33:58,232 - INFO -   SNP_ID: rs1172294
+2025-09-04 16:33:58,233 - INFO -   PubMed_ID: None
+2025-09-04 16:33:58,233 - INFO -   GWAS_Trait: height growth
+2025-09-04 16:33:58,233 - INFO -   Odds_Ratio: 0.08
+2025-09-04 16:33:58,233 - INFO -   P_Value: 1e-08
+2025-09-04 16:33:58,233 - INFO - Row 2:
+2025-09-04 16:33:58,233 - INFO -   SNP_ID: rs7628864
+2025-09-04 16:33:58,233 - INFO -   PubMed_ID: None
+2025-09-04 16:33:58,234 - INFO -   GWAS_Trait: height growth
+2025-09-04 16:33:58,234 - INFO -   Odds_Ratio: 0.11
+2025-09-04 16:33:58,234 - INFO -   P_Value: 3.0000000000000004e-09
+2025-09-04 16:33:58,235 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 16:33:58,237 - INFO - Successfully parsed and mapped 231 SNP records for trait height growth
+2025-09-04 16:33:58,237 - INFO - Saving 231 parsed variants to cache...
+2025-09-04 16:33:58,237 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 16:33:58,240 - INFO - Saved GWAS data for OBA_2045231 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250813_claude_/data/gwas_cache/OBA_2045231.parquet
+2025-09-04 16:33:58,240 - INFO - ✅ Successfully cached 231 variants for height growth
+2025-09-04 16:33:58,240 - INFO -    Time taken: 51.4 seconds
+2025-09-04 16:33:59,241 - INFO - 
+============================================================
+2025-09-04 16:33:59,242 - INFO - Processing: coronary heart disease (EFO_0001645)
+2025-09-04 16:33:59,242 - INFO - ============================================================
+2025-09-04 16:33:59,242 - INFO - Fetching GWAS associations from API...
+2025-09-04 16:33:59,242 - INFO - Fetching GWAS associations for EFO ID: EFO_0001645
+2025-09-04 16:35:33,098 - INFO - Successfully fetched 3950 GWAS associations for EFO ID: EFO_0001645
+2025-09-04 16:35:33,098 - INFO - Found 3950 raw associations
+2025-09-04 16:35:33,098 - INFO - Parsing association data...
+2025-09-04 16:35:33,098 - INFO - Parsing 3950 GWAS associations to extract rsID and risk allele.
+2025-09-04 16:35:33,101 - INFO - === DEBUG: Found 2410 unique rsIDs ===
+2025-09-04 16:35:33,101 - INFO - Sample rsIDs: ['rs1346132', 'rs148349043', 'rs192407614', 'rs1032763', 'rs7178750']
+2025-09-04 16:35:33,101 - INFO - Fetching locations for 2410 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 16:42:22,498 - INFO - Successfully fetched locations for 2405 rsIDs.
+2025-09-04 16:42:22,513 - INFO - === DEBUG: Created DataFrame with 2705 rows ===
+2025-09-04 16:42:22,513 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 16:42:22,513 - INFO - Sample DataFrame rows:
+2025-09-04 16:42:22,514 - INFO - Row 0:
+2025-09-04 16:42:22,514 - INFO -   SNP_ID: rs8055236
+2025-09-04 16:42:22,514 - INFO -   PubMed_ID: None
+2025-09-04 16:42:22,514 - INFO -   GWAS_Trait: coronary heart disease
+2025-09-04 16:42:22,514 - INFO -   Odds_Ratio: 1.91
+2025-09-04 16:42:22,515 - INFO -   P_Value: 6e-06
+2025-09-04 16:42:22,515 - INFO - Row 1:
+2025-09-04 16:42:22,515 - INFO -   SNP_ID: rs1333049
+2025-09-04 16:42:22,515 - INFO -   PubMed_ID: None
+2025-09-04 16:42:22,515 - INFO -   GWAS_Trait: coronary heart disease
+2025-09-04 16:42:22,515 - INFO -   Odds_Ratio: 1.47
+2025-09-04 16:42:22,515 - INFO -   P_Value: 1e-13
+2025-09-04 16:42:22,516 - INFO - Row 2:
+2025-09-04 16:42:22,516 - INFO -   SNP_ID: rs17672135
+2025-09-04 16:42:22,516 - INFO -   PubMed_ID: None
+2025-09-04 16:42:22,516 - INFO -   GWAS_Trait: coronary heart disease
+2025-09-04 16:42:22,516 - INFO -   Odds_Ratio: 1.43
+2025-09-04 16:42:22,516 - INFO -   P_Value: 2e-06
+2025-09-04 16:42:22,519 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 16:42:22,520 - INFO - Successfully parsed and mapped 2705 SNP records for trait coronary heart disease
+2025-09-04 16:42:22,522 - INFO - Saving 2705 parsed variants to cache...
+2025-09-04 16:42:22,523 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 16:42:22,531 - INFO - Saved GWAS data for EFO_0001645 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250813_claude_/data/gwas_cache/EFO_0001645.parquet
+2025-09-04 16:42:22,531 - INFO - ✅ Successfully cached 2705 variants for coronary heart disease
+2025-09-04 16:42:22,531 - INFO -    Time taken: 503.3 seconds
+2025-09-04 16:42:23,540 - INFO - 
+============================================================
+2025-09-04 16:42:23,541 - INFO - Processing: hypertension (EFO_0000537)
+2025-09-04 16:42:23,541 - INFO - ============================================================
+2025-09-04 16:42:23,541 - INFO - Fetching GWAS associations from API...
+2025-09-04 16:42:23,541 - INFO - Fetching GWAS associations for EFO ID: EFO_0000537
+2025-09-04 16:43:14,744 - INFO - Successfully fetched 2028 GWAS associations for EFO ID: EFO_0000537
+2025-09-04 16:43:14,745 - INFO - Found 2028 raw associations
+2025-09-04 16:43:14,745 - INFO - Parsing association data...
+2025-09-04 16:43:14,745 - INFO - Parsing 2028 GWAS associations to extract rsID and risk allele.
+2025-09-04 16:43:14,747 - INFO - === DEBUG: Found 1078 unique rsIDs ===
+2025-09-04 16:43:14,747 - INFO - Sample rsIDs: ['rs366178', 'rs368699386', 'rs2240736', 'rs62481856', 'rs1687295']
+2025-09-04 16:43:14,747 - INFO - Fetching locations for 1078 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 16:46:14,471 - INFO - Successfully fetched locations for 1073 rsIDs.
+2025-09-04 16:46:14,479 - INFO - === DEBUG: Created DataFrame with 1180 rows ===
+2025-09-04 16:46:14,479 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 16:46:14,479 - INFO - Sample DataFrame rows:
+2025-09-04 16:46:14,480 - INFO - Row 0:
+2025-09-04 16:46:14,480 - INFO -   SNP_ID: rs11646213
+2025-09-04 16:46:14,480 - INFO -   PubMed_ID: None
+2025-09-04 16:46:14,480 - INFO -   GWAS_Trait: hypertension
+2025-09-04 16:46:14,480 - INFO -   Odds_Ratio: 1.28
+2025-09-04 16:46:14,480 - INFO -   P_Value: 8e-06
+2025-09-04 16:46:14,480 - INFO - Row 1:
+2025-09-04 16:46:14,480 - INFO -   SNP_ID: rs2820037
+2025-09-04 16:46:14,480 - INFO -   PubMed_ID: None
+2025-09-04 16:46:14,480 - INFO -   GWAS_Trait: hypertension
+2025-09-04 16:46:14,480 - INFO -   Odds_Ratio: 1.54
+2025-09-04 16:46:14,481 - INFO -   P_Value: 8e-07
+2025-09-04 16:46:14,481 - INFO - Row 2:
+2025-09-04 16:46:14,481 - INFO -   SNP_ID: rs2398162
+2025-09-04 16:46:14,481 - INFO -   PubMed_ID: None
+2025-09-04 16:46:14,481 - INFO -   GWAS_Trait: hypertension
+2025-09-04 16:46:14,481 - INFO -   Odds_Ratio: 1.31
+2025-09-04 16:46:14,481 - INFO -   P_Value: 6e-06
+2025-09-04 16:46:14,483 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 16:46:14,484 - INFO - Successfully parsed and mapped 1180 SNP records for trait hypertension
+2025-09-04 16:46:14,485 - INFO - Saving 1180 parsed variants to cache...
+2025-09-04 16:46:14,486 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 16:46:14,495 - INFO - Saved GWAS data for EFO_0000537 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250813_claude_/data/gwas_cache/EFO_0000537.parquet
+2025-09-04 16:46:14,495 - INFO - ✅ Successfully cached 1180 variants for hypertension
+2025-09-04 16:46:14,495 - INFO -    Time taken: 231.0 seconds
+2025-09-04 16:46:15,503 - INFO - 
+============================================================
+2025-09-04 16:46:15,503 - INFO - Processing: type 2 diabetes (MONDO_0005148)
+2025-09-04 16:46:15,503 - INFO - ============================================================
+2025-09-04 16:46:15,503 - INFO - Fetching GWAS associations from API...
+2025-09-04 16:46:15,504 - INFO - Fetching GWAS associations for EFO ID: MONDO_0005148
+2025-09-04 16:49:25,200 - INFO - Successfully fetched 8239 GWAS associations for EFO ID: MONDO_0005148
+2025-09-04 16:49:25,200 - INFO - Found 8239 raw associations
+2025-09-04 16:49:25,200 - INFO - Parsing association data...
+2025-09-04 16:49:25,200 - INFO - Parsing 8239 GWAS associations to extract rsID and risk allele.
+2025-09-04 16:49:25,212 - INFO - === DEBUG: Found 4810 unique rsIDs ===
+2025-09-04 16:49:25,213 - INFO - Sample rsIDs: ['rs10305457', 'rs12782078', 'rs2267374', 'rs9505085', 'rs13268287']
+2025-09-04 16:49:25,213 - INFO - Fetching locations for 4810 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 17:01:03,093 - INFO - Successfully fetched locations for 4798 rsIDs.
+2025-09-04 17:01:03,147 - INFO - === DEBUG: Created DataFrame with 5328 rows ===
+2025-09-04 17:01:03,147 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 17:01:03,147 - INFO - Sample DataFrame rows:
+2025-09-04 17:01:03,147 - INFO - Row 0:
+2025-09-04 17:01:03,147 - INFO -   SNP_ID: rs7903146
+2025-09-04 17:01:03,148 - INFO -   PubMed_ID: None
+2025-09-04 17:01:03,148 - INFO -   GWAS_Trait: type 2 diabetes
+2025-09-04 17:01:03,148 - INFO -   Odds_Ratio: 1.38
+2025-09-04 17:01:03,148 - INFO -   P_Value: 2e-10
+2025-09-04 17:01:03,148 - INFO - Row 1:
+2025-09-04 17:01:03,148 - INFO -   SNP_ID: rs13266634
+2025-09-04 17:01:03,148 - INFO -   PubMed_ID: None
+2025-09-04 17:01:03,148 - INFO -   GWAS_Trait: type 2 diabetes
+2025-09-04 17:01:03,148 - INFO -   Odds_Ratio: 1.15
+2025-09-04 17:01:03,148 - INFO -   P_Value: 3e-06
+2025-09-04 17:01:03,148 - INFO - Row 2:
+2025-09-04 17:01:03,148 - INFO -   SNP_ID: rs7756992
+2025-09-04 17:01:03,148 - INFO -   PubMed_ID: None
+2025-09-04 17:01:03,148 - INFO -   GWAS_Trait: type 2 diabetes
+2025-09-04 17:01:03,148 - INFO -   Odds_Ratio: 1.2
+2025-09-04 17:01:03,148 - INFO -   P_Value: 8e-09
+2025-09-04 17:01:03,149 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 17:01:03,150 - INFO - Successfully parsed and mapped 5328 SNP records for trait type 2 diabetes
+2025-09-04 17:01:03,151 - INFO - Saving 5328 parsed variants to cache...
+2025-09-04 17:01:03,151 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 17:01:03,155 - INFO - Saved GWAS data for MONDO_0005148 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250813_claude_/data/gwas_cache/MONDO_0005148.parquet
+2025-09-04 17:01:03,156 - INFO - ✅ Successfully cached 5328 variants for type 2 diabetes
+2025-09-04 17:01:03,156 - INFO -    Time taken: 887.7 seconds
+2025-09-04 17:01:04,170 - INFO - 
+============================================================
+2025-09-04 17:01:04,170 - INFO - Processing: male fertility (EFO_0004803)
+2025-09-04 17:01:04,170 - INFO - ============================================================
+2025-09-04 17:01:04,170 - INFO - Fetching GWAS associations from API...
+2025-09-04 17:01:04,171 - INFO - Fetching GWAS associations for EFO ID: EFO_0004803
+2025-09-04 17:01:05,041 - INFO - Successfully fetched 6 GWAS associations for EFO ID: EFO_0004803
+2025-09-04 17:01:05,042 - INFO - Found 6 raw associations
+2025-09-04 17:01:05,042 - INFO - Parsing association data...
+2025-09-04 17:01:05,042 - INFO - Parsing 6 GWAS associations to extract rsID and risk allele.
+2025-09-04 17:01:05,042 - INFO - === DEBUG: Found 6 unique rsIDs ===
+2025-09-04 17:01:05,043 - INFO - Sample rsIDs: ['rs2423942', 'rs10966811', 'rs433406', 'rs2991396', 'rs11144790']
+2025-09-04 17:01:05,043 - INFO - Fetching locations for 6 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 17:01:05,911 - INFO - Successfully fetched locations for 6 rsIDs.
+2025-09-04 17:01:05,913 - INFO - === DEBUG: Created DataFrame with 6 rows ===
+2025-09-04 17:01:05,913 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 17:01:05,913 - INFO - Sample DataFrame rows:
+2025-09-04 17:01:05,914 - INFO - Row 0:
+2025-09-04 17:01:05,914 - INFO -   SNP_ID: rs4936891
+2025-09-04 17:01:05,914 - INFO -   PubMed_ID: None
+2025-09-04 17:01:05,914 - INFO -   GWAS_Trait: male fertility
+2025-09-04 17:01:05,914 - INFO -   Odds_Ratio: None
+2025-09-04 17:01:05,914 - INFO -   P_Value: 9e-06
+2025-09-04 17:01:05,915 - INFO - Row 1:
+2025-09-04 17:01:05,915 - INFO -   SNP_ID: rs433406
+2025-09-04 17:01:05,915 - INFO -   PubMed_ID: None
+2025-09-04 17:01:05,915 - INFO -   GWAS_Trait: male fertility
+2025-09-04 17:01:05,915 - INFO -   Odds_Ratio: None
+2025-09-04 17:01:05,915 - INFO -   P_Value: 3e-06
+2025-09-04 17:01:05,916 - INFO - Row 2:
+2025-09-04 17:01:05,916 - INFO -   SNP_ID: rs2991396
+2025-09-04 17:01:05,916 - INFO -   PubMed_ID: None
+2025-09-04 17:01:05,916 - INFO -   GWAS_Trait: male fertility
+2025-09-04 17:01:05,916 - INFO -   Odds_Ratio: None
+2025-09-04 17:01:05,916 - INFO -   P_Value: 4e-06
+2025-09-04 17:01:05,917 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 17:01:05,919 - INFO - Successfully parsed and mapped 6 SNP records for trait male fertility
+2025-09-04 17:01:05,919 - INFO - Saving 6 parsed variants to cache...
+2025-09-04 17:01:05,920 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 17:01:05,923 - INFO - Saved GWAS data for EFO_0004803 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250813_claude_/data/gwas_cache/EFO_0004803.parquet
+2025-09-04 17:01:05,923 - INFO - ✅ Successfully cached 6 variants for male fertility
+2025-09-04 17:01:05,923 - INFO -    Time taken: 1.8 seconds
+2025-09-04 17:01:06,929 - INFO - 
+============================================================
+2025-09-04 17:01:06,929 - INFO - Processing: androgenetic alopecia (EFO_0004191)
+2025-09-04 17:01:06,930 - INFO - ============================================================
+2025-09-04 17:01:06,930 - INFO - Fetching GWAS associations from API...
+2025-09-04 17:01:06,930 - INFO - Fetching GWAS associations for EFO ID: EFO_0004191
+2025-09-04 17:01:11,348 - INFO - Successfully fetched 132 GWAS associations for EFO ID: EFO_0004191
+2025-09-04 17:01:11,349 - INFO - Found 132 raw associations
+2025-09-04 17:01:11,349 - INFO - Parsing association data...
+2025-09-04 17:01:11,349 - INFO - Parsing 132 GWAS associations to extract rsID and risk allele.
+2025-09-04 17:01:11,351 - INFO - === DEBUG: Found 120 unique rsIDs ===
+2025-09-04 17:01:11,351 - INFO - Sample rsIDs: ['rs8085664', 'rs68088846', 'rs9357047', 'rs9398803', 'rs77767830']
+2025-09-04 17:01:11,351 - INFO - Fetching locations for 120 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 17:01:39,598 - INFO - Successfully fetched locations for 120 rsIDs.
+2025-09-04 17:01:39,602 - INFO - === DEBUG: Created DataFrame with 131 rows ===
+2025-09-04 17:01:39,602 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 17:01:39,602 - INFO - Sample DataFrame rows:
+2025-09-04 17:01:39,603 - INFO - Row 0:
+2025-09-04 17:01:39,603 - INFO -   SNP_ID: rs2180439
+2025-09-04 17:01:39,603 - INFO -   PubMed_ID: None
+2025-09-04 17:01:39,603 - INFO -   GWAS_Trait: androgenetic alopecia
+2025-09-04 17:01:39,603 - INFO -   Odds_Ratio: 1.82
+2025-09-04 17:01:39,603 - INFO -   P_Value: 3.0000000000000002e-15
+2025-09-04 17:01:39,604 - INFO - Row 1:
+2025-09-04 17:01:39,604 - INFO -   SNP_ID: rs6625163
+2025-09-04 17:01:39,604 - INFO -   PubMed_ID: None
+2025-09-04 17:01:39,604 - INFO -   GWAS_Trait: androgenetic alopecia
+2025-09-04 17:01:39,604 - INFO -   Odds_Ratio: 3.3
+2025-09-04 17:01:39,604 - INFO -   P_Value: 4.9999999999999995e-11
+2025-09-04 17:01:39,604 - INFO - Row 2:
+2025-09-04 17:01:39,604 - INFO -   SNP_ID: rs1160312
+2025-09-04 17:01:39,604 - INFO -   PubMed_ID: None
+2025-09-04 17:01:39,604 - INFO -   GWAS_Trait: androgenetic alopecia
+2025-09-04 17:01:39,605 - INFO -   Odds_Ratio: 1.6
+2025-09-04 17:01:39,605 - INFO -   P_Value: 1e-14
+2025-09-04 17:01:39,606 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 17:01:39,608 - INFO - Successfully parsed and mapped 131 SNP records for trait androgenetic alopecia
+2025-09-04 17:01:39,609 - INFO - Saving 131 parsed variants to cache...
+2025-09-04 17:01:39,609 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 17:01:39,613 - INFO - Saved GWAS data for EFO_0004191 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250813_claude_/data/gwas_cache/EFO_0004191.parquet
+2025-09-04 17:01:39,613 - INFO - ✅ Successfully cached 131 variants for androgenetic alopecia
+2025-09-04 17:01:39,613 - INFO -    Time taken: 32.7 seconds
+2025-09-04 17:01:40,617 - INFO - 
+============================================================
+2025-09-04 17:01:40,617 - INFO - Processing: asthma (MONDO_0004979)
+2025-09-04 17:01:40,617 - INFO - ============================================================
+2025-09-04 17:01:40,617 - INFO - Fetching GWAS associations from API...
+2025-09-04 17:01:40,617 - INFO - Fetching GWAS associations for EFO ID: MONDO_0004979
+2025-09-04 17:38:29,415 - INFO - Found config file at: gwas_dashboard_package/config/app_config.yaml
+2025-09-04 17:38:29,416 - INFO - Loading configuration from: gwas_dashboard_package/config/app_config.yaml
+2025-09-04 17:38:29,417 - INFO - Successfully loaded configuration with 35 settings
+2025-09-04 17:38:29,417 - INFO - Cache directory: /Users/june-young/Research_Local/08_GWAS_browser/ver_250904_claude_/data/gwas_cache
+2025-09-04 17:38:38,922 - INFO - 
+============================================================
+2025-09-04 17:38:38,923 - INFO - Processing: hypertension (EFO_0000537)
+2025-09-04 17:38:38,923 - INFO - ============================================================
+2025-09-04 17:38:38,923 - INFO - Fetching GWAS associations from API...
+2025-09-04 17:38:38,924 - INFO - Fetching GWAS associations for EFO ID: EFO_0000537
+2025-09-04 17:39:30,381 - INFO - Successfully fetched 2028 GWAS associations for EFO ID: EFO_0000537
+2025-09-04 17:39:30,381 - INFO - Found 2028 raw associations
+2025-09-04 17:39:30,381 - INFO - Parsing association data...
+2025-09-04 17:39:30,381 - INFO - Parsing 2028 GWAS associations to extract rsID and risk allele.
+2025-09-04 17:39:30,383 - INFO - === DEBUG: Found 1078 unique rsIDs ===
+2025-09-04 17:39:30,383 - INFO - Sample rsIDs: ['rs79105258', 'rs12258967', 'rs1799945', 'rs1446802', 'rs12715461']
+2025-09-04 17:39:30,383 - INFO - Fetching locations for 1078 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 17:43:42,426 - INFO - Successfully fetched locations for 1073 rsIDs.
+2025-09-04 17:43:42,431 - INFO - === DEBUG: Created DataFrame with 1180 rows ===
+2025-09-04 17:43:42,432 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 17:43:42,432 - INFO - Sample DataFrame rows:
+2025-09-04 17:43:42,432 - INFO - Row 0:
+2025-09-04 17:43:42,433 - INFO -   SNP_ID: rs11646213
+2025-09-04 17:43:42,433 - INFO -   PubMed_ID: None
+2025-09-04 17:43:42,433 - INFO -   GWAS_Trait: hypertension
+2025-09-04 17:43:42,433 - INFO -   Odds_Ratio: 1.28
+2025-09-04 17:43:42,433 - INFO -   P_Value: 8e-06
+2025-09-04 17:43:42,433 - INFO - Row 1:
+2025-09-04 17:43:42,433 - INFO -   SNP_ID: rs2820037
+2025-09-04 17:43:42,433 - INFO -   PubMed_ID: None
+2025-09-04 17:43:42,433 - INFO -   GWAS_Trait: hypertension
+2025-09-04 17:43:42,433 - INFO -   Odds_Ratio: 1.54
+2025-09-04 17:43:42,433 - INFO -   P_Value: 8e-07
+2025-09-04 17:43:42,433 - INFO - Row 2:
+2025-09-04 17:43:42,433 - INFO -   SNP_ID: rs2398162
+2025-09-04 17:43:42,433 - INFO -   PubMed_ID: None
+2025-09-04 17:43:42,433 - INFO -   GWAS_Trait: hypertension
+2025-09-04 17:43:42,433 - INFO -   Odds_Ratio: 1.31
+2025-09-04 17:43:42,433 - INFO -   P_Value: 6e-06
+2025-09-04 17:43:42,435 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 17:43:42,437 - INFO - Successfully parsed and mapped 1180 SNP records for trait hypertension
+2025-09-04 17:43:42,438 - INFO - Saving 1180 parsed variants to cache...
+2025-09-04 17:43:42,438 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 17:43:42,467 - INFO - Saved GWAS data for EFO_0000537 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250904_claude_/data/gwas_cache/EFO_0000537.parquet
+2025-09-04 17:43:42,467 - INFO - ✅ Successfully cached 1180 variants for hypertension
+2025-09-04 17:43:42,467 - INFO -    Raw associations: 2028
+2025-09-04 17:43:42,467 - INFO -    Parsed variants: 1180
+2025-09-04 17:43:42,467 - INFO -    Success rate: 58.2%
+2025-09-04 17:43:42,467 - INFO -    Time taken: 303.5 seconds
+2025-09-04 17:43:43,471 - INFO - 
+============================================================
+2025-09-04 17:43:43,472 - INFO - Processing: type 2 diabetes (MONDO_0005148)
+2025-09-04 17:43:43,472 - INFO - ============================================================
+2025-09-04 17:43:43,472 - INFO - Fetching GWAS associations from API...
+2025-09-04 17:43:43,472 - INFO - Fetching GWAS associations for EFO ID: MONDO_0005148
+2025-09-04 17:47:04,305 - INFO - Successfully fetched 8239 GWAS associations for EFO ID: MONDO_0005148
+2025-09-04 17:47:04,305 - INFO - Found 8239 raw associations
+2025-09-04 17:47:04,305 - INFO - Parsing association data...
+2025-09-04 17:47:04,305 - INFO - Parsing 8239 GWAS associations to extract rsID and risk allele.
+2025-09-04 17:47:04,316 - INFO - === DEBUG: Found 4810 unique rsIDs ===
+2025-09-04 17:47:04,316 - INFO - Sample rsIDs: ['rs147287548', 'rs80268399', 'rs34744311', 'rs12185519', 'rs11298745']
+2025-09-04 17:47:04,316 - INFO - Fetching locations for 4810 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 17:58:40,228 - INFO - Successfully fetched locations for 4798 rsIDs.
+2025-09-04 17:58:40,247 - INFO - === DEBUG: Created DataFrame with 5328 rows ===
+2025-09-04 17:58:40,248 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 17:58:40,248 - INFO - Sample DataFrame rows:
+2025-09-04 17:58:40,248 - INFO - Row 0:
+2025-09-04 17:58:40,248 - INFO -   SNP_ID: rs7903146
+2025-09-04 17:58:40,249 - INFO -   PubMed_ID: None
+2025-09-04 17:58:40,249 - INFO -   GWAS_Trait: type 2 diabetes
+2025-09-04 17:58:40,249 - INFO -   Odds_Ratio: 1.38
+2025-09-04 17:58:40,249 - INFO -   P_Value: 2e-10
+2025-09-04 17:58:40,249 - INFO - Row 1:
+2025-09-04 17:58:40,249 - INFO -   SNP_ID: rs13266634
+2025-09-04 17:58:40,249 - INFO -   PubMed_ID: None
+2025-09-04 17:58:40,249 - INFO -   GWAS_Trait: type 2 diabetes
+2025-09-04 17:58:40,249 - INFO -   Odds_Ratio: 1.15
+2025-09-04 17:58:40,249 - INFO -   P_Value: 3e-06
+2025-09-04 17:58:40,249 - INFO - Row 2:
+2025-09-04 17:58:40,249 - INFO -   SNP_ID: rs7756992
+2025-09-04 17:58:40,249 - INFO -   PubMed_ID: None
+2025-09-04 17:58:40,249 - INFO -   GWAS_Trait: type 2 diabetes
+2025-09-04 17:58:40,249 - INFO -   Odds_Ratio: 1.2
+2025-09-04 17:58:40,249 - INFO -   P_Value: 8e-09
+2025-09-04 17:58:40,253 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 17:58:40,255 - INFO - Successfully parsed and mapped 5328 SNP records for trait type 2 diabetes
+2025-09-04 17:58:40,257 - INFO - Saving 5328 parsed variants to cache...
+2025-09-04 17:58:40,257 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 17:58:40,265 - INFO - Saved GWAS data for MONDO_0005148 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250904_claude_/data/gwas_cache/MONDO_0005148.parquet
+2025-09-04 17:58:40,265 - INFO - ✅ Successfully cached 5328 variants for type 2 diabetes
+2025-09-04 17:58:40,265 - INFO -    Raw associations: 8239
+2025-09-04 17:58:40,265 - INFO -    Parsed variants: 5328
+2025-09-04 17:58:40,266 - INFO -    Success rate: 64.7%
+2025-09-04 17:58:40,266 - INFO -    Time taken: 896.8 seconds
+2025-09-04 17:58:41,277 - INFO - 
+============================================================
+2025-09-04 17:58:41,277 - INFO - Processing: male fertility (EFO_0004803)
+2025-09-04 17:58:41,277 - INFO - ============================================================
+2025-09-04 17:58:41,277 - INFO - Fetching GWAS associations from API...
+2025-09-04 17:58:41,277 - INFO - Fetching GWAS associations for EFO ID: EFO_0004803
+2025-09-04 17:58:42,516 - INFO - Successfully fetched 6 GWAS associations for EFO ID: EFO_0004803
+2025-09-04 17:58:42,517 - INFO - Found 6 raw associations
+2025-09-04 17:58:42,517 - INFO - Parsing association data...
+2025-09-04 17:58:42,517 - INFO - Parsing 6 GWAS associations to extract rsID and risk allele.
+2025-09-04 17:58:42,517 - INFO - === DEBUG: Found 6 unique rsIDs ===
+2025-09-04 17:58:42,517 - INFO - Sample rsIDs: ['rs4936891', 'rs2423942', 'rs2991396', 'rs11144790', 'rs433406']
+2025-09-04 17:58:42,518 - INFO - Fetching locations for 6 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 17:58:43,359 - INFO - Successfully fetched locations for 6 rsIDs.
+2025-09-04 17:58:43,360 - INFO - === DEBUG: Created DataFrame with 6 rows ===
+2025-09-04 17:58:43,360 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 17:58:43,360 - INFO - Sample DataFrame rows:
+2025-09-04 17:58:43,360 - INFO - Row 0:
+2025-09-04 17:58:43,360 - INFO -   SNP_ID: rs4936891
+2025-09-04 17:58:43,360 - INFO -   PubMed_ID: None
+2025-09-04 17:58:43,361 - INFO -   GWAS_Trait: male fertility
+2025-09-04 17:58:43,361 - INFO -   Odds_Ratio: None
+2025-09-04 17:58:43,361 - INFO -   P_Value: 9e-06
+2025-09-04 17:58:43,361 - INFO - Row 1:
+2025-09-04 17:58:43,361 - INFO -   SNP_ID: rs433406
+2025-09-04 17:58:43,361 - INFO -   PubMed_ID: None
+2025-09-04 17:58:43,361 - INFO -   GWAS_Trait: male fertility
+2025-09-04 17:58:43,361 - INFO -   Odds_Ratio: None
+2025-09-04 17:58:43,361 - INFO -   P_Value: 3e-06
+2025-09-04 17:58:43,361 - INFO - Row 2:
+2025-09-04 17:58:43,361 - INFO -   SNP_ID: rs2991396
+2025-09-04 17:58:43,361 - INFO -   PubMed_ID: None
+2025-09-04 17:58:43,361 - INFO -   GWAS_Trait: male fertility
+2025-09-04 17:58:43,361 - INFO -   Odds_Ratio: None
+2025-09-04 17:58:43,361 - INFO -   P_Value: 4e-06
+2025-09-04 17:58:43,362 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 17:58:43,363 - INFO - Successfully parsed and mapped 6 SNP records for trait male fertility
+2025-09-04 17:58:43,363 - INFO - Saving 6 parsed variants to cache...
+2025-09-04 17:58:43,364 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 17:58:43,367 - INFO - Saved GWAS data for EFO_0004803 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250904_claude_/data/gwas_cache/EFO_0004803.parquet
+2025-09-04 17:58:43,367 - INFO - ✅ Successfully cached 6 variants for male fertility
+2025-09-04 17:58:43,367 - INFO -    Raw associations: 6
+2025-09-04 17:58:43,367 - INFO -    Parsed variants: 6
+2025-09-04 17:58:43,367 - INFO -    Success rate: 100.0%
+2025-09-04 17:58:43,367 - INFO -    Time taken: 2.1 seconds
+2025-09-04 17:58:44,367 - INFO - 
+============================================================
+2025-09-04 17:58:44,368 - INFO - Processing: androgenetic alopecia (EFO_0004191)
+2025-09-04 17:58:44,368 - INFO - ============================================================
+2025-09-04 17:58:44,368 - INFO - Fetching GWAS associations from API...
+2025-09-04 17:58:44,368 - INFO - Fetching GWAS associations for EFO ID: EFO_0004191
+2025-09-04 17:58:48,210 - INFO - Successfully fetched 132 GWAS associations for EFO ID: EFO_0004191
+2025-09-04 17:58:48,211 - INFO - Found 132 raw associations
+2025-09-04 17:58:48,211 - INFO - Parsing association data...
+2025-09-04 17:58:48,211 - INFO - Parsing 132 GWAS associations to extract rsID and risk allele.
+2025-09-04 17:58:48,212 - INFO - === DEBUG: Found 120 unique rsIDs ===
+2025-09-04 17:58:48,212 - INFO - Sample rsIDs: ['rs6752754', 'rs2180439', 'rs1160312', 'rs16863765', 'rs2876167']
+2025-09-04 17:58:48,212 - INFO - Fetching locations for 120 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 17:59:13,801 - INFO - Successfully fetched locations for 120 rsIDs.
+2025-09-04 17:59:13,803 - INFO - === DEBUG: Created DataFrame with 131 rows ===
+2025-09-04 17:59:13,803 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 17:59:13,803 - INFO - Sample DataFrame rows:
+2025-09-04 17:59:13,804 - INFO - Row 0:
+2025-09-04 17:59:13,804 - INFO -   SNP_ID: rs2180439
+2025-09-04 17:59:13,804 - INFO -   PubMed_ID: None
+2025-09-04 17:59:13,804 - INFO -   GWAS_Trait: androgenetic alopecia
+2025-09-04 17:59:13,804 - INFO -   Odds_Ratio: 1.82
+2025-09-04 17:59:13,804 - INFO -   P_Value: 3.0000000000000002e-15
+2025-09-04 17:59:13,804 - INFO - Row 1:
+2025-09-04 17:59:13,804 - INFO -   SNP_ID: rs6625163
+2025-09-04 17:59:13,804 - INFO -   PubMed_ID: None
+2025-09-04 17:59:13,804 - INFO -   GWAS_Trait: androgenetic alopecia
+2025-09-04 17:59:13,804 - INFO -   Odds_Ratio: 3.3
+2025-09-04 17:59:13,804 - INFO -   P_Value: 4.9999999999999995e-11
+2025-09-04 17:59:13,805 - INFO - Row 2:
+2025-09-04 17:59:13,805 - INFO -   SNP_ID: rs1160312
+2025-09-04 17:59:13,805 - INFO -   PubMed_ID: None
+2025-09-04 17:59:13,805 - INFO -   GWAS_Trait: androgenetic alopecia
+2025-09-04 17:59:13,805 - INFO -   Odds_Ratio: 1.6
+2025-09-04 17:59:13,805 - INFO -   P_Value: 1e-14
+2025-09-04 17:59:13,806 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 17:59:13,808 - INFO - Successfully parsed and mapped 131 SNP records for trait androgenetic alopecia
+2025-09-04 17:59:13,808 - INFO - Saving 131 parsed variants to cache...
+2025-09-04 17:59:13,809 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 17:59:13,813 - INFO - Saved GWAS data for EFO_0004191 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250904_claude_/data/gwas_cache/EFO_0004191.parquet
+2025-09-04 17:59:13,813 - INFO - ✅ Successfully cached 131 variants for androgenetic alopecia
+2025-09-04 17:59:13,813 - INFO -    Raw associations: 132
+2025-09-04 17:59:13,813 - INFO -    Parsed variants: 131
+2025-09-04 17:59:13,813 - INFO -    Success rate: 99.2%
+2025-09-04 17:59:13,813 - INFO -    Time taken: 29.4 seconds
+2025-09-04 17:59:14,815 - INFO - 
+============================================================
+2025-09-04 17:59:14,816 - INFO - Processing: asthma (MONDO_0004979)
+2025-09-04 17:59:14,816 - INFO - ============================================================
+2025-09-04 17:59:14,816 - INFO - Fetching GWAS associations from API...
+2025-09-04 17:59:14,816 - INFO - Fetching GWAS associations for EFO ID: MONDO_0004979
+2025-09-04 18:00:28,091 - INFO - Successfully fetched 2934 GWAS associations for EFO ID: MONDO_0004979
+2025-09-04 18:00:28,092 - INFO - Found 2934 raw associations
+2025-09-04 18:00:28,092 - INFO - Parsing association data...
+2025-09-04 18:00:28,092 - INFO - Parsing 2934 GWAS associations to extract rsID and risk allele.
+2025-09-04 18:00:28,097 - INFO - === DEBUG: Found 1839 unique rsIDs ===
+2025-09-04 18:00:28,097 - INFO - Sample rsIDs: ['rs7014953', 'rs1143633', 'rs8089834', 'rs2076846', 'rs57866767']
+2025-09-04 18:00:28,098 - INFO - Fetching locations for 1839 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 18:05:23,330 - INFO - Successfully fetched locations for 1833 rsIDs.
+2025-09-04 18:05:23,341 - INFO - === DEBUG: Created DataFrame with 2027 rows ===
+2025-09-04 18:05:23,341 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 18:05:23,341 - INFO - Sample DataFrame rows:
+2025-09-04 18:05:23,342 - INFO - Row 0:
+2025-09-04 18:05:23,342 - INFO -   SNP_ID: rs2244012
+2025-09-04 18:05:23,342 - INFO -   PubMed_ID: None
+2025-09-04 18:05:23,342 - INFO -   GWAS_Trait: asthma
+2025-09-04 18:05:23,342 - INFO -   Odds_Ratio: 1.64
+2025-09-04 18:05:23,342 - INFO -   P_Value: 3e-07
+2025-09-04 18:05:23,342 - INFO - Row 1:
+2025-09-04 18:05:23,342 - INFO -   SNP_ID: rs17525472
+2025-09-04 18:05:23,343 - INFO -   PubMed_ID: None
+2025-09-04 18:05:23,343 - INFO -   GWAS_Trait: asthma
+2025-09-04 18:05:23,343 - INFO -   Odds_Ratio: nan
+2025-09-04 18:05:23,343 - INFO -   P_Value: 2e-06
+2025-09-04 18:05:23,343 - INFO - Row 2:
+2025-09-04 18:05:23,343 - INFO -   SNP_ID: rs4815617
+2025-09-04 18:05:23,343 - INFO -   PubMed_ID: None
+2025-09-04 18:05:23,343 - INFO -   GWAS_Trait: asthma
+2025-09-04 18:05:23,343 - INFO -   Odds_Ratio: nan
+2025-09-04 18:05:23,343 - INFO -   P_Value: 8e-06
+2025-09-04 18:05:23,345 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 18:05:23,346 - INFO - Successfully parsed and mapped 2027 SNP records for trait asthma
+2025-09-04 18:05:23,347 - INFO - Saving 2027 parsed variants to cache...
+2025-09-04 18:05:23,348 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 18:05:23,354 - INFO - Saved GWAS data for MONDO_0004979 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250904_claude_/data/gwas_cache/MONDO_0004979.parquet
+2025-09-04 18:05:23,354 - INFO - ✅ Successfully cached 2027 variants for asthma
+2025-09-04 18:05:23,354 - INFO -    Raw associations: 2934
+2025-09-04 18:05:23,354 - INFO -    Parsed variants: 2027
+2025-09-04 18:05:23,354 - INFO -    Success rate: 69.1%
+2025-09-04 18:05:23,354 - INFO -    Time taken: 368.5 seconds
+2025-09-04 18:05:24,364 - INFO - 
+============================================================
+2025-09-04 18:05:24,365 - INFO - Processing: psoriasis (EFO_0000676)
+2025-09-04 18:05:24,365 - INFO - ============================================================
+2025-09-04 18:05:24,365 - INFO - Fetching GWAS associations from API...
+2025-09-04 18:05:24,365 - INFO - Fetching GWAS associations for EFO ID: EFO_0000676
+2025-09-04 18:06:10,590 - INFO - Successfully fetched 1919 GWAS associations for EFO ID: EFO_0000676
+2025-09-04 18:06:10,591 - INFO - Found 1919 raw associations
+2025-09-04 18:06:10,591 - INFO - Parsing association data...
+2025-09-04 18:06:10,591 - INFO - Parsing 1919 GWAS associations to extract rsID and risk allele.
+2025-09-04 18:06:10,594 - INFO - === DEBUG: Found 1542 unique rsIDs ===
+2025-09-04 18:06:10,594 - INFO - Sample rsIDs: ['rs10893884', 'rs750027', 'rs59827721', 'rs2235175', 'rs588489']
+2025-09-04 18:06:10,594 - INFO - Fetching locations for 1542 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 18:11:02,624 - INFO - Successfully fetched locations for 1528 rsIDs.
+2025-09-04 18:11:02,633 - INFO - === DEBUG: Created DataFrame with 1554 rows ===
+2025-09-04 18:11:02,633 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 18:11:02,633 - INFO - Sample DataFrame rows:
+2025-09-04 18:11:02,634 - INFO - Row 0:
+2025-09-04 18:11:02,634 - INFO -   SNP_ID: rs12191877
+2025-09-04 18:11:02,634 - INFO -   PubMed_ID: None
+2025-09-04 18:11:02,634 - INFO -   GWAS_Trait: psoriasis
+2025-09-04 18:11:02,634 - INFO -   Odds_Ratio: 2.64
+2025-09-04 18:11:02,634 - INFO -   P_Value: 1e-100
+2025-09-04 18:11:02,634 - INFO - Row 1:
+2025-09-04 18:11:02,634 - INFO -   SNP_ID: rs2082412
+2025-09-04 18:11:02,634 - INFO -   PubMed_ID: None
+2025-09-04 18:11:02,634 - INFO -   GWAS_Trait: psoriasis
+2025-09-04 18:11:02,634 - INFO -   Odds_Ratio: 1.44
+2025-09-04 18:11:02,634 - INFO -   P_Value: 2e-28
+2025-09-04 18:11:02,635 - INFO - Row 2:
+2025-09-04 18:11:02,635 - INFO -   SNP_ID: rs17728338
+2025-09-04 18:11:02,635 - INFO -   PubMed_ID: None
+2025-09-04 18:11:02,635 - INFO -   GWAS_Trait: psoriasis
+2025-09-04 18:11:02,635 - INFO -   Odds_Ratio: 1.59
+2025-09-04 18:11:02,635 - INFO -   P_Value: 1e-20
+2025-09-04 18:11:02,636 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 18:11:02,638 - INFO - Successfully parsed and mapped 1554 SNP records for trait psoriasis
+2025-09-04 18:11:02,639 - INFO - Saving 1554 parsed variants to cache...
+2025-09-04 18:11:02,640 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 18:11:02,648 - INFO - Saved GWAS data for EFO_0000676 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250904_claude_/data/gwas_cache/EFO_0000676.parquet
+2025-09-04 18:11:02,648 - INFO - ✅ Successfully cached 1554 variants for psoriasis
+2025-09-04 18:11:02,648 - INFO -    Raw associations: 1919
+2025-09-04 18:11:02,648 - INFO -    Parsed variants: 1554
+2025-09-04 18:11:02,648 - INFO -    Success rate: 81.0%
+2025-09-04 18:11:02,648 - INFO -    Time taken: 338.3 seconds
+2025-09-04 18:11:03,657 - INFO - 
+============================================================
+2025-09-04 18:11:03,657 - INFO - Processing: breast cancer (EFO_0000305)
+2025-09-04 18:11:03,658 - INFO - ============================================================
+2025-09-04 18:11:03,658 - INFO - Fetching GWAS associations from API...
+2025-09-04 18:11:03,658 - INFO - Fetching GWAS associations for EFO ID: EFO_0000305
+2025-09-04 18:11:57,106 - INFO - Successfully fetched 2120 GWAS associations for EFO ID: EFO_0000305
+2025-09-04 18:11:57,107 - INFO - Found 2120 raw associations
+2025-09-04 18:11:57,107 - INFO - Parsing association data...
+2025-09-04 18:11:57,107 - INFO - Parsing 2120 GWAS associations to extract rsID and risk allele.
+2025-09-04 18:11:57,110 - INFO - === DEBUG: Found 1385 unique rsIDs ===
+2025-09-04 18:11:57,110 - INFO - Sample rsIDs: ['rs73110464', 'rs612683', 'rs1590566', 'rs2290854', 'rs72932523']
+2025-09-04 18:11:57,110 - INFO - Fetching locations for 1385 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 18:16:51,620 - INFO - Successfully fetched locations for 1363 rsIDs.
+2025-09-04 18:16:51,628 - INFO - === DEBUG: Created DataFrame with 1501 rows ===
+2025-09-04 18:16:51,629 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 18:16:51,629 - INFO - Sample DataFrame rows:
+2025-09-04 18:16:51,629 - INFO - Row 0:
+2025-09-04 18:16:51,629 - INFO -   SNP_ID: rs10871290
+2025-09-04 18:16:51,629 - INFO -   PubMed_ID: None
+2025-09-04 18:16:51,629 - INFO -   GWAS_Trait: breast cancer
+2025-09-04 18:16:51,629 - INFO -   Odds_Ratio: nan
+2025-09-04 18:16:51,629 - INFO -   P_Value: 4e-07
+2025-09-04 18:16:51,630 - INFO - Row 1:
+2025-09-04 18:16:51,630 - INFO -   SNP_ID: rs3784099
+2025-09-04 18:16:51,630 - INFO -   PubMed_ID: None
+2025-09-04 18:16:51,630 - INFO -   GWAS_Trait: breast cancer
+2025-09-04 18:16:51,630 - INFO -   Odds_Ratio: 1.43
+2025-09-04 18:16:51,630 - INFO -   P_Value: 3e-07
+2025-09-04 18:16:51,630 - INFO - Row 2:
+2025-09-04 18:16:51,630 - INFO -   SNP_ID: rs9934948
+2025-09-04 18:16:51,630 - INFO -   PubMed_ID: None
+2025-09-04 18:16:51,630 - INFO -   GWAS_Trait: breast cancer
+2025-09-04 18:16:51,630 - INFO -   Odds_Ratio: 1.29
+2025-09-04 18:16:51,630 - INFO -   P_Value: 6e-06
+2025-09-04 18:16:51,632 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 18:16:51,633 - INFO - Successfully parsed and mapped 1501 SNP records for trait breast cancer
+2025-09-04 18:16:51,634 - INFO - Saving 1501 parsed variants to cache...
+2025-09-04 18:16:51,634 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 18:16:51,640 - INFO - Saved GWAS data for EFO_0000305 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250904_claude_/data/gwas_cache/EFO_0000305.parquet
+2025-09-04 18:16:51,640 - INFO - ✅ Successfully cached 1501 variants for breast cancer
+2025-09-04 18:16:51,640 - INFO -    Raw associations: 2120
+2025-09-04 18:16:51,640 - INFO -    Parsed variants: 1501
+2025-09-04 18:16:51,640 - INFO -    Success rate: 70.8%
+2025-09-04 18:16:51,640 - INFO -    Time taken: 348.0 seconds
+2025-09-04 18:16:52,648 - INFO - 
+============================================================
+2025-09-04 18:16:52,648 - INFO - Processing: prostate cancer (EFO_0001663)
+2025-09-04 18:16:52,648 - INFO - ============================================================
+2025-09-04 18:16:52,649 - INFO - Fetching GWAS associations from API...
+2025-09-04 18:16:52,649 - INFO - Fetching GWAS associations for EFO ID: EFO_0001663
+2025-09-04 18:18:09,588 - INFO - Successfully fetched 2978 GWAS associations for EFO ID: EFO_0001663
+2025-09-04 18:18:09,588 - INFO - Found 2978 raw associations
+2025-09-04 18:18:09,588 - INFO - Parsing association data...
+2025-09-04 18:18:09,588 - INFO - Parsing 2978 GWAS associations to extract rsID and risk allele.
+2025-09-04 18:18:09,591 - INFO - === DEBUG: Found 1402 unique rsIDs ===
+2025-09-04 18:18:09,591 - INFO - Sample rsIDs: ['rs73110464', 'rs9306894', 'rs13390276', 'rs1590566', 'rs56159348']
+2025-09-04 18:18:09,591 - INFO - Fetching locations for 1402 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 18:23:15,082 - INFO - Successfully fetched locations for 1398 rsIDs.
+2025-09-04 18:23:15,091 - INFO - === DEBUG: Created DataFrame with 1540 rows ===
+2025-09-04 18:23:15,091 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 18:23:15,091 - INFO - Sample DataFrame rows:
+2025-09-04 18:23:15,092 - INFO - Row 0:
+2025-09-04 18:23:15,092 - INFO -   SNP_ID: rs1465618
+2025-09-04 18:23:15,092 - INFO -   PubMed_ID: None
+2025-09-04 18:23:15,092 - INFO -   GWAS_Trait: prostate cancer
+2025-09-04 18:23:15,092 - INFO -   Odds_Ratio: 1.08
+2025-09-04 18:23:15,092 - INFO -   P_Value: 2e-08
+2025-09-04 18:23:15,092 - INFO - Row 1:
+2025-09-04 18:23:15,092 - INFO -   SNP_ID: rs17021918
+2025-09-04 18:23:15,092 - INFO -   PubMed_ID: None
+2025-09-04 18:23:15,092 - INFO -   GWAS_Trait: prostate cancer
+2025-09-04 18:23:15,092 - INFO -   Odds_Ratio: 1.11
+2025-09-04 18:23:15,093 - INFO -   P_Value: 4e-15
+2025-09-04 18:23:15,093 - INFO - Row 2:
+2025-09-04 18:23:15,093 - INFO -   SNP_ID: rs7679673
+2025-09-04 18:23:15,093 - INFO -   PubMed_ID: None
+2025-09-04 18:23:15,093 - INFO -   GWAS_Trait: prostate cancer
+2025-09-04 18:23:15,093 - INFO -   Odds_Ratio: 1.1
+2025-09-04 18:23:15,093 - INFO -   P_Value: 3e-14
+2025-09-04 18:23:15,095 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 18:23:15,096 - INFO - Successfully parsed and mapped 1540 SNP records for trait prostate cancer
+2025-09-04 18:23:15,097 - INFO - Saving 1540 parsed variants to cache...
+2025-09-04 18:23:15,097 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 18:23:15,106 - INFO - Saved GWAS data for EFO_0001663 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250904_claude_/data/gwas_cache/EFO_0001663.parquet
+2025-09-04 18:23:15,106 - INFO - ✅ Successfully cached 1540 variants for prostate cancer
+2025-09-04 18:23:15,107 - INFO -    Raw associations: 2978
+2025-09-04 18:23:15,107 - INFO -    Parsed variants: 1540
+2025-09-04 18:23:15,107 - INFO -    Success rate: 51.7%
+2025-09-04 18:23:15,107 - INFO -    Time taken: 382.5 seconds
+2025-09-04 18:23:16,115 - INFO - 
+============================================================
+2025-09-04 18:23:16,115 - INFO - Processing: colorectal cancer (MONDO_0005575)
+2025-09-04 18:23:16,116 - INFO - ============================================================
+2025-09-04 18:23:16,116 - INFO - Fetching GWAS associations from API...
+2025-09-04 18:23:16,116 - INFO - Fetching GWAS associations for EFO ID: MONDO_0005575
+2025-09-04 18:24:06,739 - INFO - Successfully fetched 2020 GWAS associations for EFO ID: MONDO_0005575
+2025-09-04 18:24:06,739 - INFO - Found 2020 raw associations
+2025-09-04 18:24:06,739 - INFO - Parsing association data...
+2025-09-04 18:24:06,739 - INFO - Parsing 2020 GWAS associations to extract rsID and risk allele.
+2025-09-04 18:24:06,744 - INFO - === DEBUG: Found 1434 unique rsIDs ===
+2025-09-04 18:24:06,744 - INFO - Sample rsIDs: ['rs79105258', 'rs73110464', 'rs1590566', 'rs12672022', 'rs547637398']
+2025-09-04 18:24:06,744 - INFO - Fetching locations for 1434 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 18:27:14,401 - INFO - Successfully fetched locations for 1430 rsIDs.
+2025-09-04 18:27:14,406 - INFO - === DEBUG: Created DataFrame with 1548 rows ===
+2025-09-04 18:27:14,406 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 18:27:14,406 - INFO - Sample DataFrame rows:
+2025-09-04 18:27:14,407 - INFO - Row 0:
+2025-09-04 18:27:14,407 - INFO -   SNP_ID: rs6983267
+2025-09-04 18:27:14,407 - INFO -   PubMed_ID: None
+2025-09-04 18:27:14,407 - INFO -   GWAS_Trait: colorectal cancer
+2025-09-04 18:27:14,407 - INFO -   Odds_Ratio: 1.27
+2025-09-04 18:27:14,407 - INFO -   P_Value: 1e-14
+2025-09-04 18:27:14,407 - INFO - Row 1:
+2025-09-04 18:27:14,407 - INFO -   SNP_ID: rs10411210
+2025-09-04 18:27:14,407 - INFO -   PubMed_ID: None
+2025-09-04 18:27:14,407 - INFO -   GWAS_Trait: colorectal cancer
+2025-09-04 18:27:14,407 - INFO -   Odds_Ratio: 1.15
+2025-09-04 18:27:14,407 - INFO -   P_Value: 5e-09
+2025-09-04 18:27:14,407 - INFO - Row 2:
+2025-09-04 18:27:14,407 - INFO -   SNP_ID: rs961253
+2025-09-04 18:27:14,408 - INFO -   PubMed_ID: None
+2025-09-04 18:27:14,408 - INFO -   GWAS_Trait: colorectal cancer
+2025-09-04 18:27:14,408 - INFO -   Odds_Ratio: 1.12
+2025-09-04 18:27:14,408 - INFO -   P_Value: 2e-10
+2025-09-04 18:27:14,409 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 18:27:14,411 - INFO - Successfully parsed and mapped 1548 SNP records for trait colorectal cancer
+2025-09-04 18:27:14,412 - INFO - Saving 1548 parsed variants to cache...
+2025-09-04 18:27:14,413 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 18:27:14,420 - INFO - Saved GWAS data for MONDO_0005575 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250904_claude_/data/gwas_cache/MONDO_0005575.parquet
+2025-09-04 18:27:14,421 - INFO - ✅ Successfully cached 1548 variants for colorectal cancer
+2025-09-04 18:27:14,421 - INFO -    Raw associations: 2020
+2025-09-04 18:27:14,421 - INFO -    Parsed variants: 1548
+2025-09-04 18:27:14,421 - INFO -    Success rate: 76.6%
+2025-09-04 18:27:14,421 - INFO -    Time taken: 238.3 seconds
+2025-09-04 18:27:15,432 - INFO - 
+============================================================
+2025-09-04 18:27:15,433 - INFO - Processing: lung cancer (EFO_0001071)
+2025-09-04 18:27:15,433 - INFO - ============================================================
+2025-09-04 18:27:15,433 - INFO - Fetching GWAS associations from API...
+2025-09-04 18:27:15,433 - INFO - Fetching GWAS associations for EFO ID: EFO_0001071
+2025-09-04 18:27:31,687 - INFO - Successfully fetched 575 GWAS associations for EFO ID: EFO_0001071
+2025-09-04 18:27:31,688 - INFO - Found 575 raw associations
+2025-09-04 18:27:31,688 - INFO - Parsing association data...
+2025-09-04 18:27:31,688 - INFO - Parsing 575 GWAS associations to extract rsID and risk allele.
+2025-09-04 18:27:31,692 - INFO - === DEBUG: Found 454 unique rsIDs ===
+2025-09-04 18:27:31,692 - INFO - Sample rsIDs: ['rs73110464', 'rs1866631', 'rs6989042', 'rs117497853', 'rs7900823']
+2025-09-04 18:27:31,692 - INFO - Fetching locations for 454 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 18:28:39,010 - INFO - Successfully fetched locations for 452 rsIDs.
+2025-09-04 18:28:39,014 - INFO - === DEBUG: Created DataFrame with 424 rows ===
+2025-09-04 18:28:39,015 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 18:28:39,015 - INFO - Sample DataFrame rows:
+2025-09-04 18:28:39,015 - INFO - Row 0:
+2025-09-04 18:28:39,015 - INFO -   SNP_ID: rs8034191
+2025-09-04 18:28:39,016 - INFO -   PubMed_ID: None
+2025-09-04 18:28:39,016 - INFO -   GWAS_Trait: lung cancer
+2025-09-04 18:28:39,016 - INFO -   Odds_Ratio: 1.29
+2025-09-04 18:28:39,016 - INFO -   P_Value: 3e-26
+2025-09-04 18:28:39,016 - INFO - Row 1:
+2025-09-04 18:28:39,016 - INFO -   SNP_ID: rs4975616
+2025-09-04 18:28:39,016 - INFO -   PubMed_ID: None
+2025-09-04 18:28:39,016 - INFO -   GWAS_Trait: lung cancer
+2025-09-04 18:28:39,016 - INFO -   Odds_Ratio: 1.15
+2025-09-04 18:28:39,016 - INFO -   P_Value: 3.0000000000000004e-09
+2025-09-04 18:28:39,016 - INFO - Row 2:
+2025-09-04 18:28:39,016 - INFO -   SNP_ID: rs3117582
+2025-09-04 18:28:39,016 - INFO -   PubMed_ID: None
+2025-09-04 18:28:39,016 - INFO -   GWAS_Trait: lung cancer
+2025-09-04 18:28:39,016 - INFO -   Odds_Ratio: 1.24
+2025-09-04 18:28:39,016 - INFO -   P_Value: 4e-10
+2025-09-04 18:28:39,017 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 18:28:39,019 - INFO - Successfully parsed and mapped 424 SNP records for trait lung cancer
+2025-09-04 18:28:39,020 - INFO - Saving 424 parsed variants to cache...
+2025-09-04 18:28:39,020 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 18:28:39,024 - INFO - Saved GWAS data for EFO_0001071 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250904_claude_/data/gwas_cache/EFO_0001071.parquet
+2025-09-04 18:28:39,024 - INFO - ✅ Successfully cached 424 variants for lung cancer
+2025-09-04 18:28:39,024 - INFO -    Raw associations: 575
+2025-09-04 18:28:39,025 - INFO -    Parsed variants: 424
+2025-09-04 18:28:39,025 - INFO -    Success rate: 73.7%
+2025-09-04 18:28:39,025 - INFO -    Time taken: 83.6 seconds
+2025-09-04 18:28:40,032 - INFO - 
+============================================================
+2025-09-04 18:28:40,032 - INFO - Processing: depression (MONDO_0002050)
+2025-09-04 18:28:40,032 - INFO - ============================================================
+2025-09-04 18:28:40,032 - INFO - Fetching GWAS associations from API...
+2025-09-04 18:28:40,033 - INFO - Fetching GWAS associations for EFO ID: MONDO_0002050
+2025-09-04 18:28:42,110 - INFO - Successfully fetched 26 GWAS associations for EFO ID: MONDO_0002050
+2025-09-04 18:28:42,111 - INFO - Found 26 raw associations
+2025-09-04 18:28:42,111 - INFO - Parsing association data...
+2025-09-04 18:28:42,111 - INFO - Parsing 26 GWAS associations to extract rsID and risk allele.
+2025-09-04 18:28:42,112 - INFO - === DEBUG: Found 15 unique rsIDs ===
+2025-09-04 18:28:42,112 - INFO - Sample rsIDs: ['rs11157241', 'rs56289435', 'rs11130245', 'rs117741236', 'rs9586']
+2025-09-04 18:28:42,112 - INFO - Fetching locations for 15 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 18:28:44,863 - INFO - Successfully fetched locations for 15 rsIDs.
+2025-09-04 18:28:44,866 - INFO - === DEBUG: Created DataFrame with 15 rows ===
+2025-09-04 18:28:44,866 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 18:28:44,866 - INFO - Sample DataFrame rows:
+2025-09-04 18:28:44,867 - INFO - Row 0:
+2025-09-04 18:28:44,867 - INFO -   SNP_ID: rs553807001
+2025-09-04 18:28:44,867 - INFO -   PubMed_ID: None
+2025-09-04 18:28:44,867 - INFO -   GWAS_Trait: depression
+2025-09-04 18:28:44,868 - INFO -   Odds_Ratio: 2.968
+2025-09-04 18:28:44,868 - INFO -   P_Value: 2e-11
+2025-09-04 18:28:44,868 - INFO - Row 1:
+2025-09-04 18:28:44,868 - INFO -   SNP_ID: rs1075046
+2025-09-04 18:28:44,868 - INFO -   PubMed_ID: None
+2025-09-04 18:28:44,868 - INFO -   GWAS_Trait: depression
+2025-09-04 18:28:44,868 - INFO -   Odds_Ratio: 0.63
+2025-09-04 18:28:44,868 - INFO -   P_Value: 5e-08
+2025-09-04 18:28:44,868 - INFO - Row 2:
+2025-09-04 18:28:44,869 - INFO -   SNP_ID: rs4786119
+2025-09-04 18:28:44,869 - INFO -   PubMed_ID: None
+2025-09-04 18:28:44,869 - INFO -   GWAS_Trait: depression
+2025-09-04 18:28:44,869 - INFO -   Odds_Ratio: 0.57
+2025-09-04 18:28:44,869 - INFO -   P_Value: 2e-06
+2025-09-04 18:28:44,870 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 18:28:44,872 - INFO - Successfully parsed and mapped 15 SNP records for trait depression
+2025-09-04 18:28:44,872 - INFO - Saving 15 parsed variants to cache...
+2025-09-04 18:28:44,872 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 18:28:44,876 - INFO - Saved GWAS data for MONDO_0002050 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250904_claude_/data/gwas_cache/MONDO_0002050.parquet
+2025-09-04 18:28:44,876 - INFO - ✅ Successfully cached 15 variants for depression
+2025-09-04 18:28:44,876 - INFO -    Raw associations: 26
+2025-09-04 18:28:44,876 - INFO -    Parsed variants: 15
+2025-09-04 18:28:44,876 - INFO -    Success rate: 57.7%
+2025-09-04 18:28:44,876 - INFO -    Time taken: 4.8 seconds
+2025-09-04 18:28:45,878 - INFO - 
+============================================================
+2025-09-04 18:28:45,879 - INFO - Processing: bipolar disorder (MONDO_0004985)
+2025-09-04 18:28:45,879 - INFO - ============================================================
+2025-09-04 18:28:45,879 - INFO - Fetching GWAS associations from API...
+2025-09-04 18:28:45,879 - INFO - Fetching GWAS associations for EFO ID: MONDO_0004985
+2025-09-04 18:29:30,682 - INFO - Successfully fetched 1617 GWAS associations for EFO ID: MONDO_0004985
+2025-09-04 18:29:30,682 - INFO - Found 1617 raw associations
+2025-09-04 18:29:30,682 - INFO - Parsing association data...
+2025-09-04 18:29:30,682 - INFO - Parsing 1617 GWAS associations to extract rsID and risk allele.
+2025-09-04 18:29:30,685 - INFO - === DEBUG: Found 1232 unique rsIDs ===
+2025-09-04 18:29:30,685 - INFO - Sample rsIDs: ['rs10860416', 'rs117982730', 'rs1637749', 'rs11191499', 'rs12436436']
+2025-09-04 18:29:30,685 - INFO - Fetching locations for 1232 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 18:31:51,972 - INFO - Successfully fetched locations for 1231 rsIDs.
+2025-09-04 18:31:51,982 - INFO - === DEBUG: Created DataFrame with 1341 rows ===
+2025-09-04 18:31:51,982 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 18:31:51,982 - INFO - Sample DataFrame rows:
+2025-09-04 18:31:51,983 - INFO - Row 0:
+2025-09-04 18:31:51,983 - INFO -   SNP_ID: rs472913
+2025-09-04 18:31:51,983 - INFO -   PubMed_ID: None
+2025-09-04 18:31:51,983 - INFO -   GWAS_Trait: bipolar disorder
+2025-09-04 18:31:51,983 - INFO -   Odds_Ratio: 1.18
+2025-09-04 18:31:51,983 - INFO -   P_Value: 2e-07
+2025-09-04 18:31:51,983 - INFO - Row 1:
+2025-09-04 18:31:51,983 - INFO -   SNP_ID: rs13409348
+2025-09-04 18:31:51,983 - INFO -   PubMed_ID: None
+2025-09-04 18:31:51,983 - INFO -   GWAS_Trait: bipolar disorder
+2025-09-04 18:31:51,983 - INFO -   Odds_Ratio: 1.2
+2025-09-04 18:31:51,984 - INFO -   P_Value: 3e-06
+2025-09-04 18:31:51,984 - INFO - Row 2:
+2025-09-04 18:31:51,984 - INFO -   SNP_ID: rs6733011
+2025-09-04 18:31:51,984 - INFO -   PubMed_ID: None
+2025-09-04 18:31:51,984 - INFO -   GWAS_Trait: bipolar disorder
+2025-09-04 18:31:51,984 - INFO -   Odds_Ratio: 1.17
+2025-09-04 18:31:51,984 - INFO -   P_Value: 3e-06
+2025-09-04 18:31:51,986 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 18:31:51,988 - INFO - Successfully parsed and mapped 1341 SNP records for trait bipolar disorder
+2025-09-04 18:31:51,989 - INFO - Saving 1341 parsed variants to cache...
+2025-09-04 18:31:51,990 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 18:31:51,996 - INFO - Saved GWAS data for MONDO_0004985 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250904_claude_/data/gwas_cache/MONDO_0004985.parquet
+2025-09-04 18:31:51,996 - INFO - ✅ Successfully cached 1341 variants for bipolar disorder
+2025-09-04 18:31:51,996 - INFO -    Raw associations: 1617
+2025-09-04 18:31:51,996 - INFO -    Parsed variants: 1341
+2025-09-04 18:31:51,996 - INFO -    Success rate: 82.9%
+2025-09-04 18:31:51,996 - INFO -    Time taken: 186.1 seconds
+2025-09-04 18:31:53,004 - INFO - 
+============================================================
+2025-09-04 18:31:53,005 - INFO - Processing: autism spectrum disorder (EFO_0003758)
+2025-09-04 18:31:53,005 - INFO - ============================================================
+2025-09-04 18:31:53,005 - INFO - Fetching GWAS associations from API...
+2025-09-04 18:31:53,005 - INFO - Fetching GWAS associations for EFO ID: EFO_0003758
+2025-09-04 18:31:55,814 - INFO - Successfully fetched 45 GWAS associations for EFO ID: EFO_0003758
+2025-09-04 18:31:55,815 - INFO - Found 45 raw associations
+2025-09-04 18:31:55,815 - INFO - Parsing association data...
+2025-09-04 18:31:55,815 - INFO - Parsing 45 GWAS associations to extract rsID and risk allele.
+2025-09-04 18:31:55,815 - INFO - === DEBUG: Found 48 unique rsIDs ===
+2025-09-04 18:31:55,816 - INFO - Sample rsIDs: ['rs7710122', 'rs9573902', 'rs4150167', 'rs6537825', 'rs6661053']
+2025-09-04 18:31:55,816 - INFO - Fetching locations for 48 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 18:32:06,204 - INFO - Successfully fetched locations for 48 rsIDs.
+2025-09-04 18:32:06,206 - INFO - === DEBUG: Created DataFrame with 48 rows ===
+2025-09-04 18:32:06,207 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 18:32:06,207 - INFO - Sample DataFrame rows:
+2025-09-04 18:32:06,207 - INFO - Row 0:
+2025-09-04 18:32:06,207 - INFO -   SNP_ID: rs4307059
+2025-09-04 18:32:06,208 - INFO -   PubMed_ID: None
+2025-09-04 18:32:06,208 - INFO -   GWAS_Trait: autism spectrum disorder
+2025-09-04 18:32:06,208 - INFO -   Odds_Ratio: 1.19
+2025-09-04 18:32:06,208 - INFO -   P_Value: 2e-10
+2025-09-04 18:32:06,208 - INFO - Row 1:
+2025-09-04 18:32:06,208 - INFO -   SNP_ID: rs10513025
+2025-09-04 18:32:06,209 - INFO -   PubMed_ID: None
+2025-09-04 18:32:06,209 - INFO -   GWAS_Trait: autism spectrum disorder
+2025-09-04 18:32:06,209 - INFO -   Odds_Ratio: 1.81
+2025-09-04 18:32:06,210 - INFO -   P_Value: 2e-07
+2025-09-04 18:32:06,210 - INFO - Row 2:
+2025-09-04 18:32:06,210 - INFO -   SNP_ID: rs6453278
+2025-09-04 18:32:06,210 - INFO -   PubMed_ID: None
+2025-09-04 18:32:06,210 - INFO -   GWAS_Trait: autism spectrum disorder
+2025-09-04 18:32:06,210 - INFO -   Odds_Ratio: 1.25
+2025-09-04 18:32:06,210 - INFO -   P_Value: 4.9999999999999996e-06
+2025-09-04 18:32:06,212 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 18:32:06,213 - INFO - Successfully parsed and mapped 48 SNP records for trait autism spectrum disorder
+2025-09-04 18:32:06,213 - INFO - Saving 48 parsed variants to cache...
+2025-09-04 18:32:06,214 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 18:32:06,217 - INFO - Saved GWAS data for EFO_0003758 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250904_claude_/data/gwas_cache/EFO_0003758.parquet
+2025-09-04 18:32:06,217 - INFO - ✅ Successfully cached 48 variants for autism spectrum disorder
+2025-09-04 18:32:06,217 - INFO -    Raw associations: 45
+2025-09-04 18:32:06,217 - INFO -    Parsed variants: 48
+2025-09-04 18:32:06,217 - INFO -    Success rate: 106.7%
+2025-09-04 18:32:06,218 - INFO -    Time taken: 13.2 seconds
+2025-09-04 18:32:07,223 - INFO - 
+============================================================
+2025-09-04 18:32:07,224 - INFO - Processing: schizophrenia (MONDO_0005090)
+2025-09-04 18:32:07,225 - INFO - ============================================================
+2025-09-04 18:32:07,225 - INFO - Fetching GWAS associations from API...
+2025-09-04 18:32:07,225 - INFO - Fetching GWAS associations for EFO ID: MONDO_0005090
+2025-09-04 18:34:28,021 - INFO - Successfully fetched 5595 GWAS associations for EFO ID: MONDO_0005090
+2025-09-04 18:34:28,022 - INFO - Found 5595 raw associations
+2025-09-04 18:34:28,022 - INFO - Parsing association data...
+2025-09-04 18:34:28,022 - INFO - Parsing 5595 GWAS associations to extract rsID and risk allele.
+2025-09-04 18:34:28,031 - INFO - === DEBUG: Found 3804 unique rsIDs ===
+2025-09-04 18:34:28,031 - INFO - Sample rsIDs: ['rs9317639', 'rs114540395', 'rs210155', 'rs61712019', 'rs34879738']
+2025-09-04 18:34:28,031 - INFO - Fetching locations for 3804 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 18:42:04,336 - INFO - Successfully fetched locations for 3800 rsIDs.
+2025-09-04 18:42:04,355 - INFO - === DEBUG: Created DataFrame with 4174 rows ===
+2025-09-04 18:42:04,355 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 18:42:04,355 - INFO - Sample DataFrame rows:
+2025-09-04 18:42:04,355 - INFO - Row 0:
+2025-09-04 18:42:04,356 - INFO -   SNP_ID: rs10489202
+2025-09-04 18:42:04,356 - INFO -   PubMed_ID: None
+2025-09-04 18:42:04,356 - INFO -   GWAS_Trait: schizophrenia
+2025-09-04 18:42:04,356 - INFO -   Odds_Ratio: 1.23
+2025-09-04 18:42:04,356 - INFO -   P_Value: 1e-08
+2025-09-04 18:42:04,356 - INFO - Row 1:
+2025-09-04 18:42:04,356 - INFO -   SNP_ID: rs16887244
+2025-09-04 18:42:04,356 - INFO -   PubMed_ID: None
+2025-09-04 18:42:04,356 - INFO -   GWAS_Trait: schizophrenia
+2025-09-04 18:42:04,356 - INFO -   Odds_Ratio: 1.19
+2025-09-04 18:42:04,356 - INFO -   P_Value: 1e-10
+2025-09-04 18:42:04,356 - INFO - Row 2:
+2025-09-04 18:42:04,356 - INFO -   SNP_ID: rs1635
+2025-09-04 18:42:04,356 - INFO -   PubMed_ID: None
+2025-09-04 18:42:04,356 - INFO -   GWAS_Trait: schizophrenia
+2025-09-04 18:42:04,356 - INFO -   Odds_Ratio: 1.28
+2025-09-04 18:42:04,356 - INFO -   P_Value: 7e-12
+2025-09-04 18:42:04,359 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 18:42:04,361 - INFO - Successfully parsed and mapped 4174 SNP records for trait schizophrenia
+2025-09-04 18:42:04,363 - INFO - Saving 4174 parsed variants to cache...
+2025-09-04 18:42:04,364 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 18:42:04,369 - INFO - Saved GWAS data for MONDO_0005090 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250904_claude_/data/gwas_cache/MONDO_0005090.parquet
+2025-09-04 18:42:04,369 - INFO - ✅ Successfully cached 4174 variants for schizophrenia
+2025-09-04 18:42:04,369 - INFO -    Raw associations: 5595
+2025-09-04 18:42:04,369 - INFO -    Parsed variants: 4174
+2025-09-04 18:42:04,369 - INFO -    Success rate: 74.6%
+2025-09-04 18:42:04,369 - INFO -    Time taken: 597.1 seconds
+2025-09-04 18:42:05,378 - INFO - 
+============================================================
+2025-09-04 18:42:05,378 - INFO - Processing: alzheimer's disease (MONDO_0004975)
+2025-09-04 18:42:05,379 - INFO - ============================================================
+2025-09-04 18:42:05,379 - INFO - Fetching GWAS associations from API...
+2025-09-04 18:42:05,379 - INFO - Fetching GWAS associations for EFO ID: MONDO_0004975
+2025-09-04 18:44:26,454 - INFO - Successfully fetched 6181 GWAS associations for EFO ID: MONDO_0004975
+2025-09-04 18:44:26,454 - INFO - Found 6181 raw associations
+2025-09-04 18:44:26,454 - INFO - Parsing association data...
+2025-09-04 18:44:26,454 - INFO - Parsing 6181 GWAS associations to extract rsID and risk allele.
+2025-09-04 18:44:26,464 - INFO - === DEBUG: Found 3857 unique rsIDs ===
+2025-09-04 18:44:26,464 - INFO - Sample rsIDs: ['rs61160187', 'rs1264236841', 'rs6016505', 'rs879878849', 'rs1475548985']
+2025-09-04 18:44:26,464 - INFO - Fetching locations for 3857 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 21:13:31,118 - WARNING - Ensembl API request failed (attempt 1/3): HTTPSConnectionPool(host='rest.ensembl.org', port=443): Read timed out. (read timeout=120)
+2025-09-04 21:44:47,991 - WARNING - Ensembl API request failed (attempt 2/3): HTTPSConnectionPool(host='rest.ensembl.org', port=443): Read timed out. (read timeout=120)
+2025-09-04 21:57:46,002 - INFO - Successfully fetched locations for 3855 rsIDs.
+2025-09-04 21:57:46,021 - INFO - === DEBUG: Created DataFrame with 4066 rows ===
+2025-09-04 21:57:46,021 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 21:57:46,021 - INFO - Sample DataFrame rows:
+2025-09-04 21:57:46,022 - INFO - Row 0:
+2025-09-04 21:57:46,022 - INFO -   SNP_ID: rs11218343
+2025-09-04 21:57:46,022 - INFO -   PubMed_ID: None
+2025-09-04 21:57:46,022 - INFO -   GWAS_Trait: alzheimer's disease
+2025-09-04 21:57:46,022 - INFO -   Odds_Ratio: 1.3
+2025-09-04 21:57:46,022 - INFO -   P_Value: 9e-06
+2025-09-04 21:57:46,022 - INFO - Row 1:
+2025-09-04 21:57:46,022 - INFO -   SNP_ID: rs16830122
+2025-09-04 21:57:46,022 - INFO -   PubMed_ID: None
+2025-09-04 21:57:46,022 - INFO -   GWAS_Trait: alzheimer's disease
+2025-09-04 21:57:46,022 - INFO -   Odds_Ratio: 1.17
+2025-09-04 21:57:46,022 - INFO -   P_Value: 2e-06
+2025-09-04 21:57:46,023 - INFO - Row 2:
+2025-09-04 21:57:46,023 - INFO -   SNP_ID: rs4663105
+2025-09-04 21:57:46,023 - INFO -   PubMed_ID: None
+2025-09-04 21:57:46,023 - INFO -   GWAS_Trait: alzheimer's disease
+2025-09-04 21:57:46,023 - INFO -   Odds_Ratio: 1.19
+2025-09-04 21:57:46,023 - INFO -   P_Value: 2e-12
+2025-09-04 21:57:46,025 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 21:57:46,027 - INFO - Successfully parsed and mapped 4066 SNP records for trait alzheimer's disease
+2025-09-04 21:57:46,028 - INFO - Saving 4066 parsed variants to cache...
+2025-09-04 21:57:46,029 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 21:57:46,032 - INFO - Saved GWAS data for MONDO_0004975 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250904_claude_/data/gwas_cache/MONDO_0004975.parquet
+2025-09-04 21:57:46,032 - INFO - ✅ Successfully cached 4066 variants for alzheimer's disease
+2025-09-04 21:57:46,032 - INFO -    Raw associations: 6181
+2025-09-04 21:57:46,032 - INFO -    Parsed variants: 4066
+2025-09-04 21:57:46,032 - INFO -    Success rate: 65.8%
+2025-09-04 21:57:46,032 - INFO -    Time taken: 11740.7 seconds
+2025-09-04 21:57:47,039 - INFO - 
+============================================================
+2025-09-04 21:57:47,039 - INFO - Processing: parkinson's disease (MONDO_0005180)
+2025-09-04 21:57:47,039 - INFO - ============================================================
+2025-09-04 21:57:47,039 - INFO - Fetching GWAS associations from API...
+2025-09-04 21:57:47,040 - INFO - Fetching GWAS associations for EFO ID: MONDO_0005180
+2025-09-04 21:58:05,359 - INFO - Successfully fetched 741 GWAS associations for EFO ID: MONDO_0005180
+2025-09-04 21:58:05,360 - INFO - Found 741 raw associations
+2025-09-04 21:58:05,360 - INFO - Parsing association data...
+2025-09-04 21:58:05,360 - INFO - Parsing 741 GWAS associations to extract rsID and risk allele.
+2025-09-04 21:58:05,363 - INFO - === DEBUG: Found 540 unique rsIDs ===
+2025-09-04 21:58:05,363 - INFO - Sample rsIDs: ['rs13664', 'rs9275152', 'rs6599388', 'rs11950533', 'rs17554587']
+2025-09-04 21:58:05,363 - INFO - Fetching locations for 540 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 21:59:38,533 - INFO - Successfully fetched locations for 540 rsIDs.
+2025-09-04 21:59:38,537 - INFO - === DEBUG: Created DataFrame with 585 rows ===
+2025-09-04 21:59:38,538 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 21:59:38,538 - INFO - Sample DataFrame rows:
+2025-09-04 21:59:38,538 - INFO - Row 0:
+2025-09-04 21:59:38,538 - INFO -   SNP_ID: rs393152
+2025-09-04 21:59:38,538 - INFO -   PubMed_ID: None
+2025-09-04 21:59:38,538 - INFO -   GWAS_Trait: parkinson's disease
+2025-09-04 21:59:38,538 - INFO -   Odds_Ratio: 1.3
+2025-09-04 21:59:38,538 - INFO -   P_Value: 2e-16
+2025-09-04 21:59:38,539 - INFO - Row 1:
+2025-09-04 21:59:38,539 - INFO -   SNP_ID: rs2736990
+2025-09-04 21:59:38,539 - INFO -   PubMed_ID: None
+2025-09-04 21:59:38,539 - INFO -   GWAS_Trait: parkinson's disease
+2025-09-04 21:59:38,539 - INFO -   Odds_Ratio: 1.23
+2025-09-04 21:59:38,539 - INFO -   P_Value: 2e-16
+2025-09-04 21:59:38,539 - INFO - Row 2:
+2025-09-04 21:59:38,539 - INFO -   SNP_ID: rs823128
+2025-09-04 21:59:38,539 - INFO -   PubMed_ID: None
+2025-09-04 21:59:38,539 - INFO -   GWAS_Trait: parkinson's disease
+2025-09-04 21:59:38,539 - INFO -   Odds_Ratio: 1.52
+2025-09-04 21:59:38,539 - INFO -   P_Value: 7e-08
+2025-09-04 21:59:38,541 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 21:59:38,542 - INFO - Successfully parsed and mapped 585 SNP records for trait parkinson's disease
+2025-09-04 21:59:38,542 - INFO - Saving 585 parsed variants to cache...
+2025-09-04 21:59:38,542 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 21:59:38,546 - INFO - Saved GWAS data for MONDO_0005180 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250904_claude_/data/gwas_cache/MONDO_0005180.parquet
+2025-09-04 21:59:38,546 - INFO - ✅ Successfully cached 585 variants for parkinson's disease
+2025-09-04 21:59:38,546 - INFO -    Raw associations: 741
+2025-09-04 21:59:38,546 - INFO -    Parsed variants: 585
+2025-09-04 21:59:38,546 - INFO -    Success rate: 78.9%
+2025-09-04 21:59:38,546 - INFO -    Time taken: 111.5 seconds
+2025-09-04 21:59:39,553 - INFO - 
+============================================================
+2025-09-04 21:59:39,553 - INFO - Processing: crohn's disease (EFO_0000384)
+2025-09-04 21:59:39,553 - INFO - ============================================================
+2025-09-04 21:59:39,553 - INFO - Fetching GWAS associations from API...
+2025-09-04 21:59:39,553 - INFO - Fetching GWAS associations for EFO ID: EFO_0000384
+2025-09-04 22:00:13,210 - INFO - Successfully fetched 1344 GWAS associations for EFO ID: EFO_0000384
+2025-09-04 22:00:13,210 - INFO - Found 1344 raw associations
+2025-09-04 22:00:13,210 - INFO - Parsing association data...
+2025-09-04 22:00:13,210 - INFO - Parsing 1344 GWAS associations to extract rsID and risk allele.
+2025-09-04 22:00:13,211 - INFO - === DEBUG: Found 981 unique rsIDs ===
+2025-09-04 22:00:13,211 - INFO - Sample rsIDs: ['rs28581678', 'rs10495903', 'rs11978472', 'rs4020660', 'rs11669923']
+2025-09-04 22:00:13,211 - INFO - Fetching locations for 981 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 22:03:19,027 - INFO - Successfully fetched locations for 977 rsIDs.
+2025-09-04 22:03:19,033 - INFO - === DEBUG: Created DataFrame with 1131 rows ===
+2025-09-04 22:03:19,034 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 22:03:19,034 - INFO - Sample DataFrame rows:
+2025-09-04 22:03:19,034 - INFO - Row 0:
+2025-09-04 22:03:19,035 - INFO -   SNP_ID: rs10801047
+2025-09-04 22:03:19,035 - INFO -   PubMed_ID: None
+2025-09-04 22:03:19,035 - INFO -   GWAS_Trait: crohn's disease
+2025-09-04 22:03:19,035 - INFO -   Odds_Ratio: 1.47
+2025-09-04 22:03:19,035 - INFO -   P_Value: 3.0000000000000004e-08
+2025-09-04 22:03:19,035 - INFO - Row 1:
+2025-09-04 22:03:19,035 - INFO -   SNP_ID: rs9858542
+2025-09-04 22:03:19,035 - INFO -   PubMed_ID: None
+2025-09-04 22:03:19,035 - INFO -   GWAS_Trait: crohn's disease
+2025-09-04 22:03:19,035 - INFO -   Odds_Ratio: 1.17
+2025-09-04 22:03:19,035 - INFO -   P_Value: 5e-08
+2025-09-04 22:03:19,036 - INFO - Row 2:
+2025-09-04 22:03:19,036 - INFO -   SNP_ID: rs13361189
+2025-09-04 22:03:19,036 - INFO -   PubMed_ID: None
+2025-09-04 22:03:19,036 - INFO -   GWAS_Trait: crohn's disease
+2025-09-04 22:03:19,036 - INFO -   Odds_Ratio: 1.38
+2025-09-04 22:03:19,036 - INFO -   P_Value: 2e-10
+2025-09-04 22:03:19,037 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 22:03:19,039 - INFO - Successfully parsed and mapped 1131 SNP records for trait crohn's disease
+2025-09-04 22:03:19,040 - INFO - Saving 1131 parsed variants to cache...
+2025-09-04 22:03:19,040 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 22:03:19,045 - INFO - Saved GWAS data for EFO_0000384 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250904_claude_/data/gwas_cache/EFO_0000384.parquet
+2025-09-04 22:03:19,045 - INFO - ✅ Successfully cached 1131 variants for crohn's disease
+2025-09-04 22:03:19,045 - INFO -    Raw associations: 1344
+2025-09-04 22:03:19,045 - INFO -    Parsed variants: 1131
+2025-09-04 22:03:19,046 - INFO -    Success rate: 84.2%
+2025-09-04 22:03:19,046 - INFO -    Time taken: 219.5 seconds
+2025-09-04 22:03:20,053 - INFO - 
+============================================================
+2025-09-04 22:03:20,054 - INFO - Processing: ulcerative colitis (EFO_0000729)
+2025-09-04 22:03:20,054 - INFO - ============================================================
+2025-09-04 22:03:20,054 - INFO - Fetching GWAS associations from API...
+2025-09-04 22:03:20,054 - INFO - Fetching GWAS associations for EFO ID: EFO_0000729
+2025-09-04 22:03:47,526 - INFO - Successfully fetched 1039 GWAS associations for EFO ID: EFO_0000729
+2025-09-04 22:03:47,526 - INFO - Found 1039 raw associations
+2025-09-04 22:03:47,526 - INFO - Parsing association data...
+2025-09-04 22:03:47,527 - INFO - Parsing 1039 GWAS associations to extract rsID and risk allele.
+2025-09-04 22:03:47,529 - INFO - === DEBUG: Found 752 unique rsIDs ===
+2025-09-04 22:03:47,529 - INFO - Sample rsIDs: ['rs9879090', 'rs10797432', 'rs17229679', 'rs6689858', 'rs191610938']
+2025-09-04 22:03:47,529 - INFO - Fetching locations for 752 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 22:05:54,083 - INFO - Successfully fetched locations for 750 rsIDs.
+2025-09-04 22:05:54,087 - INFO - === DEBUG: Created DataFrame with 876 rows ===
+2025-09-04 22:05:54,087 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 22:05:54,087 - INFO - Sample DataFrame rows:
+2025-09-04 22:05:54,087 - INFO - Row 0:
+2025-09-04 22:05:54,087 - INFO -   SNP_ID: rs9263739
+2025-09-04 22:05:54,087 - INFO -   PubMed_ID: None
+2025-09-04 22:05:54,088 - INFO -   GWAS_Trait: ulcerative colitis
+2025-09-04 22:05:54,088 - INFO -   Odds_Ratio: 2.73
+2025-09-04 22:05:54,088 - INFO -   P_Value: 4e-67
+2025-09-04 22:05:54,088 - INFO - Row 1:
+2025-09-04 22:05:54,088 - INFO -   SNP_ID: rs1801274
+2025-09-04 22:05:54,088 - INFO -   PubMed_ID: None
+2025-09-04 22:05:54,088 - INFO -   GWAS_Trait: ulcerative colitis
+2025-09-04 22:05:54,088 - INFO -   Odds_Ratio: 1.59
+2025-09-04 22:05:54,088 - INFO -   P_Value: 2e-12
+2025-09-04 22:05:54,088 - INFO - Row 2:
+2025-09-04 22:05:54,088 - INFO -   SNP_ID: rs17085007
+2025-09-04 22:05:54,088 - INFO -   PubMed_ID: None
+2025-09-04 22:05:54,088 - INFO -   GWAS_Trait: ulcerative colitis
+2025-09-04 22:05:54,088 - INFO -   Odds_Ratio: 1.35
+2025-09-04 22:05:54,089 - INFO -   P_Value: 7e-08
+2025-09-04 22:05:54,090 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 22:05:54,091 - INFO - Successfully parsed and mapped 876 SNP records for trait ulcerative colitis
+2025-09-04 22:05:54,092 - INFO - Saving 876 parsed variants to cache...
+2025-09-04 22:05:54,092 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 22:05:54,095 - INFO - Saved GWAS data for EFO_0000729 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250904_claude_/data/gwas_cache/EFO_0000729.parquet
+2025-09-04 22:05:54,096 - INFO - ✅ Successfully cached 876 variants for ulcerative colitis
+2025-09-04 22:05:54,096 - INFO -    Raw associations: 1039
+2025-09-04 22:05:54,096 - INFO -    Parsed variants: 876
+2025-09-04 22:05:54,096 - INFO -    Success rate: 84.3%
+2025-09-04 22:05:54,096 - INFO -    Time taken: 154.0 seconds
+2025-09-04 22:05:55,101 - INFO - 
+============================================================
+2025-09-04 22:05:55,101 - INFO - Processing: rheumatoid arthritis (EFO_0000685)
+2025-09-04 22:05:55,101 - INFO - ============================================================
+2025-09-04 22:05:55,101 - INFO - Fetching GWAS associations from API...
+2025-09-04 22:05:55,101 - INFO - Fetching GWAS associations for EFO ID: EFO_0000685
+2025-09-04 22:07:11,183 - INFO - Successfully fetched 3181 GWAS associations for EFO ID: EFO_0000685
+2025-09-04 22:07:11,184 - INFO - Found 3181 raw associations
+2025-09-04 22:07:11,184 - INFO - Parsing association data...
+2025-09-04 22:07:11,184 - INFO - Parsing 3181 GWAS associations to extract rsID and risk allele.
+2025-09-04 22:07:11,186 - INFO - === DEBUG: Found 2090 unique rsIDs ===
+2025-09-04 22:07:11,186 - INFO - Sample rsIDs: ['rs1612904', 'rs3781092', 'rs59466457', 'rs9379892', 'rs1625035']
+2025-09-04 22:07:11,186 - INFO - Fetching locations for 2090 rsIDs from Ensembl (Build: GRCh38)...
+2025-09-04 22:11:46,804 - INFO - Successfully fetched locations for 2088 rsIDs.
+2025-09-04 22:11:46,815 - INFO - === DEBUG: Created DataFrame with 2221 rows ===
+2025-09-04 22:11:46,815 - INFO - DataFrame columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_Ancestry_Info_Raw', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT']
+2025-09-04 22:11:46,815 - INFO - Sample DataFrame rows:
+2025-09-04 22:11:46,816 - INFO - Row 0:
+2025-09-04 22:11:46,816 - INFO -   SNP_ID: rs2002842
+2025-09-04 22:11:46,816 - INFO -   PubMed_ID: None
+2025-09-04 22:11:46,816 - INFO -   GWAS_Trait: rheumatoid arthritis
+2025-09-04 22:11:46,816 - INFO -   Odds_Ratio: 1.61
+2025-09-04 22:11:46,816 - INFO -   P_Value: 6e-06
+2025-09-04 22:11:46,816 - INFO - Row 1:
+2025-09-04 22:11:46,816 - INFO -   SNP_ID: rs6457617
+2025-09-04 22:11:46,816 - INFO -   PubMed_ID: None
+2025-09-04 22:11:46,816 - INFO -   GWAS_Trait: rheumatoid arthritis
+2025-09-04 22:11:46,816 - INFO -   Odds_Ratio: nan
+2025-09-04 22:11:46,816 - INFO -   P_Value: 1e-09
+2025-09-04 22:11:46,816 - INFO - Row 2:
+2025-09-04 22:11:46,817 - INFO -   SNP_ID: rs11761231
+2025-09-04 22:11:46,817 - INFO -   PubMed_ID: None
+2025-09-04 22:11:46,817 - INFO -   GWAS_Trait: rheumatoid arthritis
+2025-09-04 22:11:46,817 - INFO -   Odds_Ratio: 1.44
+2025-09-04 22:11:46,817 - INFO -   P_Value: 4e-07
+2025-09-04 22:11:46,819 - INFO - Standardizing ethnicity data and removing raw column.
+2025-09-04 22:11:46,820 - INFO - Successfully parsed and mapped 2221 SNP records for trait rheumatoid arthritis
+2025-09-04 22:11:46,822 - INFO - Saving 2221 parsed variants to cache...
+2025-09-04 22:11:46,823 - INFO - Data cleaned for caching. Now saving...
+2025-09-04 22:11:46,829 - INFO - Saved GWAS data for EFO_0000685 to cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_250904_claude_/data/gwas_cache/EFO_0000685.parquet
+2025-09-04 22:11:46,829 - INFO - ✅ Successfully cached 2221 variants for rheumatoid arthritis
+2025-09-04 22:11:46,829 - INFO -    Raw associations: 3181
+2025-09-04 22:11:46,829 - INFO -    Parsed variants: 2221
+2025-09-04 22:11:46,829 - INFO -    Success rate: 69.8%
+2025-09-04 22:11:46,829 - INFO -    Time taken: 351.7 seconds

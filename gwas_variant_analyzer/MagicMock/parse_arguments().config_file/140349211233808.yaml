@@ -1,0 +1,18 @@
+default_filter_criteria:
+  max_p_value: 0.05
+  min_odds_ratio: 1.0
+gwas_api_max_retries: 3
+gwas_api_page_size: 100
+gwas_api_request_delay_seconds: 1
+gwas_api_request_timeout_seconds: 30
+gwas_api_retry_delay_seconds: 2
+gwas_catalog_api_base_url: https://www.ebi.ac.uk/gwas/rest/api
+log_file_path: gwas_variant_analyzer.log
+log_level: INFO
+log_to_file: false
+nan_fill_value: 1.0
+nan_handling: drop
+primary_sort_ascending: false
+primary_sort_column: Odds_Ratio
+secondary_sort_ascending: true
+secondary_sort_column: GWAS_Ethnicity_Processed
