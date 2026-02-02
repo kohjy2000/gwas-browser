@@ -18247,3 +18247,13 @@ Name: PubMed_ID, dtype: object
 2026-02-02 11:31:34,230 - main - INFO - Added GWAS Variant Analyzer package to path: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer
 2026-02-02 11:31:34,248 - werkzeug - WARNING -  * Debugger is active!
 2026-02-02 11:31:34,253 - werkzeug - INFO -  * Debugger PIN: 137-913-157
+2026-02-02 11:35:10,346 - werkzeug - INFO -  * Detected change in '/Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/customer_friendly_processor.py', reloading
+2026-02-02 11:35:10,383 - werkzeug - INFO -  * Restarting with stat
+2026-02-02 11:35:10,676 - main - INFO - Added GWAS Variant Analyzer package to path: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer
+2026-02-02 11:35:10,693 - werkzeug - WARNING -  * Debugger is active!
+2026-02-02 11:35:10,697 - werkzeug - INFO -  * Debugger PIN: 137-913-157
+2026-02-02 11:35:15,939 - werkzeug - INFO -  * Detected change in '/Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/customer_friendly_processor.py', reloading
+2026-02-02 11:35:15,980 - werkzeug - INFO -  * Restarting with stat
+2026-02-02 11:35:16,262 - main - INFO - Added GWAS Variant Analyzer package to path: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer
+2026-02-02 11:35:16,280 - werkzeug - WARNING -  * Debugger is active!
+2026-02-02 11:35:16,285 - werkzeug - INFO -  * Debugger PIN: 137-913-157
