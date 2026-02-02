@@ -728,7 +728,9 @@ def pgx_summary():
         project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 
         if source == "foregenomics":
-            tsv_path = os.path.join(project_root, "data", "pgx", "foregenomics_report.tsv")
+            tsv_path = os.environ.get("FOREGENOMICS_PGX_REPORT_PATH") or os.path.join(
+                project_root, "data", "pgx", "foregenomics_report.tsv"
+            )
             fg_df = parse_foregenomics_report_tsv(tsv_path)
             summary = _summarize_foregenomics(fg_df)
         else:
