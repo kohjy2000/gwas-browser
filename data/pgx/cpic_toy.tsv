@@ -1,0 +1,46 @@
+gene	drug	diplotype	phenotype	recommendation	cpic_level	cpic_url
+CYP2D6	codeine	*1/*1	Normal Metabolizer	Use label-recommended age- or weight-specific dosing	A	https://cpicpgx.org/guidelines/guideline-for-codeine-and-cyp2d6/
+CYP2D6	codeine	*1/*2	Normal Metabolizer	Use label-recommended age- or weight-specific dosing	A	https://cpicpgx.org/guidelines/guideline-for-codeine-and-cyp2d6/
+CYP2D6	codeine	*4/*4	Poor Metabolizer	Avoid codeine use due to lack of efficacy	A	https://cpicpgx.org/guidelines/guideline-for-codeine-and-cyp2d6/
+CYP2D6	tramadol	*1/*1	Normal Metabolizer	Use label-recommended dosing	A	https://cpicpgx.org/guidelines/guideline-for-codeine-and-cyp2d6/
+CYP2D6	tramadol	*4/*4	Poor Metabolizer	Avoid tramadol; use alternative analgesic	A	https://cpicpgx.org/guidelines/guideline-for-codeine-and-cyp2d6/
+CYP2D6	ondansetron	*1/*1	Normal Metabolizer	Use label-recommended dosing	B	https://cpicpgx.org/guidelines/guideline-for-ondansetron-and-tropisetron-and-cyp2d6/
+CYP2D6	tropisetron	*1/*1	Normal Metabolizer	Use label-recommended dosing	B	https://cpicpgx.org/guidelines/guideline-for-ondansetron-and-tropisetron-and-cyp2d6/
+CYP2D6	tamoxifen	*1/*1	Normal Metabolizer	Use recommended dosing	A	https://cpicpgx.org/guidelines/cpic-guideline-for-tamoxifen-based-on-cyp2d6/
+CYP2D6	tamoxifen	*4/*4	Poor Metabolizer	Avoid tamoxifen; consider aromatase inhibitor	A	https://cpicpgx.org/guidelines/cpic-guideline-for-tamoxifen-based-on-cyp2d6/
+CYP2C19	clopidogrel	*1/*1	Normal Metabolizer	Use label-recommended dosing	A	https://cpicpgx.org/guidelines/guideline-for-clopidogrel-and-cyp2c19/
+CYP2C19	clopidogrel	*2/*2	Poor Metabolizer	Use alternative antiplatelet therapy (e.g., prasugrel)	A	https://cpicpgx.org/guidelines/guideline-for-clopidogrel-and-cyp2c19/
+CYP2C19	voriconazole	*1/*1	Normal Metabolizer	Use standard dosing	A	https://cpicpgx.org/guidelines/guideline-for-voriconazole-and-cyp2c19/
+CYP2C19	voriconazole	*17/*17	Ultrarapid Metabolizer	Use alternative antifungal agent	A	https://cpicpgx.org/guidelines/guideline-for-voriconazole-and-cyp2c19/
+CYP2C19	escitalopram	*1/*1	Normal Metabolizer	Use standard dosing	A	https://cpicpgx.org/guidelines/guideline-for-selective-serotonin-reuptake-inhibitors-and-cyp2d6-and-cyp2c19/
+CYP2C19	sertraline	*1/*1	Normal Metabolizer	Use standard dosing	A	https://cpicpgx.org/guidelines/guideline-for-selective-serotonin-reuptake-inhibitors-and-cyp2d6-and-cyp2c19/
+CYP2C19	citalopram	*1/*1	Normal Metabolizer	Use standard dosing	A	https://cpicpgx.org/guidelines/guideline-for-selective-serotonin-reuptake-inhibitors-and-cyp2d6-and-cyp2c19/
+CYP2C19	amitriptyline	*1/*1	Normal Metabolizer	Use standard dosing	A	https://cpicpgx.org/guidelines/guideline-for-tricyclic-antidepressants-and-cyp2d6-and-cyp2c19/
+CYP2C19	imipramine	*1/*1	Normal Metabolizer	Use standard dosing	A	https://cpicpgx.org/guidelines/guideline-for-tricyclic-antidepressants-and-cyp2d6-and-cyp2c19/
+CYP2C19	lansoprazole	*1/*1	Normal Metabolizer	Use standard dosing	B	https://cpicpgx.org/guidelines/guideline-for-proton-pump-inhibitors-and-cyp2c19/
+CYP2C19	omeprazole	*1/*1	Normal Metabolizer	Use standard dosing	B	https://cpicpgx.org/guidelines/guideline-for-proton-pump-inhibitors-and-cyp2c19/
+CYP2C19	pantoprazole	*1/*1	Normal Metabolizer	Use standard dosing	B	https://cpicpgx.org/guidelines/guideline-for-proton-pump-inhibitors-and-cyp2c19/
+CYP2C9	warfarin	*1/*1	Normal Metabolizer	Use standard dosing algorithm	A	https://cpicpgx.org/guidelines/guideline-for-warfarin-and-cyp2c9-and-vkorc1/
+CYP2C9	warfarin	*2/*3	Intermediate Metabolizer	Reduce dose by 20-40%	A	https://cpicpgx.org/guidelines/guideline-for-warfarin-and-cyp2c9-and-vkorc1/
+CYP2C9	phenytoin	*1/*1	Normal Metabolizer	Use standard dosing	A	https://cpicpgx.org/guidelines/guideline-for-phenytoin-and-cyp2c9-and-hla-b/
+CYP2C9	celecoxib	*1/*1	Normal Metabolizer	Use standard dosing	A	https://cpicpgx.org/guidelines/cpic-guideline-for-nsaids-based-on-cyp2c9/
+CYP2C9	flurbiprofen	*1/*1	Normal Metabolizer	Use standard dosing	A	https://cpicpgx.org/guidelines/cpic-guideline-for-nsaids-based-on-cyp2c9/
+CYP2C9	ibuprofen	*1/*1	Normal Metabolizer	Use standard dosing	A	https://cpicpgx.org/guidelines/cpic-guideline-for-nsaids-based-on-cyp2c9/
+CYP2C9	meloxicam	*1/*1	Normal Metabolizer	Use standard dosing	A	https://cpicpgx.org/guidelines/cpic-guideline-for-nsaids-based-on-cyp2c9/
+CYP2C9	piroxicam	*1/*1	Normal Metabolizer	Use standard dosing	A	https://cpicpgx.org/guidelines/cpic-guideline-for-nsaids-based-on-cyp2c9/
+CYP3A5	tacrolimus	*1/*1	Extensive Metabolizer	Increase starting dose by 1.5-2x	A	https://cpicpgx.org/guidelines/guideline-for-tacrolimus-and-cyp3a5/
+CYP3A5	tacrolimus	*3/*3	Poor Metabolizer	Use standard dosing	A	https://cpicpgx.org/guidelines/guideline-for-tacrolimus-and-cyp3a5/
+TPMT	azathioprine	*1/*1	Normal Metabolizer	Use standard dosing	A	https://cpicpgx.org/guidelines/guideline-for-thiopurines-and-tpmt-and-nudt15/
+TPMT	mercaptopurine	*1/*1	Normal Metabolizer	Use standard dosing	A	https://cpicpgx.org/guidelines/guideline-for-thiopurines-and-tpmt-and-nudt15/
+TPMT	thioguanine	*1/*1	Normal Metabolizer	Use standard dosing	A	https://cpicpgx.org/guidelines/guideline-for-thiopurines-and-tpmt-and-nudt15/
+DPYD	fluorouracil	*1/*1	Normal Metabolizer	Use standard dosing	A	https://cpicpgx.org/guidelines/guideline-for-fluoropyrimidines-and-dpyd/
+DPYD	capecitabine	*1/*1	Normal Metabolizer	Use standard dosing	A	https://cpicpgx.org/guidelines/guideline-for-fluoropyrimidines-and-dpyd/
+SLCO1B1	simvastatin	*1a/*1a	Normal Function	Use standard dosing	A	https://cpicpgx.org/guidelines/guideline-for-simvastatin-and-slco1b1/
+SLCO1B1	simvastatin	*5/*5	Poor Function	Use alternative statin or low dose with monitoring	A	https://cpicpgx.org/guidelines/guideline-for-simvastatin-and-slco1b1/
+UGT1A1	atazanavir	*1/*1	Normal Metabolizer	Use standard dosing	A	https://cpicpgx.org/guidelines/guideline-for-atazanavir-and-ugt1a1/
+IFNL3	peginterferon	rs12979860 CC	Favorable Response	Consider peginterferon-based regimen	A	https://cpicpgx.org/guidelines/guideline-for-peg-interferon-alpha-based-regimens-and-ifnl3/
+CYP2B6	efavirenz	*1/*1	Normal Metabolizer	Use standard 600mg dosing	A	https://cpicpgx.org/guidelines/guideline-for-efavirenz-and-cyp2b6/
+CYP2B6	efavirenz	*6/*6	Poor Metabolizer	Reduce dose to 400mg or use alternative	A	https://cpicpgx.org/guidelines/guideline-for-efavirenz-and-cyp2b6/
+RYR1	halothane	Normal	Normal	Use standard volatile anesthetic	B	https://cpicpgx.org/guidelines/guideline-for-volatile-anesthetic-agents-and-succinylcholine/
+RYR1	succinylcholine	Normal	Normal	Use standard dosing	B	https://cpicpgx.org/guidelines/guideline-for-volatile-anesthetic-agents-and-succinylcholine/
+G6PD	rasburicase	Normal	Normal	Use standard dosing	A	https://cpicpgx.org/guidelines/guideline-for-rasburicase-and-g6pd/
