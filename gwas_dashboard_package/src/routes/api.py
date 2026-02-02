@@ -19,6 +19,7 @@ from gwas_variant_analyzer.data_processor import process_variants, merge_variant
 from gwas_variant_analyzer.clinvar_matcher import match_user_variants_to_clinvar
 from gwas_variant_analyzer.pgx_parser import parse_pgx_final_tsv
 from gwas_variant_analyzer.pgx_summary import summarize_pgx
+from gwas_variant_analyzer.chat_facts import collect_facts, facts_to_dicts, get_fact_ids
 
 # Import new features
 from gwas_variant_analyzer.customer_friendly_processor import format_customer_friendly_results
@@ -554,4 +555,100 @@ def pgx_summary():
         return jsonify({
             'success': False,
             'message': f'PGx summary error: {str(e)}'
+        }), 500
+
+
+# --- Minimum disclaimer tags required by the high-risk domain contract ---
+_CHAT_DISCLAIMER_TAGS = [
+    "not_medical_advice",
+    "consult_professional",
+    "research_only",
+    "no_emergency_use",
+]
+
+_VALID_RISK_LEVELS = {"low", "medium", "high", "critical"}
+
+
+def _assess_risk_level(facts_list):
+    """Deterministic risk-level assignment based on collected facts."""
+    if not facts_list:
+        return "low"
+    domains = {f.domain for f in facts_list}
+    has_clinvar = "clinvar" in domains
+    has_pgx = "pgx" in domains
+    if has_clinvar and has_pgx:
+        return "high"
+    if has_clinvar or has_pgx:
+        return "medium"
+    return "low"
+
+
+def _build_answer(message, facts_list):
+    """Build a deterministic counseling answer from collected facts."""
+    if not facts_list:
+        return (
+            "No genetic facts are currently loaded for this session. "
+            "Please upload a VCF file and run an analysis first."
+        )
+    lines = [f"Regarding your question: {message}", ""]
+    lines.append(f"Based on {len(facts_list)} available genetic facts:")
+    for fact in facts_list[:10]:
+        lines.append(f"  - [{fact.id}] {fact.text}")
+    if len(facts_list) > 10:
+        lines.append(f"  ... and {len(facts_list) - 10} more facts.")
+    lines.append("")
+    lines.append(
+        "IMPORTANT: This information is for research and educational purposes only. "
+        "It does not constitute medical advice. Please consult a qualified healthcare "
+        "professional before making any medical decisions."
+    )
+    return "\n".join(lines)
+
+
+@api_bp.route('/chat', methods=['POST'])
+def chat():
+    """POST /api/chat — facts-based counseling chat with mandatory disclaimers and citations."""
+    try:
+        data = request.get_json(silent=True) or {}
+        message = str(data.get("message", "")).strip()
+
+        if not message:
+            return jsonify({
+                'success': False,
+                'message': 'message field is required.',
+            }), 400
+
+        # Collect facts from toy data sources (deterministic, no network)
+        # GWAS associations: use a minimal representative set
+        gwas_associations = data.get("gwas_associations") or []
+        clinvar_matches = data.get("clinvar_matches") or []
+        pgx_summary_data = data.get("pgx_summary") or {}
+
+        facts_list = collect_facts(
+            gwas_associations=gwas_associations or None,
+            clinvar_matches=clinvar_matches or None,
+            pgx_summary=pgx_summary_data or None,
+        )
+
+        answer = _build_answer(message, facts_list)
+        fact_ids = get_fact_ids(facts_list)
+        risk_level = _assess_risk_level(facts_list)
+
+        return jsonify({
+            'success': True,
+            'answer': answer,
+            'disclaimer_tags': list(_CHAT_DISCLAIMER_TAGS),
+            'citations': fact_ids,
+            'risk_level': risk_level,
+        }), 200
+
+    except Exception as e:
+        current_app.logger.error(f"Error in chat: {e}", exc_info=True)
+        return jsonify({
+            'success': False,
+            'answer': '',
+            'disclaimer_tags': list(_CHAT_DISCLAIMER_TAGS),
+            'citations': [],
+            'risk_level': 'low',
+            'message': f'Chat error: {str(e)}'
         }), 500

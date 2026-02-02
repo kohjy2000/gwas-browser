@@ -11,12 +11,14 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-# Ensure project root is importable
+# Keep imports consistent across contract tests:
+# add <project_root>/gwas_variant_analyzer to sys.path so we can import the inner package as `gwas_variant_analyzer.*`.
 _project_root = Path(__file__).resolve().parent.parent
-if str(_project_root) not in sys.path:
-    sys.path.insert(0, str(_project_root))
+_gwas_pkg_parent = _project_root / "gwas_variant_analyzer"
+if str(_gwas_pkg_parent) not in sys.path:
+    sys.path.insert(0, str(_gwas_pkg_parent))
 
-from gwas_variant_analyzer.gwas_variant_analyzer.chat_facts import (
+from gwas_variant_analyzer.chat_facts import (
     Fact,
     collect_facts,
     facts_to_dicts,

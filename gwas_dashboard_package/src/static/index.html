@@ -201,7 +201,19 @@
             </button>
         </div>
 
-        <!-- Step 4: Analysis Results -->
+        <!-- Step 4: Counseling Chat -->
+        <div class="section" id="chat-section">
+            <h2><span class="step-number">4</span>Genetic Counseling Chat</h2>
+            <p>Ask questions about your genetic results. All answers include mandatory disclaimers and citations.</p>
+            <div class="search-container">
+                <input type="text" id="chat-input" class="search-box"
+                       placeholder="e.g., What does my BRCA1 result mean?">
+            </div>
+            <button class="btn btn-primary" id="chat-send-btn" onclick="sendChatMessage()">Send</button>
+            <div id="chat-response" style="margin-top:15px;"></div>
+        </div>
+
+        <!-- Step 5: Analysis Results -->
         <div id="results" style="display: none;">
             <div class="section">
                 <h2><span class="step-number">4</span>🎯 Analysis Results</h2>
@@ -538,6 +550,38 @@
             });
             
             document.getElementById('variantResults').innerHTML = variantsHtml;
+        }
+
+        // Counseling chat
+        async function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const msg = (input.value || '').trim();
+            if (!msg) return;
+            const responseDiv = document.getElementById('chat-response');
+            responseDiv.innerHTML = '<div class="status loading"><span class="loading-spinner"></span> Thinking...</div>';
+            try {
+                const resp = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: msg })
+                });
+                const data = await resp.json();
+                if (data.success) {
+                    let html = '<div class="status success">';
+                    html += '<pre style="white-space:pre-wrap;font-family:inherit;">' + data.answer + '</pre>';
+                    html += '<p><strong>Risk Level:</strong> ' + data.risk_level + '</p>';
+                    html += '<p><strong>Disclaimers:</strong> ' + data.disclaimer_tags.join(', ') + '</p>';
+                    if (data.citations && data.citations.length) {
+                        html += '<p><strong>Citations:</strong> ' + data.citations.join(', ') + '</p>';
+                    }
+                    html += '</div>';
+                    responseDiv.innerHTML = html;
+                } else {
+                    responseDiv.innerHTML = '<div class="status error">' + (data.message || 'Chat error') + '</div>';
+                }
+            } catch (e) {
+                responseDiv.innerHTML = '<div class="status error">Chat error: ' + e.message + '</div>';
+            }
         }
 
         // Load popular phenotypes on page load

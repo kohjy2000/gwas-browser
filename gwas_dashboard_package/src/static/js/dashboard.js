@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeTabSystem();
     initializeFormHandlers();
     setupDownloadButtons();
+    initializeChatWiring();
     // 초기에는 다운로드 버튼 비활성화
     document.querySelectorAll('.download-results-btn').forEach(btn => btn.disabled = true);
 });
@@ -366,4 +367,18 @@ function showError(message) {
     } else {
         alert("Error: " + message);
     }
+}
+
+// --- C4.B2: Minimal chat wiring referencing /api/chat ---
+function initializeChatWiring() {
+    const chatInput = document.getElementById('chat-input');
+    const chatBtn = document.getElementById('chat-send-btn');
+    if (!chatInput || !chatBtn) return;
+
+    chatInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            chatBtn.click();
+        }
+    });
 }
