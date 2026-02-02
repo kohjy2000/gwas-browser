@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -19,6 +20,24 @@ class CmdResult:
 
 def _project_root_from_arg(path: str | None) -> Path:
     return Path(path).resolve() if path else Path.cwd().resolve()
+
+def _load_env_kv_file(path: Path) -> None:
+    if not path.exists():
+        return
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        if key and key not in os.environ:
+            os.environ[key] = value
+
+
+def _load_project_env(project_root: Path) -> None:
+    _load_env_kv_file(project_root / "ai_workflow" / ".env.local")
+    _load_env_kv_file(project_root / ".env")
 
 
 def _run(cmd: str, cwd: Path, log_path: Path) -> CmdResult:
@@ -94,6 +113,7 @@ def main() -> int:
     args = parser.parse_args()
 
     project_root = _project_root_from_arg(args.project_root)
+    _load_project_env(project_root)
     _ensure_git_or_exit(project_root)
 
     runs_root = project_root / "ai_workflow" / "_runs"
@@ -162,4 +182,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

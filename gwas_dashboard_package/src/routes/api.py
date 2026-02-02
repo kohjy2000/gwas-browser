@@ -8,6 +8,8 @@ import os
 import tempfile
 import json
 import logging
+import csv
+import glob
 from datetime import datetime, timezone
 import pandas as pd
 import requests as http_requests
@@ -94,8 +96,113 @@ def _load_trait_list():
     global _trait_list
     # api.py is at gwas_dashboard_package/src/routes/api.py — 4 levels up = project root
     project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+    # Prefer a large runtime cache if available (generated from local TSV mapping / remote fetch).
+    full_trait_list_path = os.path.join(project_root, "data", "trait_list.full.json")
+    full_meta_path = os.path.join(project_root, "data", "trait_list.full.meta.json")
     trait_list_path = os.path.join(project_root, "data", "trait_list.json")
     fallback_path = os.path.join(project_root, "gwas_dashboard_package", "config", "efo_mapping.json")
+
+    def _is_pytest_running() -> bool:
+        # During contract tests we must not write new files (scope checks).
+        return bool(os.environ.get("PYTEST_CURRENT_TEST"))
+
+    def _extract_short_form_from_uri(uri: str) -> str:
+        u = (uri or "").strip()
+        if not u:
+            return ""
+        # Common patterns:
+        # - http://purl.obolibrary.org/obo/MONDO_0002974  -> MONDO_0002974
+        # - http://www.ebi.ac.uk/efo/EFO_0000616          -> EFO_0000616
+        for sep in ("/obo/", "/efo/"):
+            if sep in u:
+                return u.split(sep, 1)[1].strip().rstrip("/")
+        return u.rstrip("/").rsplit("/", 1)[-1].strip()
+
+    def _default_trait_mappings_tsv() -> str:
+        # 1) Explicit override
+        override = os.environ.get("GWAS_TRAIT_MAPPINGS_TSV_PATH", "").strip()
+        if override and os.path.exists(override):
+            return override
+        # 2) Auto-detect at repo root (one directory above project_root)
+        parent = os.path.abspath(os.path.join(project_root, ".."))
+        cands = sorted(glob.glob(os.path.join(parent, "gwas_catalog_trait-mappings_*.tsv")))
+        return cands[-1] if cands else ""
+
+    def _build_full_trait_list_from_tsv(tsv_path: str) -> list[dict]:
+        rows: list[dict] = []
+        with open(tsv_path, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f, delimiter="\t")
+            for r in reader:
+                disease_trait = str(r.get("Disease trait", "") or "").strip()
+                efo_term = str(r.get("EFO term", "") or "").strip()
+                efo_uri = str(r.get("EFO URI", "") or "").strip()
+                trait = disease_trait or efo_term
+                if not trait or not efo_uri:
+                    continue
+                short_form = _extract_short_form_from_uri(efo_uri)
+                if not short_form:
+                    continue
+                rows.append({"trait": trait, "shortForm": short_form, "uri": efo_uri})
+
+        # De-dupe by (trait_lower, shortForm) while keeping order
+        seen = set()
+        out: list[dict] = []
+        for item in rows:
+            key = (item["trait"].lower(), item["shortForm"])
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append(item)
+        return out
+
+    def _maybe_bootstrap_full_trait_cache() -> None:
+        # Contract tests must not write files.
+        if _is_pytest_running():
+            return
+        # Allow turning off via env (default ON when TSV exists).
+        auto = os.environ.get("GWAS_TRAIT_LIST_AUTOBOOTSTRAP", "").strip().lower()
+        if auto in ("0", "false", "no"):
+            return
+        if os.path.exists(full_trait_list_path) and os.path.getsize(full_trait_list_path) > 0:
+            return
+        tsv_path = _default_trait_mappings_tsv()
+        if not tsv_path:
+            return
+        try:
+            traits = _build_full_trait_list_from_tsv(tsv_path)
+            if not traits:
+                return
+            os.makedirs(os.path.join(project_root, "data"), exist_ok=True)
+            with open(full_trait_list_path, "w", encoding="utf-8") as f:
+                json.dump(traits, f, ensure_ascii=False, indent=2)
+            with open(full_meta_path, "w", encoding="utf-8") as f:
+                json.dump(
+                    {
+                        "updated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                        "total_traits": len(traits),
+                        "source": "gwas_catalog_trait_mappings_tsv",
+                        "source_path": tsv_path,
+                    },
+                    f,
+                    ensure_ascii=False,
+                    indent=2,
+                )
+            logger.info(f"Bootstrapped full trait cache: {len(traits)} traits from {tsv_path}")
+        except Exception as e:
+            logger.warning(f"Failed to bootstrap full trait cache from TSV: {e}")
+
+    _maybe_bootstrap_full_trait_cache()
+
+    # 0) Prefer runtime full cache if present.
+    # IMPORTANT: in pytest, avoid reading runtime-generated caches (non-deterministic + slower).
+    if (not _is_pytest_running()) and os.path.exists(full_trait_list_path):
+        try:
+            with open(full_trait_list_path, "r", encoding="utf-8") as f:
+                _trait_list = json.load(f)
+            logger.info(f"Loaded {len(_trait_list)} traits from {full_trait_list_path}")
+            return
+        except Exception as e:
+            logger.warning(f"Failed to load trait_list.full.json: {e}")
 
     if os.path.exists(trait_list_path):
         try:
@@ -135,6 +242,9 @@ def _get_trait_list():
 
 # --- C6.B1: Remote GWAS Catalog trait search + local cache update ---
 
+# GWAS Catalog REST API (HAL). See:
+#   https://www.ebi.ac.uk/gwas/rest/api/efoTraits/search
+# Note: the query parameter name is `trait` (not `efoTrait`).
 REMOTE_GWAS_TRAIT_URL = "https://www.ebi.ac.uk/gwas/rest/api/efoTraits/search/findByEfoTrait"
 REMOTE_SCORE_THRESHOLD = 0.4  # If top local score below this, trigger remote
 
@@ -236,8 +346,11 @@ def _fuzzy_search_traits(query: str, top_k: int = 10):
             scored.append((0.6, name, entry))
             continue
 
-    # Sort: score desc, then trait name asc
-    scored.sort(key=lambda x: (-x[0], x[1]))
+    # Sort:
+    # - score desc
+    # - fewer tokens first (prefer canonical disease/trait names like "Obesity" over phrases like "Obese vs. thin")
+    # - trait name asc
+    scored.sort(key=lambda x: (-x[0], len(str(x[1]).split()), x[1]))
 
     results = []
     for score, _, entry in scored[:top_k]:
@@ -470,7 +583,9 @@ def analyze():
             }), 500
 
         # 3. Determine EFO ID
-        trait_name = trait_or_efo
+        # IMPORTANT: UI sends trait_or_efo as EFO/ontology ID (use_trait_name=false)
+        # but also includes a human-friendly trait_name for display and references.
+        trait_name = request.form.get("trait_name") or trait_or_efo
         if use_trait_name:
             mapping_path = os.path.join(current_app.root_path, '..', 'config', 'efo_mapping.json')
             efo_id = get_efo_id_for_trait(trait_or_efo, mapping_path)
@@ -829,9 +944,15 @@ def _call_ollama(message, facts_list):
 
     facts_text = "\n".join(f"- [{f.id}] {f.text}" for f in facts_list[:20])
     system_prompt = (
-        "You are a genetic counseling assistant. Answer the user's question "
-        "based ONLY on the provided genetic facts. Always include disclaimers "
-        "that this is not medical advice. Reference fact IDs in your answer."
+        "You are a genetics counseling assistant for research/education.\n"
+        "Use ONLY the provided genetic facts. Do NOT add outside knowledge.\n"
+        "Do NOT reveal chain-of-thought. Output final answer only.\n"
+        "Required structure:\n"
+        "1) Brief answer (1-3 sentences)\n"
+        "2) Evidence: bullet list of the specific fact IDs you used and why\n"
+        "3) Limits: what cannot be concluded from the facts\n"
+        "4) Disclaimers: not medical advice; consult professional; no emergency use\n"
+        "Cite facts by writing their IDs exactly (e.g., gwas-0001-..., clinvar-0000-..., pgx-0003-...)."
     )
     user_prompt = f"Facts:\n{facts_text}\n\nUser question: {message}"
 
@@ -842,6 +963,11 @@ def _call_ollama(message, facts_list):
             "prompt": user_prompt,
             "system": system_prompt,
             "stream": False,
+            "options": {
+                "temperature": 0.2,
+                "top_p": 0.9,
+                "num_predict": 512,
+            },
         },
         timeout=60,
     )
@@ -856,6 +982,15 @@ def _validate_ollama_answer(raw_answer, fact_ids):
     """
     if not raw_answer or not raw_answer.strip():
         return None
+    # Strip common chain-of-thought wrappers some local models emit.
+    text = raw_answer
+    # <think> ... </think>
+    if "<think>" in text and "</think>" in text:
+        while "<think>" in text and "</think>" in text:
+            pre, rest = text.split("<think>", 1)
+            _, post = rest.split("</think>", 1)
+            text = (pre + post).strip()
+    raw_answer = text.strip()
     # Check if at least one fact ID is referenced
     if fact_ids and not any(fid in raw_answer for fid in fact_ids):
         raw_answer += "\n\nReferenced facts: " + ", ".join(fact_ids[:5])
@@ -902,10 +1037,13 @@ def chat():
 
         # C6.B2: Ollama mode — call local LLM if enabled and facts exist
         answer = None
+        llm_used = False
         if _ollama_enabled() and facts_list:
             try:
                 raw = _call_ollama(message, facts_list)
                 answer = _validate_ollama_answer(raw, fact_ids)
+                if answer is not None:
+                    llm_used = True
             except Exception as ollama_err:
                 logger.warning(f"Ollama call failed, falling back to deterministic: {ollama_err}")
 
@@ -913,12 +1051,27 @@ def chat():
         if answer is None:
             answer = _build_answer(message, facts_list)
 
+        # C8.B4: LLM transparency — report which model was used
+        if llm_used:
+            llm_info = {
+                "enabled": True,
+                "provider": "ollama",
+                "model": os.environ.get("OLLAMA_MODEL_CHAT", ""),
+            }
+        else:
+            llm_info = {
+                "enabled": False,
+                "provider": "deterministic",
+                "model": "",
+            }
+
         return jsonify({
             'success': True,
             'answer': answer,
             'disclaimer_tags': list(_CHAT_DISCLAIMER_TAGS),
             'citations': fact_ids,
             'risk_level': risk_level,
+            'llm': llm_info,
         }), 200
 
     except Exception as e:

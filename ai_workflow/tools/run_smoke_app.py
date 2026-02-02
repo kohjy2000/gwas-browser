@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import threading
 import time
@@ -20,6 +21,24 @@ class Check:
 
 def _project_root_from_arg(path: str | None) -> Path:
     return Path(path).resolve() if path else Path.cwd().resolve()
+
+def _load_env_kv_file(path: Path) -> None:
+    if not path.exists():
+        return
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        if key and key not in os.environ:
+            os.environ[key] = value
+
+
+def _load_project_env(project_root: Path) -> None:
+    _load_env_kv_file(project_root / "ai_workflow" / ".env.local")
+    _load_env_kv_file(project_root / ".env")
 
 
 def _make_server(app, host: str, port: int):
@@ -63,6 +82,7 @@ def main() -> int:
     args = parser.parse_args()
 
     project_root = _project_root_from_arg(args.project_root)
+    _load_project_env(project_root)
 
     # Ensure the project root is importable even when running this script by path
     # (otherwise sys.path[0] becomes ai_workflow/tools and imports like

@@ -7,9 +7,53 @@ from __future__ import annotations
 import logging
 import os
 import sys
+import glob
 
 from flask import Flask, render_template, send_from_directory
 from flask_cors import CORS  # Added
+
+# --- ai_workflow: optional local env auto-load (no manual exports) ---
+
+_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+
+def _load_env_file(path: str) -> None:
+    """
+    Minimal .env loader.
+
+    - Ignores blank lines and comments (# ...)
+    - Supports KEY=VALUE (optionally quoted)
+    - Only sets variables that are not already set in os.environ
+    """
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            for raw_line in f:
+                line = raw_line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, value = line.split("=", 1)
+                key = key.strip()
+                value = value.strip().strip('"').strip("'")
+                if key and key not in os.environ:
+                    os.environ[key] = value
+    except Exception:
+        # Never crash app startup due to env file parsing
+        return
+
+
+def _auto_load_ai_workflow_env() -> None:
+    """Load ai_workflow env defaults if present (opt-in via file existence)."""
+    candidates = [
+        os.path.join(_PROJECT_ROOT, "ai_workflow", ".env.local"),
+        os.path.join(_PROJECT_ROOT, ".env"),
+    ]
+    for p in candidates:
+        if os.path.exists(p):
+            _load_env_file(p)
+            break
+
+
+# Load early so later imports can see env vars if they want to
+_auto_load_ai_workflow_env()
 
 # Import blueprints
 try:
@@ -27,11 +71,12 @@ CORS(app)  # Added: Enable CORS
 app.config['MAX_CONTENT_LENGTH'] = 300 * 1024 * 1024  # 300MB in bytes
 
 # Configure logging
+os.makedirs(os.path.join(_PROJECT_ROOT, "logs"), exist_ok=True)
 logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('app.log'),
+        logging.FileHandler(os.path.join(_PROJECT_ROOT, "logs", "app.log")),
         logging.StreamHandler()
     ]
 )
@@ -101,6 +146,69 @@ if __name__ == '__main__':
     # Enable remote GWAS trait search by default
     if not os.environ.get("GWAS_REMOTE_SEARCH"):
         os.environ["GWAS_REMOTE_SEARCH"] = "1"
+
+    # Optional: seed GWAS cache into this project if it's empty (prevents re-fetching everything).
+    def _seed_gwas_cache_if_empty() -> None:
+        if os.environ.get("PYTEST_CURRENT_TEST"):
+            return
+        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+        dst_cache = os.path.join(project_root, "data", "gwas_cache")
+        try:
+            os.makedirs(dst_cache, exist_ok=True)
+            if any(p.endswith(".parquet") for p in os.listdir(dst_cache)):
+                return
+
+            # 1) explicit seed dir
+            seed_dir = os.environ.get("GWAS_CACHE_SEED_DIR", "").strip()
+            if seed_dir and os.path.isdir(seed_dir):
+                src_cache = seed_dir
+            else:
+                # 2) auto-detect best candidate among sibling project versions
+                parent = os.path.abspath(os.path.join(project_root, ".."))
+                candidates = []
+                for p in glob.glob(os.path.join(parent, "ver_*", "data", "gwas_cache")):
+                    p_abs = os.path.abspath(p)
+                    if p_abs == os.path.abspath(dst_cache):
+                        continue
+                    n = len(glob.glob(os.path.join(p_abs, "*.parquet")))
+                    if n > 0:
+                        candidates.append((n, p_abs))
+                if not candidates:
+                    return
+                candidates.sort(reverse=True)
+                src_cache = candidates[0][1]
+
+            copied = 0
+            for pattern in ("*.parquet", "*.meta.json"):
+                for src in glob.glob(os.path.join(src_cache, pattern)):
+                    dst = os.path.join(dst_cache, os.path.basename(src))
+                    if os.path.exists(dst):
+                        continue
+                    try:
+                        import shutil
+
+                        shutil.copy2(src, dst)
+                        copied += 1
+                    except Exception:
+                        continue
+
+            if copied:
+                app.logger.info(f"Seeded GWAS cache: copied {copied} files from {src_cache} -> {dst_cache}")
+        except Exception:
+            return
+
+    _seed_gwas_cache_if_empty()
+
+    # Optional: auto-detect local ForeGenomics report if user didn't set it.
+    if not os.environ.get("FOREGENOMICS_PGX_REPORT_PATH"):
+        try:
+            project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+            trial_dir = os.path.abspath(os.path.join(project_root, "..", "ForeGenomics_PGx", "trial"))
+            cands = sorted(glob.glob(os.path.join(trial_dir, "*", "*.PGx.out.report.tsv")))
+            if cands:
+                os.environ["FOREGENOMICS_PGX_REPORT_PATH"] = cands[0]
+        except Exception:
+            pass
 
     # Run the app
     app.run(host='0.0.0.0', port=1111, debug=True)

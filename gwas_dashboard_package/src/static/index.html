@@ -387,12 +387,25 @@
                         body: JSON.stringify({ query: query, top_k: 10 })
                     });
 
-                    const result = await response.json();
+                    const raw = await response.text();
+                    let result = null;
+                    try {
+                        result = JSON.parse(raw);
+                    } catch (e) {
+                        throw new Error(`search-traits returned non-JSON (HTTP ${response.status}).`);
+                    }
+
+                    if (!response.ok) {
+                        // Show server-side message instead of a generic "unavailable".
+                        displaySearchSuggestions(result, query);
+                        return;
+                    }
+
                     displaySearchSuggestions(result, query);
                 } catch (error) {
                     console.error('Search error:', error);
                     document.getElementById('trait-search-results').innerHTML =
-                        '<p>Search service temporarily unavailable. Please select from the popular diseases below.</p>';
+                        '<p>Search service temporarily unavailable. Please check server logs (logs/app.log) and retry.</p>';
                     document.getElementById('trait-search-results').style.display = 'block';
                 }
             }, 300);
@@ -756,6 +769,13 @@
                     html += '<p><strong>Disclaimers:</strong> ' + data.disclaimer_tags.join(', ') + '</p>';
                     if (data.citations && data.citations.length) {
                         html += '<p><strong>Citations:</strong> ' + data.citations.join(', ') + '</p>';
+                    }
+                    if (data.llm) {
+                        const llm = data.llm;
+                        const modelLabel = llm.enabled
+                            ? llm.provider + ' / ' + llm.model
+                            : 'deterministic (no LLM)';
+                        html += '<p style="color:#6c757d;font-size:12px;margin-top:8px;">Model: ' + modelLabel + '</p>';
                     }
                     html += '</div>';
                     responseDiv.innerHTML = html;

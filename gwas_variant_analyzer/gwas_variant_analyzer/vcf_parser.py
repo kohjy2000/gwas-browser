@@ -56,38 +56,31 @@ def extract_user_variants(vcf_reader: VCF, target_rsids_set: set = None) -> pd.D
     variants_data = []
     total_records = 0
     
-    for variant in vcf_reader:
-        total_records += 1
-        
-        # Remove rsID filtering logic and use position information from all records
-        chrom = variant.CHROM
-        pos = variant.POS
-        ref = variant.REF
-        alts = variant.ALT  # ALT is a list of alternate allele strings, e.g., ['A', 'T']
+    try:
+        for variant in vcf_reader:
+            total_records += 1
 
-        # Skip records missing essential information (chromosome, position, reference base, alternate alleles)
-        if not all([chrom, pos, ref, alts]):
-            continue
+            chrom = variant.CHROM
+            pos = variant.POS
+            ref = variant.REF
+            alts = variant.ALT
 
-        # A single variant can have multiple alternate alleles (multi-allelic).
-        # Create a separate row for each alternate allele.
-        for alt_allele in alts:
-            # Skip invalid alternate alleles (e.g., '.')
-            if alt_allele is None or alt_allele == '.':
-                 continue
-            
-            # Store information extracted from user VCF in dictionary
-            # Use 'USER_' prefix for column names to clarify source
-            variants_data.append({
-                'USER_CHROM': str(chrom),
-                'USER_POS': int(pos),
-                'USER_REF': str(ref),
-                'USER_ALT': str(alt_allele),
-                # Add SNP_ID only if it exists, otherwise set to None
-                'SNP_ID': variant.ID if variant.ID and variant.ID != '.' else None,
-                # Can add other information here if needed (e.g., genotype)
-                # 'User_Genotype': ...
-            })
+            if not all([chrom, pos, ref, alts]):
+                continue
+
+            for alt_allele in alts:
+                if alt_allele is None or alt_allele == '.':
+                    continue
+
+                variants_data.append({
+                    'USER_CHROM': str(chrom),
+                    'USER_POS': int(pos),
+                    'USER_REF': str(ref),
+                    'USER_ALT': str(alt_allele),
+                    'SNP_ID': variant.ID if variant.ID and variant.ID != '.' else None,
+                })
+    except Exception as e:
+        logger.warning(f"VCF parsing stopped at record {total_records}: {e}. Returning partial results.")
 
     logger.info(f"Processed {total_records} VCF records.")
     logger.info(f"Extracted {len(variants_data)} user variant alleles.")

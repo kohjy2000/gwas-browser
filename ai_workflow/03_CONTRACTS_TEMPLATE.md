@@ -31,7 +31,10 @@ API Endpoint
 2. Valid query returns HTTP 200 with success true and a results list.
 3. Each results item contains trait (string), efo_id (string), score (number).
 4. Scoring rules: prefix match 1.0, contains match 0.8, token-prefix match 0.6.
-5. Sorting rules: score descending, then trait ascending.
+5. Sorting rules:
+   - score descending
+   - fewer tokens first (prefer canonical traits like "Obesity" over phrases like "Obese vs. thin")
+   - then trait ascending.
 
 ### Test File
 
@@ -61,6 +64,7 @@ Function
 4. Malformed meta must not crash; treat as expired and return None.
 5. (Optional extension, C8.B3) If `GWAS_CACHE_REQUIRE_PUBMED=1` env var is set:
    - If loaded parquet is missing `PubMed_ID` column OR all `PubMed_ID` values are empty, treat as stale and return None.
+6. (Optional extension, C9.B1) If `GWAS_CACHE_DIR` env var is set, it overrides config.gwas_cache_directory for both load/save.
 
 ### Test File
 
@@ -88,6 +92,7 @@ Function
 2. Writes a parquet file named by efo_id in the configured cache directory.
 3. Writes a meta JSON file named by efo_id with keys efo_id, trait, fetched_at, association_count.
 4. association_count equals number of rows in the saved DataFrame.
+5. (Optional extension, C9.B1) If `GWAS_CACHE_DIR` env var is set, it overrides config.gwas_cache_directory for both load/save.
 
 ### Test File
 
@@ -326,7 +331,8 @@ API Endpoint
 - disclaimer_tags
 - citations
 - risk_level
- - (Optional extension, C8.B4) llm
+- (Optional extension, C8.B4) llm
+- (Optional extension, C9.B2) suggested_actions
 
 ### Validation Rules
 
@@ -533,6 +539,16 @@ API Endpoint (local LLM optional)
 ### Test File
 
 /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_chat_ollama_mode_contract.py
+
+---
+
+## Note: ForeGenomics report path (real data)
+
+For `source="foregenomics"` PGx summary, the expected real-world file format is the per-sample report TSV:
+
+- `/Users/june-young/Research_Local/08_GWAS_browser/ForeGenomics_PGx/trial/<SAMPLE>/<SAMPLE>.PGx.out.report.tsv`
+
+Do **not** point `FOREGENOMICS_PGX_REPORT_PATH` to `results.tsv` (different schema).
 
 ---
 

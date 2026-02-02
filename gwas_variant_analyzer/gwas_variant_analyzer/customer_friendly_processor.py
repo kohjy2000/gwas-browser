@@ -80,7 +80,14 @@ def get_confidence_level(
             if trait is not None and str(trait).strip() and str(trait).strip().lower() != "nan":
                 terms.append(str(trait).strip())
             if snp_id is not None and str(snp_id).strip() and str(snp_id).strip().lower() != "nan":
-                terms.append(str(snp_id).strip())
+                sid = str(snp_id).strip()
+                # Prefer GWAS Catalog variant pages over a blind PubMed search query.
+                # This is still a real evidence link and avoids confusing "?term=EFO_...+rs..." URLs.
+                if sid.lower().startswith("rs"):
+                    reference_url = f"https://www.ebi.ac.uk/gwas/variants/{sid}"
+                    has_reference = True
+                    return {"confidence": confidence, "description": description, "reference": reference_url, "has_reference": bool(has_reference)}
+                terms.append(sid)
             q = quote_plus(" ".join(terms)) if terms else "gwas"
             reference_url = f"https://pubmed.ncbi.nlm.nih.gov/?term={q}"
         has_reference = True

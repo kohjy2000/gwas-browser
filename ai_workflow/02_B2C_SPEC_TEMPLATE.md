@@ -112,6 +112,175 @@ git status --porcelain
 
 - false
 
+---
+
+## Cycle 9 (Phase 6): Persistency + Auto-Analyze + Dataset Expansion
+
+These blocks exist because users still report:
+- “GWAS cache was deleted” (actually: versioned folders don’t share cache; self-heal can also refetch once)
+- Chat answers using only PGx facts even when the question is clearly GWAS/trait-driven
+- PGx drug lists are still too small without additional datasets
+
+## Block: C9.B1 GWAS Cache Directory Override (Persist Across Versions)
+
+### Description
+
+Stop the “cache disappeared / refetching again” pain.
+Introduce a single shared cache directory controlled by env:
+
+- If `GWAS_CACHE_DIR` is set: read/write GWAS cache parquet/meta only under that directory.
+- Else: keep legacy behavior (`{PROJECT_ROOT}/data/gwas_cache`).
+
+This should work across versioned project folders so you don’t lose cache when you clone/copy a new `ver_*` folder.
+
+### Dependencies
+
+- Depends on: C8.B3 GWAS Cache Self-Heal for PubMed (Stale If Missing)
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_gwas_cache_dir_override_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/utils.py
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_gwas_cache_dir_override_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py contract_tests/test_gwas_cache_dir_override_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. With `GWAS_CACHE_DIR` set to a directory, cache read/write paths are under that directory only.
+2. With env var unset, legacy behavior remains unchanged.
+3. New contract test passes:
+   - /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_gwas_cache_dir_override_contract.py
+
+### Allow NOOP
+
+- false
+
+---
+
+## Block: C9.B2 Chat: Suggest Trait Analysis When Missing Facts
+
+### Description
+
+When the user asks a trait-driven question (e.g., “obesity risk”) but the session has no GWAS facts loaded,
+the chat should not answer using only PGx facts.
+
+Instead, return a `next_actions` / `suggested_actions` field that the UI can render as a one-click action:
+- Suggest selecting the extracted trait (via `/api/search-traits`) and running `/api/analyze`.
+
+This is “auto-analyze 유도/트리거” without silently running expensive network calls.
+
+### Dependencies
+
+- Depends on: C8.B4 Chat Transparency: Report Ollama Model Used
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/static/index.html
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_chat_suggest_analyze_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_chat_endpoint_contract.py
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_chat_suggest_analyze_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_dashboard_package/src/routes/api.py contract_tests/test_chat_suggest_analyze_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_dashboard_package/src/routes/api.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. `/api/chat` response includes `suggested_actions` when user asks about a recognizable trait and `gwas_hits` are missing.
+2. UI renders this as a visible button (e.g., “Analyze obesity”) that triggers the normal flow (search-traits → analyze).
+3. New contract test passes:
+   - /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_chat_suggest_analyze_contract.py
+
+### Allow NOOP
+
+- false
+
+---
+
+## Block: C9.B3 PGx Dataset Expansion: CPIC Snapshot Ingest
+
+### Description
+
+Expand the PGx drug list beyond the current ForeGenomics snapshot by adding a **CPIC toy snapshot**.
+
+Requirements:
+- Store a small CPIC-like mapping snapshot inside the project (no external download during tests).
+- Parse it into normalized recommendations (drug, gene, phenotype/diplotype, recommendation summary, evidence link).
+- Extend `/api/pgx-summary` to optionally include these recommendations (either as a new `source="cpic"` or a merge mode).
+
+### Dependencies
+
+- Depends on: C7.B2 PGx Summary API Supports ForeGenomics Source
+
+### Target Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/pgx/cpic_toy.tsv
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/pgx_cpic.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pgx_cpic_contract.py
+
+### Read Files
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/pgx_foregenomics.py
+
+### Do Not Touch
+
+- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
+
+### Tests Required
+
+```bash
+cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_pgx_cpic_contract.py
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_dashboard_package/src/routes/api.py gwas_variant_analyzer/gwas_variant_analyzer/pgx_cpic.py contract_tests/test_pgx_cpic_contract.py --select E9,F63,F7,F82
+/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_variant_analyzer/gwas_variant_analyzer/pgx_cpic.py
+git status --porcelain
+```
+
+### Acceptance Criteria
+
+1. The CPIC snapshot exists at:
+   - /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/pgx/cpic_toy.tsv
+2. `/api/pgx-summary` can return a `summary.drugs` list that is meaningfully larger (e.g., >= 30 unique drugs) when CPIC is enabled.
+3. New contract test passes:
+   - /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pgx_cpic_contract.py
+
+### Allow NOOP
+
+- false
+
 ### Notes
 
 Contract tests create cache dirs under data with a _contract_cache_ prefix.
@@ -609,6 +778,13 @@ Cycle 4 is high-risk domain. Disclaimers and citations are mandatory and must be
 | 18 | C6.B3 PubMed Meta Enrichment (Prefer PubMed When Available) | C6.B2 Chat Ollama Local LLM Mode |
 | 19 | C7.B1 ForeGenomics PGx Report Snapshot + Parser | C6.B3 PubMed Meta Enrichment (Prefer PubMed When Available) |
 | 20 | C7.B2 PGx Summary API Supports ForeGenomics Source | C7.B1 ForeGenomics PGx Report Snapshot + Parser |
+| 21 | C8.B1 UI PGx Summary Defaults to ForeGenomics Source | C7.B2 PGx Summary API Supports ForeGenomics Source |
+| 22 | C8.B2 ForeGenomics Report Path Override (Env) | C8.B1 UI PGx Summary Defaults to ForeGenomics Source |
+| 23 | C8.B3 GWAS Cache Self-Heal for PubMed (Stale If Missing) | C6.B3 PubMed Meta Enrichment (Prefer PubMed When Available) |
+| 24 | C8.B4 Chat Transparency: Report Ollama Model Used | C6.B2 Chat Ollama Local LLM Mode |
+| 25 | C9.B1 GWAS Cache Directory Override (Persist Across Versions) | C8.B3 GWAS Cache Self-Heal for PubMed (Stale If Missing) |
+| 26 | C9.B2 Chat: Suggest Trait Analysis When Missing Facts | C8.B4 Chat Transparency: Report Ollama Model Used |
+| 27 | C9.B3 PGx Dataset Expansion: CPIC Snapshot Ingest | C7.B2 PGx Summary API Supports ForeGenomics Source |
 
 ---
 
