@@ -501,6 +501,10 @@ def clinvar_match():
             significance_filter=significance_filter,
         )
 
+        # Store matches in session for chat facts derivation (C5.B3)
+        if session_id in UPLOADS:
+            UPLOADS[session_id]['clinvar_matches'] = matches
+
         return jsonify({
             'success': True,
             'summary': {
@@ -536,6 +540,11 @@ def pgx_summary():
 
         df = parse_pgx_final_tsv(tsv_path)
         summary = summarize_pgx(df)
+
+        # Store pgx summary in session for chat facts derivation (C5.B3)
+        session_id = str(data.get("session_id", "")).strip()
+        if session_id and session_id in UPLOADS:
+            UPLOADS[session_id]['pgx_summary'] = summary
 
         disclaimer_tags = [
             "pharmacogenomics",
@@ -617,11 +626,19 @@ def chat():
                 'message': 'message field is required.',
             }), 400
 
-        # Collect facts from toy data sources (deterministic, no network)
-        # GWAS associations: use a minimal representative set
+        # Collect facts: prefer session-derived data, fall back to explicit payload
+        session_id = str(data.get("session_id", "")).strip()
         gwas_associations = data.get("gwas_associations") or []
         clinvar_matches = data.get("clinvar_matches") or []
         pgx_summary_data = data.get("pgx_summary") or {}
+
+        # C5.B3: If session_id provided, derive facts from stored session results
+        if session_id and session_id in UPLOADS:
+            session_data = UPLOADS[session_id]
+            if not clinvar_matches:
+                clinvar_matches = session_data.get("clinvar_matches") or []
+            if not pgx_summary_data:
+                pgx_summary_data = session_data.get("pgx_summary") or {}
 
         facts_list = collect_facts(
             gwas_associations=gwas_associations or None,
