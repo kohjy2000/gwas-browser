@@ -23,6 +23,7 @@ from gwas_variant_analyzer.clinvar_matcher import match_user_variants_to_clinvar
 from gwas_variant_analyzer.pgx_parser import parse_pgx_final_tsv
 from gwas_variant_analyzer.pgx_summary import summarize_pgx
 from gwas_variant_analyzer.pgx_foregenomics import parse_foregenomics_report_tsv
+from gwas_variant_analyzer.pgx_cpic import parse_cpic_toy_tsv
 from gwas_variant_analyzer.chat_facts import collect_facts, get_fact_ids
 
 # Import new features
@@ -827,17 +828,50 @@ def _summarize_foregenomics(df):
     }
 
 
+def _summarize_cpic(df):
+    """Build a summary dict from a CPIC parsed DataFrame."""
+    if df is None or df.empty:
+        return {
+            "total_rows": 0,
+            "genes": [],
+            "drugs": [],
+            "by_gene": [],
+        }
+
+    genes = sorted(df["gene"].dropna().loc[df["gene"] != ""].unique().tolist())
+    drugs = sorted(df["drug"].dropna().loc[df["drug"] != ""].unique().tolist())
+
+    by_gene = []
+    for gene in genes:
+        sub = df[df["gene"] == gene]
+        by_gene.append({
+            "gene": gene,
+            "rows": int(len(sub)),
+            "diplotypes": sorted(set(sub["diplotype"].tolist())),
+            "phenotypes": sorted(set(sub["phenotype"].tolist())),
+            "drugs": sorted(set(sub["drug"].tolist())),
+        })
+    by_gene.sort(key=lambda x: x["gene"])
+
+    return {
+        "total_rows": int(len(df)),
+        "genes": genes,
+        "drugs": drugs,
+        "by_gene": by_gene,
+    }
+
+
 @api_bp.route('/pgx-summary', methods=['POST'])
 def pgx_summary():
-    """POST /api/pgx-summary — return deterministic PGx summary from toy or foregenomics TSV."""
+    """POST /api/pgx-summary — return deterministic PGx summary from toy, foregenomics, or cpic TSV."""
     try:
         data = request.get_json(silent=True) or {}
         source = str(data.get("source", "toy")).strip().lower()
 
-        if source not in ("toy", "foregenomics"):
+        if source not in ("toy", "foregenomics", "cpic"):
             return jsonify({
                 'success': False,
-                'message': 'Invalid source. Use source="toy" or source="foregenomics".'
+                'message': 'Invalid source. Use source="toy", source="foregenomics", or source="cpic".'
             }), 400
 
         project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
@@ -848,6 +882,10 @@ def pgx_summary():
             )
             fg_df = parse_foregenomics_report_tsv(tsv_path)
             summary = _summarize_foregenomics(fg_df)
+        elif source == "cpic":
+            tsv_path = os.path.join(project_root, "data", "pgx", "cpic_toy.tsv")
+            cpic_df = parse_cpic_toy_tsv(tsv_path)
+            summary = _summarize_cpic(cpic_df)
         else:
             tsv_path = os.path.join(project_root, "data", "pgx", "final.tsv")
             df = parse_pgx_final_tsv(tsv_path)
@@ -860,7 +898,7 @@ def pgx_summary():
 
         disclaimer_tags = [
             "pharmacogenomics",
-            "foregenomics_data" if source == "foregenomics" else "toy_data",
+            "cpic_data" if source == "cpic" else ("foregenomics_data" if source == "foregenomics" else "toy_data"),
             "not_medical_advice",
             "consult_professional",
         ]
@@ -997,6 +1035,32 @@ def _validate_ollama_answer(raw_answer, fact_ids):
     return raw_answer
 
 
+def _extract_trait_from_message(message: str):
+    """Try to extract a recognizable trait name from a user chat message.
+
+    Returns the matched trait name (str) or None.
+    Uses the loaded trait list for matching.
+    """
+    msg_lower = message.lower()
+    traits = _get_trait_list()
+    if not traits:
+        return None
+
+    best_match = None
+    best_len = 0
+    for entry in traits:
+        trait_name = entry.get("trait", "")
+        if not trait_name:
+            continue
+        t_lower = trait_name.lower()
+        if len(t_lower) < 3:
+            continue
+        if t_lower in msg_lower and len(t_lower) > best_len:
+            best_match = trait_name
+            best_len = len(t_lower)
+    return best_match
+
+
 @api_bp.route('/chat', methods=['POST'])
 def chat():
     """POST /api/chat — facts-based counseling chat with mandatory disclaimers and citations."""
@@ -1035,6 +1099,18 @@ def chat():
         fact_ids = get_fact_ids(facts_list)
         risk_level = _assess_risk_level(facts_list)
 
+        # C9.B2: Suggest trait analysis when user mentions a trait but no GWAS facts
+        suggested_actions = []
+        has_gwas_facts = any(f.domain == "gwas" for f in facts_list) if facts_list else False
+        if not has_gwas_facts:
+            detected_trait = _extract_trait_from_message(message)
+            if detected_trait:
+                suggested_actions.append({
+                    "type": "analyze_trait",
+                    "label": f"Analyze {detected_trait}",
+                    "trait": detected_trait,
+                })
+
         # C6.B2: Ollama mode — call local LLM if enabled and facts exist
         answer = None
         llm_used = False
@@ -1072,6 +1148,7 @@ def chat():
             'citations': fact_ids,
             'risk_level': risk_level,
             'llm': llm_info,
+            'suggested_actions': suggested_actions,
         }), 200
 
     except Exception as e:

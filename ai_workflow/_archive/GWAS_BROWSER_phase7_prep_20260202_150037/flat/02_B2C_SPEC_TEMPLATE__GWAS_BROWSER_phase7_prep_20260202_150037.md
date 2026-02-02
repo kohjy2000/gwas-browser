@@ -129,7 +129,7 @@ Stop the “cache disappeared / refetching again” pain.
 Introduce a single shared cache directory controlled by env:
 
 - If `GWAS_CACHE_DIR` is set: read/write GWAS cache parquet/meta only under that directory.
-- Else: keep legacy behavior (`/Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache`).
+- Else: keep legacy behavior (`{PROJECT_ROOT}/data/gwas_cache`).
 
 This should work across versioned project folders so you don’t lose cache when you clone/copy a new `ver_*` folder.
 
@@ -785,9 +785,6 @@ Cycle 4 is high-risk domain. Disclaimers and citations are mandatory and must be
 | 25 | C9.B1 GWAS Cache Directory Override (Persist Across Versions) | C8.B3 GWAS Cache Self-Heal for PubMed (Stale If Missing) |
 | 26 | C9.B2 Chat: Suggest Trait Analysis When Missing Facts | C8.B4 Chat Transparency: Report Ollama Model Used |
 | 27 | C9.B3 PGx Dataset Expansion: CPIC Snapshot Ingest | C7.B2 PGx Summary API Supports ForeGenomics Source |
-| 28 | C10.B1 References: PubMed Direct URL + Robust PubMed ID Extraction | C6.B3 PubMed Meta Enrichment (Prefer PubMed When Available) |
-| 29 | C10.B2 ForeGenomics PGx: Per-Session Report Selection (Different Individuals ≠ Same Output) | C7.B2 PGx Summary API Supports ForeGenomics Source |
-| 30 | C10.B3 Chat: Trait-Risk Guard (Do Not Answer Disease Risk From PGx-Only Facts) | C9.B2 Chat: Suggest Trait Analysis When Missing Facts |
 
 ---
 
@@ -837,175 +834,6 @@ git status --porcelain
 2. For query "Obes" / "obes", the suggestion list includes "obesity" as the top suggestion (UI-level behavior, not hidden inputs).
 3. Selected phenotype/efo_id used for /api/analyze is the chosen /api/search-traits result (no mismatch).
 4. New contract test passes: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_ui_visible_trait_search_contract.py
-
-### Allow NOOP
-
-- false
-
----
-
-## Cycle 10 (Phase 7): PubMed + ForeGenomics Personalization + Chat Relevance
-
-Gate2 PASS is not the end: **user-visible quality** must match the original intent:
-- References should link to **real PubMed papers** (not `?term=EFO_...+rs...` searches).
-- PGx should not show the *same* result for different individuals unless the inputs are truly identical.
-- Chat must not answer “obesity risk” using only PGx facts (it should require GWAS facts or trigger analysis).
-
-## Block: C10.B1 References: PubMed Direct URL + Robust PubMed ID Extraction
-
-### Description
-
-Make reference URLs human-meaningful:
-- If PubMed_ID exists, reference must be a **direct PubMed article URL** (`/12345678/`), not a `?term=` search URL.
-- If PubMed_ID is missing, reference should fall back to a GWAS Catalog stable URL (variant/study), not a vague placeholder.
-
-This block is allowed to touch both:
-- PubMed_ID extraction (parsing / study JSON keys)
-- Reference URL formatting (customer-friendly layer)
-
-### Dependencies
-
-- Depends on: C6.B3 PubMed Meta Enrichment (Prefer PubMed When Available)
-
-### Target Files
-
-- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py
-- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/customer_friendly_processor.py
-- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_url_quality_contract.py
-
-### Read Files
-
-- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
-- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_url_fallback_contract.py
-- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_fix_contract.py
-
-### Do Not Touch
-
-- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
-
-### Tests Required
-
-```bash
-cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
-/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_reference_url_quality_contract.py
-/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py gwas_variant_analyzer/gwas_variant_analyzer/customer_friendly_processor.py contract_tests/test_reference_url_quality_contract.py --select E9,F63,F7,F82
-/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_variant_analyzer/gwas_variant_analyzer/gwas_catalog_handler.py gwas_variant_analyzer/gwas_variant_analyzer/customer_friendly_processor.py
-git status --porcelain
-```
-
-### Acceptance Criteria
-
-1. When PubMed_ID is known, variants[].reference equals `https://pubmed.ncbi.nlm.nih.gov/<PubMed_ID>/` (no `?term=`).
-2. When PubMed_ID is missing but rsid is known, variants[].reference is a stable GWAS Catalog URL (variant/study), not “No publication…” and not a PubMed `?term=` search.
-3. New contract test passes:
-   - /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_reference_url_quality_contract.py
-
-### Allow NOOP
-
-- false
-
----
-
-## Block: C10.B2 ForeGenomics PGx: Per-Session Report Selection (Different Individuals ≠ Same Output)
-
-### Description
-
-Fix “PGx looks identical for different individuals” by making ForeGenomics ingestion session-aware:
-- Derive a `sample_id` from the uploaded VCF (or explicitly supplied sample_id).
-- Select the matching ForeGenomics report file for that sample_id (from a root directory).
-- Store the summary into the session so chat can cite it.
-
-### Dependencies
-
-- Depends on: C7.B2 PGx Summary API Supports ForeGenomics Source
-
-### Target Files
-
-- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
-- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer/gwas_variant_analyzer/pgx_foregenomics.py
-- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/pgx/foregenomics_reports/SAMPLE_A.PGx.out.report.tsv
-- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/pgx/foregenomics_reports/SAMPLE_B.PGx.out.report.tsv
-- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pgx_foregenomics_session_select_contract.py
-
-### Read Files
-
-- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
-- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pgx_endpoint_foregenomics_contract.py
-
-### Do Not Touch
-
-- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
-
-### Tests Required
-
-```bash
-cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
-/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_pgx_foregenomics_session_select_contract.py
-/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_dashboard_package/src/routes/api.py gwas_variant_analyzer/gwas_variant_analyzer/pgx_foregenomics.py contract_tests/test_pgx_foregenomics_session_select_contract.py --select E9,F63,F7,F82
-/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_dashboard_package/src/routes/api.py gwas_variant_analyzer/gwas_variant_analyzer/pgx_foregenomics.py
-git status --porcelain
-```
-
-### Acceptance Criteria
-
-1. With `FOREGENOMICS_PGX_ROOT` set, `/api/pgx-summary` source="foregenomics" uses the report that matches the session’s sample_id.
-2. Two different uploaded fixture VCFs (different sample_id) produce **different** ForeGenomics summaries.
-3. New contract test passes:
-   - /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_pgx_foregenomics_session_select_contract.py
-
-### Allow NOOP
-
-- false
-
----
-
-## Block: C10.B3 Chat: Trait-Risk Guard (Do Not Answer Disease Risk From PGx-Only Facts)
-
-### Description
-
-Prevent misleading answers like “obesity risk: medium” when only PGx facts exist.
-
-Rules:
-- If user’s message mentions a trait (e.g., obesity) and session has **no GWAS facts**, chat must:
-  - avoid disease-risk scoring from PGx-only facts
-  - return risk_level="low"
-  - include suggested_actions to run trait analysis (C9.B2 behavior), and a clear instruction to run GWAS analysis first
-- If GWAS facts exist, chat may answer trait-risk questions and cite GWAS fact IDs.
-
-### Dependencies
-
-- Depends on: C9.B2 Chat: Suggest Trait Analysis When Missing Facts
-
-### Target Files
-
-- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py
-- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_chat_trait_risk_guard_contract.py
-
-### Read Files
-
-- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/ai_workflow/03_CONTRACTS_TEMPLATE.md
-- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_chat_suggest_analyze_contract.py
-
-### Do Not Touch
-
-- /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache
-
-### Tests Required
-
-```bash
-cd /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser
-/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests/test_chat_trait_risk_guard_contract.py
-/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/ruff check gwas_dashboard_package/src/routes/api.py contract_tests/test_chat_trait_risk_guard_contract.py --select E9,F63,F7,F82
-/Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m py_compile gwas_dashboard_package/src/routes/api.py
-git status --porcelain
-```
-
-### Acceptance Criteria
-
-1. When only PGx facts exist and user asks a trait-risk question, chat does NOT produce a “medium/high” trait risk; returns risk_level="low" and guides to run analysis.
-2. suggested_actions includes analyze_trait for the detected trait.
-3. New contract test passes:
-   - /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_chat_trait_risk_guard_contract.py
 
 ### Allow NOOP
 

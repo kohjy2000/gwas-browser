@@ -4,6 +4,9 @@ data/_contract_cache_*/
 # Local runtime env (operator-specific)
 ai_workflow/.env.local
 
+# Local workflow state (baseline for scope checks)
+ai_workflow/_state/
+
 # Large local GWAS cache files (runtime)
 data/gwas_cache/*.parquet
 data/gwas_cache/*.meta.json

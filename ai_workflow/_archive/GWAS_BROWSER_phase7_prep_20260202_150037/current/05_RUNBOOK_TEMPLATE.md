@@ -342,12 +342,9 @@ ollama pull deepseek-r1:32b
 
 ForeGenomics 결과 파일을 실제로 ingest하고 싶으면:
 
-- (권장, Phase 7/C10.B2) 샘플별 report 디렉토리를 지정:
-  - `FOREGENOMICS_PGX_ROOT=/Users/june-young/Research_Local/08_GWAS_browser/ForeGenomics_PGx/trial`
-- (옵션) 단일 report 파일로 고정하고 싶으면(개인별 차이 없음):
-  - `FOREGENOMICS_PGX_REPORT_PATH=/Users/june-young/Research_Local/08_GWAS_browser/ForeGenomics_PGx/trial/<SAMPLE>/<SAMPLE>.PGx.out.report.tsv`
-
-주의: `trial/results.tsv`는 스키마가 다르므로 `FOREGENOMICS_PGX_REPORT_PATH`로 쓰면 안 된다.
+- `FOREGENOMICS_PGX_REPORT_PATH=/Users/june-young/Research_Local/08_GWAS_browser/ForeGenomics_PGx/trial/results.tsv`
+  - 주의: `results.tsv`가 아니라, 보통 아래처럼 샘플별 report 파일을 써야 한다:
+    - `/Users/june-young/Research_Local/08_GWAS_browser/ForeGenomics_PGx/trial/<SAMPLE>/<SAMPLE>.PGx.out.report.tsv`
 
 ### GWAS cache PubMed self-heal (optional, Cycle 8)
 
