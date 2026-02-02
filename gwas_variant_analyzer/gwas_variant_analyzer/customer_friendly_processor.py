@@ -26,15 +26,14 @@ def categorize_risk_level(odds_ratio: float) -> Dict[str, str]:
     else:
         return {"level": "Protective", "description": f"Associated with a {odds_ratio:.1f}x risk, which may indicate a protective effect."}
 
-def get_confidence_level(p_value: float, pubmed_id: Any) -> Dict[str, Any]:
+def get_confidence_level(p_value: float, pubmed_id: Any, association_id: Any = None) -> Dict[str, Any]:
     """Determine confidence level based on P-value and publication info in English."""
     # Check if pubmed_id is valid (not None, NaN, or empty string)
     has_reference = pubmed_id and pd.notna(pubmed_id) and str(pubmed_id).strip()
-    
+
     # Convert pubmed_id from float (e.g., 29878757.0) to integer string if needed
     if has_reference:
         try:
-            # Handle various formats: float, int, string
             pubmed_str = str(pubmed_id).strip()
             if '.' in pubmed_str:
                 pubmed_id = str(int(float(pubmed_str)))
@@ -52,8 +51,17 @@ def get_confidence_level(p_value: float, pubmed_id: Any) -> Dict[str, Any]:
         confidence, description = "High", f"Result is statistically significant (p = {p_value:.2e})."
     else:
         confidence, description = "Medium", f"Result shows moderate statistical significance (p = {p_value:.3f})."
-        
-    reference_url = f"https://pubmed.ncbi.nlm.nih.gov/{pubmed_id}" if has_reference else "No publication reference available"
+
+    # Build reference URL: PubMed preferred, GWAS Catalog association URL as fallback
+    if has_reference:
+        reference_url = f"https://pubmed.ncbi.nlm.nih.gov/{pubmed_id}"
+    elif association_id and pd.notna(association_id) and str(association_id).strip():
+        reference_url = f"https://www.ebi.ac.uk/gwas/associations/{str(association_id).strip()}"
+        has_reference = True
+    else:
+        reference_url = "https://www.ebi.ac.uk/gwas/"
+        has_reference = True
+
     return {"confidence": confidence, "description": description, "reference": reference_url, "has_reference": bool(has_reference)}
 
 def calculate_overall_risk_summary(results_df: pd.DataFrame) -> Dict[str, Any]:
@@ -118,7 +126,8 @@ def format_customer_friendly_results(merged_data: pd.DataFrame) -> Dict[str, Any
                 logger.info(f"  {col}: {row[col]} (type: {type(row[col])})")
         
         risk_info = categorize_risk_level(row.get('Odds_Ratio'))
-        confidence_info = get_confidence_level(row.get('P_Value'), pubmed_id)
+        association_id = row.get('GWAS_Association_ID')
+        confidence_info = get_confidence_level(row.get('P_Value'), pubmed_id, association_id)
         
         customer_results.append({
             "snp_id": snp_id,

@@ -18257,3 +18257,43 @@ Name: PubMed_ID, dtype: object
 2026-02-02 11:35:16,262 - main - INFO - Added GWAS Variant Analyzer package to path: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer
 2026-02-02 11:35:16,280 - werkzeug - WARNING -  * Debugger is active!
 2026-02-02 11:35:16,285 - werkzeug - INFO -  * Debugger PIN: 137-913-157
+2026-02-02 11:39:35,209 - werkzeug - INFO -  * Detected change in '/Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py', reloading
+2026-02-02 11:39:35,243 - werkzeug - INFO -  * Restarting with stat
+2026-02-02 11:39:35,527 - main - INFO - Added GWAS Variant Analyzer package to path: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer
+2026-02-02 11:39:35,542 - werkzeug - WARNING -  * Debugger is active!
+2026-02-02 11:39:35,547 - werkzeug - INFO -  * Debugger PIN: 137-913-157
+2026-02-02 11:39:53,256 - werkzeug - INFO -  * Detected change in '/Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py', reloading
+2026-02-02 11:39:53,287 - werkzeug - INFO -  * Restarting with stat
+2026-02-02 11:39:53,561 - main - INFO - Added GWAS Variant Analyzer package to path: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer
+2026-02-02 11:39:53,578 - werkzeug - WARNING -  * Debugger is active!
+2026-02-02 11:39:53,582 - werkzeug - INFO -  * Debugger PIN: 137-913-157
+2026-02-02 11:40:07,148 - werkzeug - INFO -  * Detected change in '/Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py', reloading
+2026-02-02 11:40:07,180 - werkzeug - INFO -  * Restarting with stat
+2026-02-02 11:40:07,452 - main - INFO - Added GWAS Variant Analyzer package to path: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer
+2026-02-02 11:40:07,467 - werkzeug - WARNING -  * Debugger is active!
+2026-02-02 11:40:07,471 - werkzeug - INFO -  * Debugger PIN: 137-913-157
+2026-02-02 11:41:16,135 - werkzeug - INFO -  * Detected change in '/Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_search_traits_remote_cache_contract.py', reloading
+2026-02-02 11:41:16,187 - werkzeug - INFO -  * Restarting with stat
+2026-02-02 11:41:16,453 - main - INFO - Added GWAS Variant Analyzer package to path: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer
+2026-02-02 11:41:16,468 - werkzeug - WARNING -  * Debugger is active!
+2026-02-02 11:41:16,473 - werkzeug - INFO -  * Debugger PIN: 137-913-157
+2026-02-02 11:42:04,524 - werkzeug - INFO -  * Detected change in '/Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_search_traits_remote_cache_contract.py', reloading
+2026-02-02 11:42:04,570 - werkzeug - INFO -  * Restarting with stat
+2026-02-02 11:42:04,833 - main - INFO - Added GWAS Variant Analyzer package to path: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer
+2026-02-02 11:42:04,847 - werkzeug - WARNING -  * Debugger is active!
+2026-02-02 11:42:04,852 - werkzeug - INFO -  * Debugger PIN: 137-913-157
+2026-02-02 11:43:12,709 - werkzeug - INFO -  * Detected change in '/Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py', reloading
+2026-02-02 11:43:12,752 - werkzeug - INFO -  * Restarting with stat
+2026-02-02 11:43:13,021 - main - INFO - Added GWAS Variant Analyzer package to path: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer
+2026-02-02 11:43:13,038 - werkzeug - WARNING -  * Debugger is active!
+2026-02-02 11:43:13,042 - werkzeug - INFO -  * Debugger PIN: 137-913-157
+2026-02-02 11:43:19,325 - werkzeug - INFO -  * Detected change in '/Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/routes/api.py', reloading
+2026-02-02 11:43:19,372 - werkzeug - INFO -  * Restarting with stat
+2026-02-02 11:43:19,640 - main - INFO - Added GWAS Variant Analyzer package to path: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer
+2026-02-02 11:43:19,654 - werkzeug - WARNING -  * Debugger is active!
+2026-02-02 11:43:19,659 - werkzeug - INFO -  * Debugger PIN: 137-913-157
+2026-02-02 11:44:29,813 - werkzeug - INFO -  * Detected change in '/Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_search_traits_remote_cache_contract.py', reloading
+2026-02-02 11:44:29,853 - werkzeug - INFO -  * Restarting with stat
+2026-02-02 11:44:30,129 - main - INFO - Added GWAS Variant Analyzer package to path: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer
+2026-02-02 11:44:30,144 - werkzeug - WARNING -  * Debugger is active!
+2026-02-02 11:44:30,149 - werkzeug - INFO -  * Debugger PIN: 137-913-157
