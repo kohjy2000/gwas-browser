@@ -1,0 +1,13 @@
+Sample	Entry	Group	Drug_Class	Drug_Subclass	Drug	RxCUI	Brand_Name(s)	Gene	Genotype	Phenotype	PK_Direction	PK_Change	PD_Direction	PD_Change	Recommendation	PharmGKB_Guideline_IDs
+SAMPLE_A	13	3	Drugs_for_Treatment_of_Infections	HCV_Treatments	Peginterferon_Alfa-2a	120608	Pegasys	IFNL3	rs12979860_TT	Unfavorable_Response	.	.	Decrease	Efficacy	Use_with_Caution	PA166104801
+SAMPLE_A	14	3	Drugs_for_Treatment_of_Infections	HCV_Treatments	Peginterferon_Alfa-2b	253453	PegIntron	IFNL3	rs12979860_TT	Unfavorable_Response	.	.	Decrease	Efficacy	Use_with_Caution	PA166104801
+SAMPLE_A	51	19	Neurologic/Psychiatric_Medications	Antidepressants_(SSRIs)	Citalopram	2556	Celexa	CYP2C19	*1/*2	Intermediate_Metabolizer	Increase	Exposure	Increase	Toxicity	Adjust_Dosage	PA166104852
+SAMPLE_A	52	19	Neurologic/Psychiatric_Medications	Antidepressants_(SSRIs)	Escitalopram	321988	Lexapro	CYP2C19	*1/*2	Intermediate_Metabolizer	Increase	Exposure	Increase	Toxicity	Adjust_Dosage	PA166104852
+SAMPLE_A	53	20	Neurologic/Psychiatric_Medications	Antidepressants_(SSRIs)	Sertraline	36437	Zoloft	CYP2C19	*1/*2	Intermediate_Metabolizer	Increase	Exposure	Increase	Toxicity	Adjust_Dosage	PA166104980
+SAMPLE_A	100	40	Cardiovascular_Medications	Blood_Thinners	Acenocoumarol	154	Sintrom	CYP2C9	*1/*1	Normal_Metabolizer	.	.	.	.	.	PA166104938
+SAMPLE_A	103	42	Cardiovascular_Medications	Blood_Thinners	Warfarin	11289	Coumadin	CYP2C9	*1/*1	Normal_Metabolizer	.	.	.	.	.	PA166104776
+SAMPLE_A	107	43	Cardiovascular_Medications	Blood_Thinners	Clopidogrel	32968	Plavix	CYP2C19	*1/*2	Intermediate_Metabolizer	Increase	Exposure	Decrease	Efficacy	Consider_Alternatives	PA166104777
+SAMPLE_A	108	44	Cardiovascular_Medications	Statins	Atorvastatin	83367	Lipitor	SLCO1B1	*15/*37	Decreased_Function	Increase	Exposure	Increase	Toxicity	Adjust_Dosage	PA166105005
+SAMPLE_A	109	44	Cardiovascular_Medications	Statins	Simvastatin	36567	Zocor	SLCO1B1	*15/*37	Decreased_Function	Increase	Exposure	Increase	Toxicity	Adjust_Dosage	PA166105005
+SAMPLE_A	120	47	Gastrointestinal_Medications	.	Omeprazole	7646	Prilosec	CYP2C19	*1/*2	Intermediate_Metabolizer	Increase	Exposure	Increase	Efficacy	Adjust_Dosage	PA166104863
+SAMPLE_A	121	47	Gastrointestinal_Medications	.	Pantoprazole	40790	Protonix	CYP2C19	*1/*2	Intermediate_Metabolizer	Increase	Exposure	Increase	Efficacy	Adjust_Dosage	PA166104863

@@ -6,6 +6,9 @@ with columns: gene, drug, genotype, phenotype, recommendation, guideline_ids.
 
 from __future__ import annotations
 
+import glob
+import os
+
 import pandas as pd
 
 
@@ -61,3 +64,18 @@ def parse_foregenomics_report_tsv(path: str) -> pd.DataFrame:
 
     df = pd.DataFrame(out_rows)
     return df
+
+
+def find_foregenomics_report(root_dir: str, sample_id: str) -> str | None:
+    """Find the ForeGenomics report file for a given sample_id under *root_dir*.
+
+    Looks for ``<sample_id>.PGx.out.report.tsv`` (case-sensitive) directly
+    inside *root_dir*.  Returns the path if found, otherwise ``None``.
+    """
+    if not root_dir or not sample_id:
+        return None
+    pattern = os.path.join(root_dir, f"{sample_id}.PGx.out.report.tsv")
+    matches = glob.glob(pattern)
+    if matches:
+        return matches[0]
+    return None

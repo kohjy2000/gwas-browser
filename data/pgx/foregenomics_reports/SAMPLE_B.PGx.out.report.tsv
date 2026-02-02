@@ -1,0 +1,13 @@
+Sample	Entry	Group	Drug_Class	Drug_Subclass	Drug	RxCUI	Brand_Name(s)	Gene	Genotype	Phenotype	PK_Direction	PK_Change	PD_Direction	PD_Change	Recommendation	PharmGKB_Guideline_IDs
+SAMPLE_B	21	8	Drugs_for_Treatment_of_Infections	Others	Isoniazid	6038	Rifater	NAT2	*5/*6	Slow_Acetylator	Increase	Exposure	Increase	Toxicity	Use_with_Caution	PA166104850
+SAMPLE_B	51	19	Neurologic/Psychiatric_Medications	Antidepressants_(SSRIs)	Citalopram	2556	Celexa	CYP2C19	*2/*2	Poor_Metabolizer	Increase	Exposure	Increase	Toxicity	Consider_Alternatives	PA166104852
+SAMPLE_B	52	19	Neurologic/Psychiatric_Medications	Antidepressants_(SSRIs)	Escitalopram	321988	Lexapro	CYP2C19	*2/*2	Poor_Metabolizer	Increase	Exposure	Increase	Toxicity	Consider_Alternatives	PA166104852
+SAMPLE_B	93	35	Anticancer_Medication	.	Lapatinib	480167	Tykerb	HLA-DQA1	*02:01/*05:05	Unfavorable_Response	.	.	Increase	Adverse_reaction_risk	Avoid	PA166151878
+SAMPLE_B	94	35	Anticancer_Medication	.	Lapatinib	480167	Tykerb	HLA-DRB1	*07:01/*13:03	Unfavorable_Response	.	.	Increase	Adverse_reaction_risk	Avoid	PA166151878
+SAMPLE_B	103	42	Cardiovascular_Medications	Blood_Thinners	Warfarin	11289	Coumadin	CYP2C9	*2/*3	Poor_Metabolizer	Increase	Exposure	Increase	Toxicity	Consider_Alternatives	PA166104776
+SAMPLE_B	107	43	Cardiovascular_Medications	Blood_Thinners	Clopidogrel	32968	Plavix	CYP2C19	*2/*2	Poor_Metabolizer	Increase	Exposure	Decrease	Efficacy	Consider_Alternatives	PA166104777
+SAMPLE_B	108	44	Cardiovascular_Medications	Statins	Atorvastatin	83367	Lipitor	SLCO1B1	*1a/*1a	Normal_Function	.	.	.	.	.	PA166105005
+SAMPLE_B	110	44	Cardiovascular_Medications	Statins	Rosuvastatin	301542	Crestor	SLCO1B1	*1a/*1a	Normal_Function	.	.	.	.	.	PA166105023
+SAMPLE_B	120	47	Gastrointestinal_Medications	.	Omeprazole	7646	Prilosec	CYP2C19	*2/*2	Poor_Metabolizer	Increase	Exposure	Increase	Efficacy	Consider_Alternatives	PA166104863
+SAMPLE_B	123	49	Others	.	Allopurinol	519	Zyloprim	HLA-B	*58:01/*15:17	High_Risk	.	.	Increase	Adverse_reaction_risk	Avoid	PA166105003
+SAMPLE_B	130	52	Others	.	Dapsone	3108	Aczone	G6PD	B_(reference)/A-	G6PD_Deficient	.	.	Increase	Toxicity	Avoid	PA166104876
