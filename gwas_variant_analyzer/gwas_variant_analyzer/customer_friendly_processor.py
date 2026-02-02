@@ -68,7 +68,7 @@ def get_confidence_level(
     # Build reference URL: PubMed preferred, GWAS Catalog association URL fallback,
     # and finally a PubMed search link (still points to original papers, not the GWAS homepage).
     if has_reference:
-        reference_url = f"https://pubmed.ncbi.nlm.nih.gov/{pubmed_id}"
+        reference_url = f"https://pubmed.ncbi.nlm.nih.gov/{pubmed_id}/"
     else:
         assoc_str = ""
         if association_id is not None and pd.notna(association_id):
@@ -76,20 +76,17 @@ def get_confidence_level(
         if assoc_str:
             reference_url = f"https://www.ebi.ac.uk/gwas/associations/{assoc_str}"
         else:
-            terms = []
-            if trait is not None and str(trait).strip() and str(trait).strip().lower() != "nan":
-                terms.append(str(trait).strip())
+            # C10.B1: Use stable GWAS Catalog URLs, never PubMed ?term= search
+            sid = ""
             if snp_id is not None and str(snp_id).strip() and str(snp_id).strip().lower() != "nan":
                 sid = str(snp_id).strip()
-                # Prefer GWAS Catalog variant pages over a blind PubMed search query.
-                # This is still a real evidence link and avoids confusing "?term=EFO_...+rs..." URLs.
-                if sid.lower().startswith("rs"):
-                    reference_url = f"https://www.ebi.ac.uk/gwas/variants/{sid}"
-                    has_reference = True
-                    return {"confidence": confidence, "description": description, "reference": reference_url, "has_reference": bool(has_reference)}
-                terms.append(sid)
-            q = quote_plus(" ".join(terms)) if terms else "gwas"
-            reference_url = f"https://pubmed.ncbi.nlm.nih.gov/?term={q}"
+            if sid.lower().startswith("rs"):
+                reference_url = f"https://www.ebi.ac.uk/gwas/variants/{sid}"
+            elif trait is not None and str(trait).strip() and str(trait).strip().lower() != "nan":
+                q = quote_plus(str(trait).strip())
+                reference_url = f"https://www.ebi.ac.uk/gwas/search?query={q}"
+            else:
+                reference_url = "https://www.ebi.ac.uk/gwas/"
         has_reference = True
 
     return {"confidence": confidence, "description": description, "reference": reference_url, "has_reference": bool(has_reference)}

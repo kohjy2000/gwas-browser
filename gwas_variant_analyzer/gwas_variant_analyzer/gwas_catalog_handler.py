@@ -377,12 +377,13 @@ def parse_gwas_association_data(raw_associations: List[Dict], trait_name: str, c
     for association in raw_associations:
         # Extract common information from each association
         
-        pubmed_id = association.get('publicationInfo', {}).get('pubmedId')
+        pub_info = association.get('publicationInfo', {}) or {}
+        pubmed_id = pub_info.get('pubmedId') or pub_info.get('pubMedId') or ""
         # Some payloads can expose pubmedId directly or as a list; normalize to a scalar.
         if isinstance(pubmed_id, list) and pubmed_id:
             pubmed_id = pubmed_id[0]
         if not pubmed_id:
-            pubmed_id = association.get("pubmedId") or ""
+            pubmed_id = association.get("pubmedId") or association.get("pubMedId") or ""
         if not pubmed_id:
             study_url = association.get('_links', {}).get('study', {}).get('href')
             request_timeout = config.get('gwas_api_request_timeout_seconds', 30)
@@ -400,7 +401,8 @@ def parse_gwas_association_data(raw_associations: List[Dict], trait_name: str, c
                         response = requests.get(study_url, timeout=request_timeout)
                         response.raise_for_status()
                         study_json = response.json()
-                        pubmed_id = study_json.get('publicationInfo', {}).get('pubmedId')
+                        study_pub = study_json.get('publicationInfo', {}) or {}
+                        pubmed_id = study_pub.get('pubmedId') or study_pub.get('pubMedId') or ""
                         if isinstance(pubmed_id, list) and pubmed_id:
                             pubmed_id = pubmed_id[0]
                         break
