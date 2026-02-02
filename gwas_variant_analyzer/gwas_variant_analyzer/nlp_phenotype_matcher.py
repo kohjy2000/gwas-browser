@@ -9,8 +9,7 @@ System for automatically finding related diseases/traits from natural language i
 import json
 import logging
 import os
-from typing import List, Dict, Any, Optional
-import re
+from typing import Any, Dict, List
 from difflib import SequenceMatcher
 
 logger = logging.getLogger(__name__)
@@ -230,40 +229,5 @@ class PhenotypeNLPMatcher:
                 'results': []
             }
     
-    def get_popular_phenotypes(self, count: int = 10) -> List[Dict[str, str]]:
-        """Return list of popular diseases/traits (based on existing efo_mapping.json)"""
-        # Select popular diseases from existing mapping
-        popular = [
-              "obesity",
-              "height growth",
-              "coronary heart disease",
-              "hypertension",
-              "type 2 diabetes",
-              "male fertility",
-              "androgenetic alopecia",
-              "asthma",
-              "psoriasis",
-              "breast cancer",
-              "prostate cancer",
-              "colorectal cancer",
-              "lung cancer",
-              "depression",
-              "bipolar disorder",
-              "autism spectrum disorder",
-              "schizophrenia",
-              "alzheimer's disease",
-              "parkinson's disease",
-              "crohn's disease",
-              "ulcerative colitis",
-              "rheumatoid arthritis"
-        ]
-        
-        results = []
-        for disease in popular[:count]:
-            if disease in self.efo_mapping:
-                results.append({
-                    'name': disease,
-                    'efo_id': self.efo_mapping[disease]
-                })
-        
-        return results
+    # NOTE: A second get_popular_phenotypes() implementation used to exist below and caused
+    # a redefinition lint error (F811). Keep only the primary implementation.

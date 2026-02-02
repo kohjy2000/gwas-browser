@@ -12,7 +12,6 @@ import logging
 import requests
 import pandas as pd
 from typing import List, Dict, Any, Optional
-import re
 import os
 import json
 
@@ -264,12 +263,12 @@ def merge_variant_data(user_variants_df: pd.DataFrame, gwas_data_df: pd.DataFram
     merged_df = merged_df.drop('confidence_rank', axis=1)
     
     # 통계 로깅
-    logger.info(f"=" * 60)
-    logger.info(f"RELAXED MERGE SUMMARY:")
+    logger.info("=" * 60)
+    logger.info("RELAXED MERGE SUMMARY:")
     logger.info(f"  Total unique variants matched: {len(merged_df)}")
     
     if 'MATCH_TYPE' in merged_df.columns:
-        logger.info(f"  Match type breakdown:")
+        logger.info("  Match type breakdown:")
         match_stats = merged_df['MATCH_TYPE'].value_counts()
         for match_type, count in match_stats.items():
             pct = count/len(merged_df)*100
@@ -277,13 +276,13 @@ def merge_variant_data(user_variants_df: pd.DataFrame, gwas_data_df: pd.DataFram
             logger.info(f"    • {match_type} ({confidence} confidence): {count} ({pct:.1f}%)")
     
     if 'MATCH_CONFIDENCE' in merged_df.columns:
-        logger.info(f"  Confidence breakdown:")
+        logger.info("  Confidence breakdown:")
         conf_stats = merged_df['MATCH_CONFIDENCE'].value_counts()
         for conf, count in conf_stats.items():
             logger.info(f"    • {conf}: {count} ({count/len(merged_df)*100:.1f}%)")
     
     logger.info(f"  Improvement: {len(merged_df)/61*100:.1f}% of original strict matching")
-    logger.info(f"=" * 60)
+    logger.info("=" * 60)
     
     return merged_df
 

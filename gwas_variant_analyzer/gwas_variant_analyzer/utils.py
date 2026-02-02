@@ -232,7 +232,7 @@ def create_default_config(config_file_path: str) -> Dict:
             with open(f"{os.path.splitext(config_file_path)[0]}.yaml", 'w') as config_file:
                 yaml.dump(default_config, config_file, default_flow_style=False)
         
-        logger.info(f"Default configuration file created successfully")
+        logger.info("Default configuration file created successfully")
         
     except Exception as e:
         logger.error(f"Error creating default configuration file: {str(e)}")

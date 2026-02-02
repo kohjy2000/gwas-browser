@@ -8,7 +8,6 @@ Provides user-friendly result formatting and risk analysis in English.
 import pandas as pd
 import logging
 from typing import Dict, Any
-import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +47,7 @@ def get_confidence_level(p_value: float, pubmed_id: Any) -> Dict[str, Any]:
     if pd.isna(p_value):
         confidence, description = "Unclear", "Statistical significance information is not available."
     elif p_value < 5e-8:
-        confidence, description = "Very High", f"Result is considered genome-wide significant (p < 5e-8)."
+        confidence, description = "Very High", "Result is considered genome-wide significant (p < 5e-8)."
     elif p_value < 1e-5:
         confidence, description = "High", f"Result is statistically significant (p = {p_value:.2e})."
     else:
@@ -154,7 +153,7 @@ def format_customer_friendly_results(merged_data: pd.DataFrame) -> Dict[str, Any
     
     summary = calculate_overall_risk_summary(summary_df)
     
-    logger.info(f"=== DEBUG: Final results ===")
+    logger.info("=== DEBUG: Final results ===")
     logger.info(f"Generated {len(customer_results)} customer-friendly results")
     if customer_results:
         logger.info(f"First result SNP ID: {customer_results[0]['snp_id']}")

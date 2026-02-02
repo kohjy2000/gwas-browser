@@ -6,7 +6,6 @@ It provides functions to load VCF files and extract specific variants based on r
 Uses cyvcf2 for modern, fast VCF parsing.
 """
 
-import re
 import logging
 import pandas as pd
 from cyvcf2 import VCF  # Modern cyvcf2 library

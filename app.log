@@ -17217,3 +17217,1018 @@ Name: PubMed_ID, dtype: object
 2025-12-09 20:53:57,333 - gwas_variant_analyzer.customer_friendly_processor - INFO - First result SNP ID: rs76734286
 2025-12-09 20:53:57,333 - gwas_variant_analyzer.customer_friendly_processor - INFO - First result reference: No publication reference available
 2025-12-09 20:53:57,334 - werkzeug - INFO - 192.168.45.217 - - [09/Dec/2025 20:53:57] "POST /api/analyze HTTP/1.1" 200 -
+2026-02-02 10:46:46,641 - main - INFO - Added GWAS Variant Analyzer package to path: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer
+2026-02-02 10:46:46,710 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:1111
+ * Running on http://100.96.40.22:1111
+2026-02-02 10:46:46,710 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-02 10:46:46,712 - werkzeug - INFO -  * Restarting with stat
+2026-02-02 10:46:46,951 - main - INFO - Added GWAS Variant Analyzer package to path: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer
+2026-02-02 10:46:46,964 - werkzeug - WARNING -  * Debugger is active!
+2026-02-02 10:46:46,969 - werkzeug - INFO -  * Debugger PIN: 137-913-157
+2026-02-02 10:46:59,068 - werkzeug - INFO - 100.96.40.22 - - [02/Feb/2026 10:46:59] "GET / HTTP/1.1" 200 -
+2026-02-02 10:46:59,086 - gwas_variant_analyzer.gwas_variant_analyzer.utils - INFO - Loading configuration from: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/../config/app_config.yaml
+2026-02-02 10:46:59,096 - gwas_variant_analyzer.gwas_variant_analyzer.utils - INFO - Successfully loaded configuration with 35 settings
+2026-02-02 10:46:59,096 - gwas_variant_analyzer.gwas_variant_analyzer.nlp_phenotype_matcher - WARNING - EFO mapping file not found: config/efo_mapping.json, using fallback
+2026-02-02 10:46:59,097 - werkzeug - INFO - 100.96.40.22 - - [02/Feb/2026 10:46:59] "GET /api/get-popular-phenotypes HTTP/1.1" 200 -
+2026-02-02 10:46:59,118 - werkzeug - INFO - 100.96.40.22 - - [02/Feb/2026 10:46:59] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-02-02 10:47:26,924 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - Loading VCF file: /var/folders/bv/jqrpb4p97k1f36bbw11bwm3w0000gn/T/tmp_2jmyqmx/GIUS-AAHV-0001-12AD.pm.vcf.gz
+2026-02-02 10:47:26,930 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - Successfully loaded VCF file with 1 samples
+2026-02-02 10:47:26,930 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - Extracting variants from VCF file based on CHROM:POS:REF:ALT.
+2026-02-02 10:47:42,238 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - Processed 4984259 VCF records.
+2026-02-02 10:47:42,238 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - Extracted 4984259 user variant alleles.
+2026-02-02 10:47:43,752 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - === DEBUG: Sample of extracted user variants ===
+2026-02-02 10:47:43,752 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - DataFrame shape: (4984259, 5)
+2026-02-02 10:47:43,752 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - DataFrame columns: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID']
+2026-02-02 10:47:43,752 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - Sample rows:
+2026-02-02 10:47:43,753 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - Row 0: CHROM=chr1, POS=10146, REF=AC, ALT=A, SNP_ID=None
+2026-02-02 10:47:43,753 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - Row 1: CHROM=chr1, POS=10230, REF=AC, ALT=A, SNP_ID=None
+2026-02-02 10:47:43,753 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - Row 2: CHROM=chr1, POS=10254, REF=TA, ALT=T, SNP_ID=None
+2026-02-02 10:47:43,835 - werkzeug - INFO - 100.96.40.22 - - [02/Feb/2026 10:47:43] "POST /api/upload-vcf HTTP/1.1" 200 -
+2026-02-02 10:47:49,570 - werkzeug - INFO - 100.96.40.22 - - [02/Feb/2026 10:47:49] "POST /api/search-phenotypes HTTP/1.1" 200 -
+2026-02-02 10:47:55,016 - werkzeug - INFO - 100.96.40.22 - - [02/Feb/2026 10:47:55] "POST /api/search-phenotypes HTTP/1.1" 200 -
+2026-02-02 10:47:55,887 - werkzeug - INFO - 100.96.40.22 - - [02/Feb/2026 10:47:55] "POST /api/search-phenotypes HTTP/1.1" 200 -
+2026-02-02 10:47:56,235 - werkzeug - INFO - 100.96.40.22 - - [02/Feb/2026 10:47:56] "POST /api/search-phenotypes HTTP/1.1" 200 -
+2026-02-02 10:47:56,607 - werkzeug - INFO - 100.96.40.22 - - [02/Feb/2026 10:47:56] "POST /api/search-phenotypes HTTP/1.1" 200 -
+2026-02-02 10:48:52,706 - gwas_variant_analyzer.gwas_variant_analyzer.utils - INFO - Loading configuration from: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/../config/app_config.yaml
+2026-02-02 10:48:52,715 - gwas_variant_analyzer.gwas_variant_analyzer.utils - INFO - Successfully loaded configuration with 35 settings
+2026-02-02 10:48:52,715 - gwas_variant_analyzer.gwas_variant_analyzer.gwas_catalog_handler - INFO - Loading GWAS data for EFO_0001073 from cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache/EFO_0001073.parquet
+2026-02-02 10:48:52,810 - main - INFO - === DEBUG: Data before merge ===
+2026-02-02 10:48:52,810 - main - INFO - GWAS data columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed']
+2026-02-02 10:48:52,810 - main - INFO - User variants columns: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID']
+2026-02-02 10:48:52,810 - main - INFO - GWAS data sample:
+2026-02-02 10:48:52,812 - main - INFO -       SNP_ID PubMed_ID  Odds_Ratio       P_Value   GWAS_Trait GWAS_CHROM  GWAS_POS GWAS_REF GWAS_ALT GWAS_Ethnicity_Processed
+0   rs297325      None         NaN  4.000000e-07  EFO_0001073         11  16368048        N        C                  Unknown
+1  rs4756846      None         NaN  5.000000e-07  EFO_0001073         11  16381965        N        C                  Unknown
+2  rs1558902      None        0.09  1.000000e-07  EFO_0001073         16  53769662        N        T                  Unknown
+2026-02-02 10:48:52,813 - main - INFO - User variants sample:
+2026-02-02 10:48:52,813 - main - INFO -   USER_CHROM  USER_POS USER_REF USER_ALT SNP_ID
+0       chr1     10146       AC        A   None
+1       chr1     10230       AC        A   None
+2       chr1     10254       TA        T   None
+2026-02-02 10:48:52,813 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO - Starting RELAXED merge: 4984259 user × 972 GWAS variants
+2026-02-02 10:48:53,576 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -   Trying Strategy 1: Exact position + alt allele...
+2026-02-02 10:48:54,319 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -     ✓ Found 61 exact matches
+2026-02-02 10:48:54,320 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -   Trying Strategy 2: Position + ref allele...
+2026-02-02 10:48:55,017 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -     ✓ Found 106 ref matches
+2026-02-02 10:48:55,017 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -   Trying Strategy 3: Position only...
+2026-02-02 10:48:55,511 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -   Trying Strategy 4: Complement alleles...
+2026-02-02 10:48:56,743 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -     ✓ Found 2 complement matches
+2026-02-02 10:48:56,911 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -   Trying Strategy 5: Nearby positions (±1bp)...
+2026-02-02 10:48:57,398 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -     ✓ Found 4 nearby matches
+2026-02-02 10:48:57,401 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO - ============================================================
+2026-02-02 10:48:57,401 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO - RELAXED MERGE COMPLETE:
+2026-02-02 10:48:57,401 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -   Total matches: 173 (17.8% of GWAS variants)
+2026-02-02 10:48:57,401 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -   By strategy:
+2026-02-02 10:48:57,402 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -     • ref_match       (medium    ):  106 ( 61.3%)
+2026-02-02 10:48:57,402 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -     • exact           (high      ):   61 ( 35.3%)
+2026-02-02 10:48:57,402 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -     • nearby          (very_low  ):    4 (  2.3%)
+2026-02-02 10:48:57,402 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -     • complement      (medium    ):    2 (  1.2%)
+2026-02-02 10:48:57,402 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -   Improvement: 173/61 = 284% vs original
+2026-02-02 10:48:57,402 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO - ============================================================
+2026-02-02 10:48:57,451 - main - INFO - === DEBUG: Data after merge ===
+2026-02-02 10:48:57,452 - main - INFO - Merged data columns: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,452 - main - INFO - Merged data shape: (173, 17)
+2026-02-02 10:48:57,452 - main - INFO - Merged data sample:
+2026-02-02 10:48:57,453 - main - INFO -    USER_CHROM  USER_POS USER_REF USER_ALT     SNP_ID GWAS_SNP_ID PubMed_ID  Odds_Ratio       P_Value   GWAS_Trait GWAS_CHROM  GWAS_POS GWAS_REF GWAS_ALT GWAS_Ethnicity_Processed MATCH_TYPE MATCH_CONFIDENCE
+0           1  72285502        T        C  rs3101336   rs3101336      None      1.2100  2.000000e-08  EFO_0001073          1  72285502        N        C                  Unknown      exact             high
+33          9  69039128        C        A  rs2481599   rs2481599      None      0.9141  3.000000e-07  EFO_0001073          9  69039128        N        A                  Unknown      exact             high
+34          9  93125038        G        T  rs2275848   rs2275848      None      1.2300  1.000000e-06  EFO_0001073          9  93125038        N        T                  Unknown      exact             high
+2026-02-02 10:48:57,453 - main - INFO - SNP_ID values sample: 0     rs3101336
+33    rs2481599
+34    rs2275848
+35     rs666595
+36    rs7474896
+Name: SNP_ID, dtype: object
+2026-02-02 10:48:57,453 - main - INFO - PubMed_ID values sample: 0     None
+33    None
+34    None
+35    None
+36    None
+Name: PubMed_ID, dtype: object
+2026-02-02 10:48:57,454 - main - INFO - 74 variants remaining after applying filters.
+2026-02-02 10:48:57,454 - main - INFO - === DEBUG: Data after filtering ===
+2026-02-02 10:48:57,454 - main - INFO - Filtered data columns: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,454 - main - INFO - Sample of filtered data:
+2026-02-02 10:48:57,454 - main - INFO - Row 0:
+2026-02-02 10:48:57,454 - main - INFO -   SNP_ID: rs3101336
+2026-02-02 10:48:57,454 - main - INFO -   PubMed_ID: None
+2026-02-02 10:48:57,454 - main - INFO -   GWAS_Trait: EFO_0001073
+2026-02-02 10:48:57,454 - main - INFO - Row 33:
+2026-02-02 10:48:57,454 - main - INFO -   SNP_ID: rs2481599
+2026-02-02 10:48:57,454 - main - INFO -   PubMed_ID: None
+2026-02-02 10:48:57,454 - main - INFO -   GWAS_Trait: EFO_0001073
+2026-02-02 10:48:57,454 - main - INFO - Row 34:
+2026-02-02 10:48:57,454 - main - INFO -   SNP_ID: rs2275848
+2026-02-02 10:48:57,454 - main - INFO -   PubMed_ID: None
+2026-02-02 10:48:57,454 - main - INFO -   GWAS_Trait: EFO_0001073
+2026-02-02 10:48:57,454 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Inside format_customer_friendly_results ===
+2026-02-02 10:48:57,454 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Input data columns: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,454 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Input data shape: (74, 17)
+2026-02-02 10:48:57,454 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 0 ===
+2026-02-02 10:48:57,454 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs3101336 (source: SNP_ID)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs3101336 (type: <class 'str'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs3101336 (type: <class 'str'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 1 (type: <class 'str'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 72285502 (type: <class 'int'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 33 ===
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs2481599 (source: SNP_ID)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs2481599 (type: <class 'str'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs2481599 (type: <class 'str'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 9 (type: <class 'str'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 69039128 (type: <class 'int'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 34 ===
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs2275848 (source: SNP_ID)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs2275848 (type: <class 'str'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs2275848 (type: <class 'str'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 9 (type: <class 'str'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 93125038 (type: <class 'int'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 35 ===
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs666595 (source: SNP_ID)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs666595 (type: <class 'str'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs666595 (type: <class 'str'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 10 (type: <class 'str'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 6186263 (type: <class 'int'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 36 ===
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs7474896 (source: SNP_ID)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,455 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs7474896 (type: <class 'str'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs7474896 (type: <class 'str'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 10 (type: <class 'str'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 37693169 (type: <class 'int'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 37 ===
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs11042023 (source: SNP_ID)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs11042023 (type: <class 'str'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs11042023 (type: <class 'str'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 11 (type: <class 'str'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 8640969 (type: <class 'int'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 38 ===
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs12295638 (source: SNP_ID)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs12295638 (type: <class 'str'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs12295638 (type: <class 'str'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 11 (type: <class 'str'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 26583784 (type: <class 'int'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 40 ===
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs16917237 (source: SNP_ID)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs16917237 (type: <class 'str'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs16917237 (type: <class 'str'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 11 (type: <class 'str'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 27680836 (type: <class 'int'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 41 ===
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs2030323 (source: SNP_ID)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs2030323 (type: <class 'str'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs2030323 (type: <class 'str'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 11 (type: <class 'str'>)
+2026-02-02 10:48:57,456 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 27706992 (type: <class 'int'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 43 ===
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs10875976 (source: SNP_ID)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs10875976 (type: <class 'str'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs10875976 (type: <class 'str'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 12 (type: <class 'str'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 49832684 (type: <class 'int'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 44 ===
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs7138803 (source: SNP_ID)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs7138803 (type: <class 'str'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs7138803 (type: <class 'str'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 12 (type: <class 'str'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 49853685 (type: <class 'int'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 47 ===
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs7141420 (source: SNP_ID)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs7141420 (type: <class 'str'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs7141420 (type: <class 'str'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 14 (type: <class 'str'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 79433111 (type: <class 'int'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 48 ===
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs2370983 (source: SNP_ID)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs2370983 (type: <class 'str'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs2370983 (type: <class 'str'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 14 (type: <class 'str'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 79437033 (type: <class 'int'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,457 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 50 ===
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs2531995 (source: SNP_ID)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs2531995 (type: <class 'str'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs2531995 (type: <class 'str'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 16 (type: <class 'str'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 3963466 (type: <class 'int'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 51 ===
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs7498665 (source: SNP_ID)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs7498665 (type: <class 'str'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs7498665 (type: <class 'str'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 16 (type: <class 'str'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 28871920 (type: <class 'int'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 52 ===
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs7189927 (source: SNP_ID)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs7189927 (type: <class 'str'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs7189927 (type: <class 'str'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 16 (type: <class 'str'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 28902466 (type: <class 'int'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 54 ===
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs1558902 (source: SNP_ID)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs1558902 (type: <class 'str'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs1558902 (type: <class 'str'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 16 (type: <class 'str'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 53769662 (type: <class 'int'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 55 ===
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs8043757 (source: SNP_ID)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs8043757 (type: <class 'str'>)
+2026-02-02 10:48:57,458 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs8043757 (type: <class 'str'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 16 (type: <class 'str'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 53779538 (type: <class 'int'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 56 ===
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs8050136 (source: SNP_ID)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs8050136 (type: <class 'str'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs8050136 (type: <class 'str'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 16 (type: <class 'str'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 53782363 (type: <class 'int'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 58 ===
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs9941349 (source: SNP_ID)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs9941349 (type: <class 'str'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs9941349 (type: <class 'str'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 16 (type: <class 'str'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 53791576 (type: <class 'int'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 59 ===
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs7187365 (source: SNP_ID)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs7187365 (type: <class 'str'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs7187365 (type: <class 'str'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 16 (type: <class 'str'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 86478309 (type: <class 'int'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 60 ===
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs750456 (source: SNP_ID)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs750456 (type: <class 'str'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs750456 (type: <class 'str'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 19 (type: <class 'str'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 48039052 (type: <class 'int'>)
+2026-02-02 10:48:57,459 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 32 ===
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs1412239 (source: SNP_ID)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs1412239 (type: <class 'str'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs1412239 (type: <class 'str'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 9 (type: <class 'str'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 28425517 (type: <class 'int'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 31 ===
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs10968576 (source: SNP_ID)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs10968576 (type: <class 'str'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs10968576 (type: <class 'str'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 9 (type: <class 'str'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 28414341 (type: <class 'int'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 57 ===
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs7185735 (source: SNP_ID)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs7185735 (type: <class 'str'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs7185735 (type: <class 'str'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 16 (type: <class 'str'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 53788739 (type: <class 'int'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 29 ===
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs435581 (source: SNP_ID)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs435581 (type: <class 'str'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs435581 (type: <class 'str'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 8 (type: <class 'str'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 9171903 (type: <class 'int'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 30 ===
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs2060457 (source: SNP_ID)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,460 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs2060457 (type: <class 'str'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs2060457 (type: <class 'str'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 8 (type: <class 'str'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 11355741 (type: <class 'int'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 1 ===
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs2568958 (source: SNP_ID)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs2568958 (type: <class 'str'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs2568958 (type: <class 'str'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 1 (type: <class 'str'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 72299433 (type: <class 'int'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 2 ===
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs7531118 (source: SNP_ID)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs7531118 (type: <class 'str'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs7531118 (type: <class 'str'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 1 (type: <class 'str'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 72371556 (type: <class 'int'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 4 ===
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs633715 (source: SNP_ID)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs633715 (type: <class 'str'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs633715 (type: <class 'str'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 1 (type: <class 'str'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 177883445 (type: <class 'int'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 7 ===
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs6711012 (source: SNP_ID)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs6711012 (type: <class 'str'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs6711012 (type: <class 'str'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,461 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 2 (type: <class 'str'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 624034 (type: <class 'int'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 8 ===
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs12463617 (source: SNP_ID)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs12463617 (type: <class 'str'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs12463617 (type: <class 'str'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 2 (type: <class 'str'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 629244 (type: <class 'int'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 10 ===
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs11127485 (source: SNP_ID)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs11127485 (type: <class 'str'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs11127485 (type: <class 'str'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 2 (type: <class 'str'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 632028 (type: <class 'int'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 11 ===
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs10189761 (source: SNP_ID)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs10189761 (type: <class 'str'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs10189761 (type: <class 'str'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 2 (type: <class 'str'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 646364 (type: <class 'int'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 12 ===
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs7603514 (source: SNP_ID)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs7603514 (type: <class 'str'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs7603514 (type: <class 'str'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 2 (type: <class 'str'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 205971888 (type: <class 'int'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,462 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 14 ===
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs13078807 (source: SNP_ID)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs13078807 (type: <class 'str'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs13078807 (type: <class 'str'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 3 (type: <class 'str'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 85835000 (type: <class 'int'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 3 ===
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs1993709 (source: SNP_ID)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs1993709 (type: <class 'str'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs1993709 (type: <class 'str'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 1 (type: <class 'str'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 72372846 (type: <class 'int'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 16 ===
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs9816226 (source: SNP_ID)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs9816226 (type: <class 'str'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs9816226 (type: <class 'str'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 3 (type: <class 'str'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 186116710 (type: <class 'int'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 15 ===
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs1516725 (source: SNP_ID)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs1516725 (type: <class 'str'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs1516725 (type: <class 'str'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 3 (type: <class 'str'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 186106215 (type: <class 'int'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 27 ===
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs2948300 (source: SNP_ID)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs2948300 (type: <class 'str'>)
+2026-02-02 10:48:57,463 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs2948300 (type: <class 'str'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 8 (type: <class 'str'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 8248986 (type: <class 'int'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 25 ===
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs2207139 (source: SNP_ID)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs2207139 (type: <class 'str'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs2207139 (type: <class 'str'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 6 (type: <class 'str'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 50877777 (type: <class 'int'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 21 ===
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs2173676 (source: SNP_ID)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs2173676 (type: <class 'str'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs2173676 (type: <class 'str'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 5 (type: <class 'str'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 80282978 (type: <class 'int'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 17 ===
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs13130484 (source: SNP_ID)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs13130484 (type: <class 'str'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs13130484 (type: <class 'str'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 4 (type: <class 'str'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 45173674 (type: <class 'int'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 22 ===
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs2206277 (source: SNP_ID)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs2206277 (type: <class 'str'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs2206277 (type: <class 'str'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 6 (type: <class 'str'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 50830813 (type: <class 'int'>)
+2026-02-02 10:48:57,464 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 18 ===
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs10938397 (source: SNP_ID)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs10938397 (type: <class 'str'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs10938397 (type: <class 'str'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 4 (type: <class 'str'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 45180510 (type: <class 'int'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 28 ===
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs2953802 (source: SNP_ID)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs2953802 (type: <class 'str'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs2953802 (type: <class 'str'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 8 (type: <class 'str'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 8994371 (type: <class 'int'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 20 ===
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs12646911 (source: SNP_ID)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs12646911 (type: <class 'str'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs12646911 (type: <class 'str'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 4 (type: <class 'str'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 174701439 (type: <class 'int'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 140 ===
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs8028313 (source: SNP_ID)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs8028313 (type: <class 'str'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs8028313 (type: <class 'str'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 15 (type: <class 'str'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 67750719 (type: <class 'int'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 135 ===
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs1957894 (source: SNP_ID)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,465 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs1957894 (type: <class 'str'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs1957894 (type: <class 'str'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 14 (type: <class 'str'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 61441393 (type: <class 'int'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 132 ===
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs35669975 (source: SNP_ID)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs35669975 (type: <class 'str'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs35669975 (type: <class 'str'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 13 (type: <class 'str'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 107138053 (type: <class 'int'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 130 ===
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs2241005 (source: SNP_ID)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs2241005 (type: <class 'str'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs2241005 (type: <class 'str'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 12 (type: <class 'str'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 9595976 (type: <class 'int'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 127 ===
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs564343 (source: SNP_ID)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs564343 (type: <class 'str'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs564343 (type: <class 'str'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 11 (type: <class 'str'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 66127695 (type: <class 'int'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 120 ===
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs988712 (source: SNP_ID)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs988712 (type: <class 'str'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs988712 (type: <class 'str'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 11 (type: <class 'str'>)
+2026-02-02 10:48:57,466 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 27541835 (type: <class 'int'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 119 ===
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs7950004 (source: SNP_ID)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs7950004 (type: <class 'str'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs7950004 (type: <class 'str'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 11 (type: <class 'str'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 3689514 (type: <class 'int'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 168 ===
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs1121980 (source: SNP_ID)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs1121980 (type: <class 'str'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs1121980 (type: <class 'str'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 16 (type: <class 'str'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 53775335 (type: <class 'int'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 167 ===
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs16862964 (source: SNP_ID)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs16862964 (type: <class 'str'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs16862964 (type: <class 'str'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 3 (type: <class 'str'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 188074923 (type: <class 'int'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 164 ===
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs13041126 (source: SNP_ID)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs13041126 (type: <class 'str'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs13041126 (type: <class 'str'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 20 (type: <class 'str'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 52476457 (type: <class 'int'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 163 ===
+2026-02-02 10:48:57,467 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs10423928 (source: SNP_ID)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs10423928 (type: <class 'str'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs10423928 (type: <class 'str'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 19 (type: <class 'str'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 45679046 (type: <class 'int'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 162 ===
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs1800437 (source: SNP_ID)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs1800437 (type: <class 'str'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs1800437 (type: <class 'str'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 19 (type: <class 'str'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 45678134 (type: <class 'int'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 147 ===
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs7184597 (source: SNP_ID)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs7184597 (type: <class 'str'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs7184597 (type: <class 'str'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 16 (type: <class 'str'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 28910488 (type: <class 'int'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 115 ===
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs2116830 (source: SNP_ID)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs2116830 (type: <class 'str'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs2116830 (type: <class 'str'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 10 (type: <class 'str'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 76886778 (type: <class 'int'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 79 ===
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs887912 (source: SNP_ID)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs887912 (type: <class 'str'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs887912 (type: <class 'str'>)
+2026-02-02 10:48:57,468 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 2 (type: <class 'str'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 59075742 (type: <class 'int'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 76 ===
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs6731302 (source: SNP_ID)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs6731302 (type: <class 'str'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs6731302 (type: <class 'str'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 2 (type: <class 'str'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 58606358 (type: <class 'int'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 74 ===
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs12145833 (source: SNP_ID)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs12145833 (type: <class 'str'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs12145833 (type: <class 'str'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 1 (type: <class 'str'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 243320452 (type: <class 'int'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 66 ===
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs1514174 (source: SNP_ID)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs1514174 (type: <class 'str'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs1514174 (type: <class 'str'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 1 (type: <class 'str'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 74527379 (type: <class 'int'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 65 ===
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs1514177 (source: SNP_ID)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs1514177 (type: <class 'str'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs1514177 (type: <class 'str'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 1 (type: <class 'str'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 74525718 (type: <class 'int'>)
+2026-02-02 10:48:57,469 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 61 ===
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs1776012 (source: SNP_ID)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs1776012 (type: <class 'str'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs1776012 (type: <class 'str'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 1 (type: <class 'str'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 72252060 (type: <class 'int'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 114 ===
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs10999409 (source: SNP_ID)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs10999409 (type: <class 'str'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs10999409 (type: <class 'str'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 10 (type: <class 'str'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 70572684 (type: <class 'int'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 110 ===
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs4736065 (source: SNP_ID)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs4736065 (type: <class 'str'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs4736065 (type: <class 'str'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 8 (type: <class 'str'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 139245800 (type: <class 'int'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 108 ===
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs4735692 (source: SNP_ID)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs4735692 (type: <class 'str'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs4735692 (type: <class 'str'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 8 (type: <class 'str'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 75703428 (type: <class 'int'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 97 ===
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs374748 (source: SNP_ID)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,470 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs374748 (type: <class 'str'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs374748 (type: <class 'str'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 5 (type: <class 'str'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 128363682 (type: <class 'int'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 93 ===
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs2112347 (source: SNP_ID)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs2112347 (type: <class 'str'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs2112347 (type: <class 'str'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 5 (type: <class 'str'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 75719417 (type: <class 'int'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 92 ===
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs2307111 (source: SNP_ID)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs2307111 (type: <class 'str'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs2307111 (type: <class 'str'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 5 (type: <class 'str'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 75707853 (type: <class 'int'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 170 ===
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs1412239 (source: SNP_ID)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs1412239 (type: <class 'str'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs1412239 (type: <class 'str'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 9 (type: <class 'str'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 28425517 (type: <class 'int'>)
+2026-02-02 10:48:57,471 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: EFO_0001073 (type: <class 'str'>)
+2026-02-02 10:48:57,472 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Final results ===
+2026-02-02 10:48:57,472 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Generated 74 customer-friendly results
+2026-02-02 10:48:57,472 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - First result SNP ID: rs16862964
+2026-02-02 10:48:57,472 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - First result reference: No publication reference available
+2026-02-02 10:48:57,473 - werkzeug - INFO - 100.96.40.22 - - [02/Feb/2026 10:48:57] "POST /api/analyze HTTP/1.1" 200 -
+2026-02-02 10:49:49,733 - werkzeug - INFO - 100.96.40.22 - - [02/Feb/2026 10:49:49] "POST /api/chat HTTP/1.1" 200 -
+2026-02-02 11:07:01,709 - main - INFO - Added GWAS Variant Analyzer package to path: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer
+2026-02-02 11:07:01,734 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:1111
+ * Running on http://100.96.40.22:1111
+2026-02-02 11:07:01,734 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-02 11:07:01,735 - werkzeug - INFO -  * Restarting with stat
+2026-02-02 11:07:01,969 - main - INFO - Added GWAS Variant Analyzer package to path: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_variant_analyzer
+2026-02-02 11:07:01,983 - werkzeug - WARNING -  * Debugger is active!
+2026-02-02 11:07:01,987 - werkzeug - INFO -  * Debugger PIN: 137-913-157
+2026-02-02 11:07:08,075 - werkzeug - INFO - 100.96.40.22 - - [02/Feb/2026 11:07:08] "GET / HTTP/1.1" 200 -
+2026-02-02 11:07:08,098 - gwas_variant_analyzer.gwas_variant_analyzer.utils - INFO - Loading configuration from: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/../config/app_config.yaml
+2026-02-02 11:07:08,113 - gwas_variant_analyzer.gwas_variant_analyzer.utils - INFO - Successfully loaded configuration with 35 settings
+2026-02-02 11:07:08,113 - gwas_variant_analyzer.gwas_variant_analyzer.nlp_phenotype_matcher - WARNING - EFO mapping file not found: config/efo_mapping.json, using fallback
+2026-02-02 11:07:08,114 - werkzeug - INFO - 100.96.40.22 - - [02/Feb/2026 11:07:08] "GET /api/get-popular-phenotypes HTTP/1.1" 200 -
+2026-02-02 11:07:15,201 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - Loading VCF file: /var/folders/bv/jqrpb4p97k1f36bbw11bwm3w0000gn/T/tmpkf9nzchq/GIUS-AAHV-0001-12AD.pm.vcf.gz
+2026-02-02 11:07:15,202 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - Successfully loaded VCF file with 1 samples
+2026-02-02 11:07:15,202 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - Extracting variants from VCF file based on CHROM:POS:REF:ALT.
+2026-02-02 11:07:30,687 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - Processed 4984259 VCF records.
+2026-02-02 11:07:30,687 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - Extracted 4984259 user variant alleles.
+2026-02-02 11:07:32,158 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - === DEBUG: Sample of extracted user variants ===
+2026-02-02 11:07:32,158 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - DataFrame shape: (4984259, 5)
+2026-02-02 11:07:32,158 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - DataFrame columns: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID']
+2026-02-02 11:07:32,158 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - Sample rows:
+2026-02-02 11:07:32,158 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - Row 0: CHROM=chr1, POS=10146, REF=AC, ALT=A, SNP_ID=None
+2026-02-02 11:07:32,158 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - Row 1: CHROM=chr1, POS=10230, REF=AC, ALT=A, SNP_ID=None
+2026-02-02 11:07:32,158 - gwas_variant_analyzer.gwas_variant_analyzer.vcf_parser - INFO - Row 2: CHROM=chr1, POS=10254, REF=TA, ALT=T, SNP_ID=None
+2026-02-02 11:07:32,239 - werkzeug - INFO - 100.96.40.22 - - [02/Feb/2026 11:07:32] "POST /api/upload-vcf HTTP/1.1" 200 -
+2026-02-02 11:07:43,180 - werkzeug - INFO - 100.96.40.22 - - [02/Feb/2026 11:07:43] "POST /api/search-phenotypes HTTP/1.1" 200 -
+2026-02-02 11:07:46,876 - gwas_variant_analyzer.gwas_variant_analyzer.utils - INFO - Loading configuration from: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/../config/app_config.yaml
+2026-02-02 11:07:46,887 - gwas_variant_analyzer.gwas_variant_analyzer.utils - INFO - Successfully loaded configuration with 35 settings
+2026-02-02 11:07:46,887 - gwas_variant_analyzer.gwas_variant_analyzer.gwas_catalog_handler - INFO - Loading GWAS data for EFO_0003758 from cache: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/data/gwas_cache/EFO_0003758.parquet
+2026-02-02 11:07:46,957 - main - INFO - === DEBUG: Data before merge ===
+2026-02-02 11:07:46,958 - main - INFO - GWAS data columns: ['SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed']
+2026-02-02 11:07:46,958 - main - INFO - User variants columns: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID']
+2026-02-02 11:07:46,958 - main - INFO - GWAS data sample:
+2026-02-02 11:07:46,959 - main - INFO -        SNP_ID PubMed_ID  Odds_Ratio       P_Value                GWAS_Trait GWAS_CHROM  GWAS_POS GWAS_REF GWAS_ALT GWAS_Ethnicity_Processed
+0   rs4307059      None        1.19  2.000000e-10  autism spectrum disorder          5  25967594        N        T                  Unknown
+1  rs10513025      None        1.81  2.000000e-07  autism spectrum disorder          5   9623510        N     None                  Unknown
+2   rs6453278      None        1.25  5.000000e-06  autism spectrum disorder          5  77121217        N     None                  Unknown
+2026-02-02 11:07:46,959 - main - INFO - User variants sample:
+2026-02-02 11:07:46,960 - main - INFO -   USER_CHROM  USER_POS USER_REF USER_ALT SNP_ID
+0       chr1     10146       AC        A   None
+1       chr1     10230       AC        A   None
+2       chr1     10254       TA        T   None
+2026-02-02 11:07:46,960 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO - Starting RELAXED merge: 4984259 user × 48 GWAS variants
+2026-02-02 11:07:47,739 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -   Trying Strategy 1: Exact position + alt allele...
+2026-02-02 11:07:48,485 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -     ✓ Found 5 exact matches
+2026-02-02 11:07:48,485 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -   Trying Strategy 2: Position + ref allele...
+2026-02-02 11:07:49,189 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -     ✓ Found 8 ref matches
+2026-02-02 11:07:49,189 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -   Trying Strategy 3: Position only...
+2026-02-02 11:07:49,691 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -   Trying Strategy 4: Complement alleles...
+2026-02-02 11:07:51,186 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -   Trying Strategy 5: Nearby positions (±1bp)...
+2026-02-02 11:07:51,695 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -     ✓ Found 1 nearby matches
+2026-02-02 11:07:51,697 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO - ============================================================
+2026-02-02 11:07:51,697 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO - RELAXED MERGE COMPLETE:
+2026-02-02 11:07:51,697 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -   Total matches: 14 (29.2% of GWAS variants)
+2026-02-02 11:07:51,697 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -   By strategy:
+2026-02-02 11:07:51,697 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -     • ref_match       (medium    ):    8 ( 57.1%)
+2026-02-02 11:07:51,697 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -     • exact           (high      ):    5 ( 35.7%)
+2026-02-02 11:07:51,697 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -     • nearby          (very_low  ):    1 (  7.1%)
+2026-02-02 11:07:51,697 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO -   Improvement: 14/5 = 280% vs original
+2026-02-02 11:07:51,697 - gwas_variant_analyzer.gwas_variant_analyzer.data_processor - INFO - ============================================================
+2026-02-02 11:07:51,749 - main - INFO - === DEBUG: Data after merge ===
+2026-02-02 11:07:51,749 - main - INFO - Merged data columns: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 11:07:51,749 - main - INFO - Merged data shape: (14, 17)
+2026-02-02 11:07:51,749 - main - INFO - Merged data sample:
+2026-02-02 11:07:51,750 - main - INFO -   USER_CHROM   USER_POS USER_REF USER_ALT     SNP_ID GWAS_SNP_ID PubMed_ID  Odds_Ratio       P_Value                GWAS_Trait GWAS_CHROM   GWAS_POS GWAS_REF GWAS_ALT GWAS_Ethnicity_Processed MATCH_TYPE MATCH_CONFIDENCE
+0          1  114556471        C        T  rs1877455   rs1877455      None         NaN  8.000000e-08  autism spectrum disorder          1  114556471        N        T                  Unknown      exact             high
+1          3   63453658        G        A  rs9823776   rs9823776      None         NaN  5.000000e-06  autism spectrum disorder          3   63453658        N        A                  Unknown      exact             high
+2          5  167904318        T        C  rs7710122   rs7710122      None         NaN  5.000000e-06  autism spectrum disorder          5  167904318        N        C                  Unknown      exact             high
+2026-02-02 11:07:51,750 - main - INFO - SNP_ID values sample: 0    rs1877455
+1    rs9823776
+2    rs7710122
+3    rs6599528
+4    rs7248508
+Name: SNP_ID, dtype: object
+2026-02-02 11:07:51,750 - main - INFO - PubMed_ID values sample: 0    None
+1    None
+2    None
+3    None
+4    None
+Name: PubMed_ID, dtype: object
+2026-02-02 11:07:51,751 - main - INFO - 5 variants remaining after applying filters.
+2026-02-02 11:07:51,751 - main - INFO - === DEBUG: Data after filtering ===
+2026-02-02 11:07:51,751 - main - INFO - Filtered data columns: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 11:07:51,751 - main - INFO - Sample of filtered data:
+2026-02-02 11:07:51,751 - main - INFO - Row 5:
+2026-02-02 11:07:51,751 - main - INFO -   SNP_ID: rs6537825
+2026-02-02 11:07:51,751 - main - INFO -   PubMed_ID: None
+2026-02-02 11:07:51,751 - main - INFO -   GWAS_Trait: autism spectrum disorder
+2026-02-02 11:07:51,751 - main - INFO - Row 8:
+2026-02-02 11:07:51,751 - main - INFO -   SNP_ID: rs926938
+2026-02-02 11:07:51,751 - main - INFO -   PubMed_ID: None
+2026-02-02 11:07:51,751 - main - INFO -   GWAS_Trait: autism spectrum disorder
+2026-02-02 11:07:51,751 - main - INFO - Row 10:
+2026-02-02 11:07:51,751 - main - INFO -   SNP_ID: rs10038113
+2026-02-02 11:07:51,751 - main - INFO -   PubMed_ID: None
+2026-02-02 11:07:51,751 - main - INFO -   GWAS_Trait: autism spectrum disorder
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Inside format_customer_friendly_results ===
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Input data columns: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Input data shape: (5, 17)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 5 ===
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs6537825 (source: SNP_ID)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs6537825 (type: <class 'str'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs6537825 (type: <class 'str'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 1 (type: <class 'str'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 114405659 (type: <class 'int'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: autism spectrum disorder (type: <class 'str'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 8 ===
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs926938 (source: SNP_ID)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs926938 (type: <class 'str'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs926938 (type: <class 'str'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 1 (type: <class 'str'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 114697195 (type: <class 'int'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: autism spectrum disorder (type: <class 'str'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 10 ===
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs10038113 (source: SNP_ID)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs10038113 (type: <class 'str'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs10038113 (type: <class 'str'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 5 (type: <class 'str'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 25902233 (type: <class 'int'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: autism spectrum disorder (type: <class 'str'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 11 ===
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs4307059 (source: SNP_ID)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs4307059 (type: <class 'str'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs4307059 (type: <class 'str'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 5 (type: <class 'str'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 25967594 (type: <class 'int'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: autism spectrum disorder (type: <class 'str'>)
+2026-02-02 11:07:51,752 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Processing row 13 ===
+2026-02-02 11:07:51,753 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - SNP ID: rs4773054 (source: SNP_ID)
+2026-02-02 11:07:51,753 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - PubMed ID raw: None (type: <class 'NoneType'>)
+2026-02-02 11:07:51,753 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Available columns in row: ['USER_CHROM', 'USER_POS', 'USER_REF', 'USER_ALT', 'SNP_ID', 'GWAS_SNP_ID', 'PubMed_ID', 'Odds_Ratio', 'P_Value', 'GWAS_Trait', 'GWAS_CHROM', 'GWAS_POS', 'GWAS_REF', 'GWAS_ALT', 'GWAS_Ethnicity_Processed', 'MATCH_TYPE', 'MATCH_CONFIDENCE']
+2026-02-02 11:07:51,753 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   SNP_ID: rs4773054 (type: <class 'str'>)
+2026-02-02 11:07:51,753 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_SNP_ID: rs4773054 (type: <class 'str'>)
+2026-02-02 11:07:51,753 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   PubMed_ID: None (type: <class 'NoneType'>)
+2026-02-02 11:07:51,753 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_CHROM: 13 (type: <class 'str'>)
+2026-02-02 11:07:51,753 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_POS: 109501681 (type: <class 'int'>)
+2026-02-02 11:07:51,753 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO -   GWAS_Trait: autism spectrum disorder (type: <class 'str'>)
+2026-02-02 11:07:51,753 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - === DEBUG: Final results ===
+2026-02-02 11:07:51,753 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - Generated 5 customer-friendly results
+2026-02-02 11:07:51,753 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - First result SNP ID: rs4773054
+2026-02-02 11:07:51,753 - gwas_variant_analyzer.gwas_variant_analyzer.customer_friendly_processor - INFO - First result reference: No publication reference available
+2026-02-02 11:07:51,754 - werkzeug - INFO - 100.96.40.22 - - [02/Feb/2026 11:07:51] "POST /api/analyze HTTP/1.1" 200 -
+2026-02-02 11:08:08,171 - werkzeug - INFO - 100.96.40.22 - - [02/Feb/2026 11:08:08] "POST /api/search-phenotypes HTTP/1.1" 200 -
+2026-02-02 11:08:09,338 - werkzeug - INFO - 100.96.40.22 - - [02/Feb/2026 11:08:09] "POST /api/search-phenotypes HTTP/1.1" 200 -
+2026-02-02 11:08:10,914 - werkzeug - INFO - 100.96.40.22 - - [02/Feb/2026 11:08:10] "POST /api/search-phenotypes HTTP/1.1" 200 -

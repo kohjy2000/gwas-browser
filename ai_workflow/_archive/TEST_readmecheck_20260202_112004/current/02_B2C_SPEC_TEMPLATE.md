@@ -660,17 +660,7 @@ git status --porcelain
 
 ### Description
 
-Expose ClinVar(rare variant) and PGx as **UI tabs** and wire them to the existing API endpoints using the current session_id from upload.
-
-Tab names (fixed):
-- GWAS
-- ClinVar (rare variant)
-- PGx
-- Chat
-
-Visibility rule (fixed):
-- Tabs for ClinVar/PGx/Chat are hidden (or disabled) until VCF upload succeeds (session_id exists).
-- After upload succeeds, those tabs become visible/clickable and can call their endpoints.
+Expose ClinVar and PGx as visible UI panels (or tabs) and wire them to the existing API endpoints using the current session_id from upload.
 
 ### Dependencies
 
@@ -702,13 +692,12 @@ git status --porcelain
 
 ### Acceptance Criteria
 
-1. UI contains a tab system (buttons + panels) with stable DOM IDs defined in contracts (tabs, panels, and result containers).
-2. Before upload (no session_id), ClinVar/PGx/Chat tabs are not shown or are disabled and show a clear “upload first” message.
-3. After upload (session_id exists), UI can trigger:
+1. UI contains visible ClinVar and PGx sections (or tabs) with stable DOM IDs defined in contracts.
+2. After upload (session_id exists), UI can trigger:
    - POST /api/clinvar-match with session_id
    - POST /api/pgx-summary with session_id
-4. UI renders returned results to the page inside the relevant tab panel (not only console logs).
-5. New contract test passes: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_ui_panels_clinvar_pgx_contract.py
+3. UI renders returned results to the page (not hidden).
+4. New contract test passes: /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/contract_tests/test_ui_panels_clinvar_pgx_contract.py
 
 ### Allow NOOP
 

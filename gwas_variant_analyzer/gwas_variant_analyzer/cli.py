@@ -10,7 +10,6 @@ import sys
 import argparse
 import logging
 import pandas as pd
-from typing import List, Set, Optional
 
 from . import __version__
 from .vcf_parser import load_vcf_reader, extract_user_variants

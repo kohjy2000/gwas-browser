@@ -10,16 +10,15 @@ import json
 import logging
 import pandas as pd
 from flask import Blueprint, request, jsonify, current_app
-import numpy as np
 
 from gwas_variant_analyzer.utils import load_app_config, get_efo_id_for_trait
 from gwas_variant_analyzer.vcf_parser import load_vcf_reader, extract_user_variants
 from gwas_variant_analyzer.gwas_catalog_handler import fetch_gwas_associations_by_efo, parse_gwas_association_data, load_gwas_data_from_cache, save_gwas_data_to_cache
-from gwas_variant_analyzer.data_processor import process_variants, merge_variant_data
+from gwas_variant_analyzer.data_processor import merge_variant_data
 from gwas_variant_analyzer.clinvar_matcher import match_user_variants_to_clinvar
 from gwas_variant_analyzer.pgx_parser import parse_pgx_final_tsv
 from gwas_variant_analyzer.pgx_summary import summarize_pgx
-from gwas_variant_analyzer.chat_facts import collect_facts, facts_to_dicts, get_fact_ids
+from gwas_variant_analyzer.chat_facts import collect_facts, get_fact_ids
 
 # Import new features
 from gwas_variant_analyzer.customer_friendly_processor import format_customer_friendly_results

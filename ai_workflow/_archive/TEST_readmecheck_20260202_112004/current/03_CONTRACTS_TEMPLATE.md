@@ -400,21 +400,17 @@ Frontend (HTML + JS)
 | Field | Value |
 |-------|-------|
 | HTML Path | /Users/june-young/Research_Local/08_GWAS_browser/ver_260201_toy_gwas_browser/gwas_dashboard_package/src/static/index.html |
-| Tab Button IDs | tab-gwas, tab-clinvar, tab-pgx, tab-chat |
-| Panel IDs | panel-gwas, panel-clinvar, panel-pgx, panel-chat |
+| ClinVar Panel ID | clinvar-panel |
+| PGx Panel ID | pgx-panel |
 | ClinVar Run Button ID | run-clinvar-btn |
 | PGx Run Button ID | run-pgx-btn |
-| ClinVar Result Container ID | clinvar-results |
-| PGx Result Container ID | pgx-results |
 | Endpoints | POST /api/clinvar-match, POST /api/pgx-summary |
 
 ### Validation Rules
 
-1. ClinVar(rare variant) and PGx must be visible as **tabs** in the UI, not only implemented as backend endpoints.
-2. Default visibility rule: before VCF upload succeeds (no session_id), `tab-clinvar`, `tab-pgx`, `tab-chat` are hidden or disabled and present a clear “upload first” UX.
-3. After VCF upload succeeds (session_id exists), UI must enable/show `tab-clinvar`, `tab-pgx`, `tab-chat`.
-4. UI must call /api/clinvar-match and /api/pgx-summary using the current session_id obtained from /api/upload-vcf.
-5. UI must render results into the page (not only console logs), inside `clinvar-results` / `pgx-results`.
+1. ClinVar and PGx must be visible in the UI (panels or tabs), not only implemented as backend endpoints.
+2. UI must call /api/clinvar-match and /api/pgx-summary using the current session_id obtained from /api/upload-vcf.
+3. UI must render results into the page (not only console logs).
 
 ### Test File
 

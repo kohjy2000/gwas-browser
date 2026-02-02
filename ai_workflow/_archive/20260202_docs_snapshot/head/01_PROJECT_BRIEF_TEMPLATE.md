@@ -14,20 +14,11 @@ A Flask-based GWAS browser and variant analyzer with GWAS trait search, local GW
 2. Cycle 2: Add VCF upload to ClinVar pathogenic matching report using a fixed toy ClinVar TSV and a fixed normalization key.
 3. Cycle 3: Add deterministic PGx summary from a toy final TSV with minimal-context parsing rules.
 4. Cycle 4: Add a facts-based counseling chat endpoint with mandatory disclaimer tags and citations in the response.
-5. Cycle 5 (Phase 2): Make the *actual UI/UX* match the intended features (not just contract tests):
-   - Visible trait search must behave well for partial inputs (e.g., "Obes" → "obesity" top suggestion, not unrelated items).
-   - References must not be a blanket "No publication reference available" when a study URL can be used.
-   - ClinVar / PGx / Chat must be visible in the UI and actually callable from the UI.
-   - Chat must use session-based facts (no manual facts paste; session_id-driven).
-6. Cycle 6 (Phase 3): Add “online + local LLM” capabilities safely:
-   - Trait search must consult the GWAS Catalog REST API when local cache has no good match, then persist new traits into the local cache file.
-   - Counseling chat must support an Ollama-backed local LLM mode, while preserving disclaimer_tags + citations as mandatory and keeping contract tests network-free via mocking.
 
 ## 4. Non-Goals
 
 1. Production clinical decision support or medically validated interpretation.
 2. Network-dependent tests. Contract tests must not call external services.
-3. Requiring a specific Ollama model tag to exist at test time (model choice must be configurable).
 
 ## 5. Tech Stack
 
@@ -83,5 +74,3 @@ Key paths:
   - /Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m pytest -q contract_tests
 - Linter is clean on touched files:
   - /Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python -m ruff check gwas_dashboard_package/src gwas_variant_analyzer/gwas_variant_analyzer
-- Product UX smoke checks pass (automated; no browser required):
-  - /Users/june-young/Research_Local/08_GWAS_browser/venv/bin/python ai_workflow/tools/run_smoke_app.py

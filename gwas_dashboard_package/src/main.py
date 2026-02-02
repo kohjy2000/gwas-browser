@@ -2,16 +2,22 @@
 Main entry point for the GWAS Variant Analyzer Dashboard Flask application.
 """
 
-import sys
+from __future__ import annotations
+
+import logging
 import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))  # DON'T CHANGE THIS !!!
+import sys
 
 from flask import Flask, render_template, send_from_directory
 from flask_cors import CORS  # Added
-import logging
 
 # Import blueprints
-from src.routes.api import api_bp
+try:
+    from .routes.api import api_bp
+except Exception:  # pragma: no cover - script-mode fallback
+    # Allows running: `python gwas_dashboard_package/src/main.py`
+    sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+    from src.routes.api import api_bp  # noqa: E402
 
 # Create Flask app
 app = Flask(__name__, static_folder='static', template_folder='static')

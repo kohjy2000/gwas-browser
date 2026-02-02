@@ -5,20 +5,10 @@ This module is responsible for processing and merging variant data from differen
 It merges user's VCF data with GWAS Catalog data based on genomic coordinates and alleles,
 applies ethnicity standardization, and filters the results based on user-defined criteria.
 """
-import pandas as pd
 import logging
-from typing import Dict, Any
-
-logger = logging.getLogger(__name__)
-
-# Replace the merge_variant_data function in data_processor.py with this enhanced version
-
-# data_processor.py에서 merge_variant_data 함수를 이걸로 완전히 교체하세요!
+from typing import Any, Dict
 
 import pandas as pd
-import numpy as np
-import logging
-from typing import Dict, Any
 
 logger = logging.getLogger(__name__)
 
