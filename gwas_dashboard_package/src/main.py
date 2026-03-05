@@ -80,11 +80,8 @@ except Exception:  # pragma: no cover - script-mode fallback
 app = Flask(__name__, static_folder='static', template_folder='static')
 CORS(app)  # Added: Enable CORS
 
-# Set file size limit: 50MB in production, 300MB locally
-if _IS_PRODUCTION:
-    app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
-else:
-    app.config['MAX_CONTENT_LENGTH'] = 300 * 1024 * 1024
+# Set file size limit (300MB)
+app.config['MAX_CONTENT_LENGTH'] = 300 * 1024 * 1024
 
 # Configure logging
 if _IS_PRODUCTION:
