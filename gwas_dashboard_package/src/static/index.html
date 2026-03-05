@@ -350,6 +350,13 @@
                     body: formData
                 });
 
+                if (!response.ok) {
+                    const text = await response.text();
+                    let msg;
+                    try { msg = JSON.parse(text).message; } catch { msg = `Server error (${response.status})`; }
+                    throw new Error(msg);
+                }
+
                 const result = await response.json();
 
                 if (result.success) {

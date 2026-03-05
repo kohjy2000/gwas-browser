@@ -127,6 +127,11 @@ def favicon():
 def page_not_found(e):
     return {"error": "Not found", "message": str(e)}, 404
 
+@app.errorhandler(413)
+def request_entity_too_large(e):
+    max_mb = app.config.get('MAX_CONTENT_LENGTH', 0) // (1024 * 1024)
+    return jsonify({"success": False, "message": f"File too large. Maximum upload size is {max_mb}MB."}), 413
+
 @app.errorhandler(500)
 def internal_server_error(e):
     return {"error": "Internal server error", "message": str(e)}, 500
