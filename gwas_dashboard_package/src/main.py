@@ -9,8 +9,15 @@ import os
 import sys
 import glob
 
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, jsonify, render_template, send_from_directory
 from flask_cors import CORS  # Added
+
+# --- Production environment detection ---
+_IS_PRODUCTION = os.environ.get("RENDER") == "true" or os.environ.get("IS_PRODUCTION") == "1"
+
+# Enable remote GWAS trait search by default (moved outside __main__ for gunicorn)
+if not os.environ.get("GWAS_REMOTE_SEARCH"):
+    os.environ["GWAS_REMOTE_SEARCH"] = "1"
 
 # --- ai_workflow: optional local env auto-load (no manual exports) ---
 
@@ -60,29 +67,50 @@ try:
     from .routes.api import api_bp
 except Exception:  # pragma: no cover - script-mode fallback
     # Allows running: `python gwas_dashboard_package/src/main.py`
-    sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+    _dash_pkg = os.path.dirname(os.path.dirname(__file__))  # gwas_dashboard_package/
+    sys.path.insert(0, _dash_pkg)
+    # Ensure gwas_variant_analyzer package is importable
+    _this_project = os.path.dirname(_dash_pkg)  # ver_260201_.../
+    _gwas_pkg_parent = os.path.join(_this_project, "gwas_variant_analyzer")
+    if _gwas_pkg_parent not in sys.path:
+        sys.path.insert(0, _gwas_pkg_parent)
     from src.routes.api import api_bp  # noqa: E402
 
 # Create Flask app
 app = Flask(__name__, static_folder='static', template_folder='static')
 CORS(app)  # Added: Enable CORS
 
-# Set file size limit (300MB)
-app.config['MAX_CONTENT_LENGTH'] = 300 * 1024 * 1024  # 300MB in bytes
+# Set file size limit: 50MB in production, 300MB locally
+if _IS_PRODUCTION:
+    app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
+else:
+    app.config['MAX_CONTENT_LENGTH'] = 300 * 1024 * 1024
 
 # Configure logging
-os.makedirs(os.path.join(_PROJECT_ROOT, "logs"), exist_ok=True)
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler(os.path.join(_PROJECT_ROOT, "logs", "app.log")),
-        logging.StreamHandler()
-    ]
-)
+if _IS_PRODUCTION:
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        handlers=[logging.StreamHandler(sys.stdout)],
+    )
+else:
+    os.makedirs(os.path.join(_PROJECT_ROOT, "logs"), exist_ok=True)
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.FileHandler(os.path.join(_PROJECT_ROOT, "logs", "app.log")),
+            logging.StreamHandler()
+        ]
+    )
 
 # Register blueprints
 app.register_blueprint(api_bp, url_prefix='/api')
+
+# Health check endpoint (for Render)
+@app.route('/health')
+def health():
+    return jsonify({"status": "ok"})
 
 # Serve static files
 @app.route('/')
@@ -142,10 +170,6 @@ if __name__ == '__main__':
                 app.logger.info(f"Ollama auto-detected: host=127.0.0.1:11434, model={os.environ.get('OLLAMA_MODEL_CHAT', 'none')}")
         except Exception:
             pass
-
-    # Enable remote GWAS trait search by default
-    if not os.environ.get("GWAS_REMOTE_SEARCH"):
-        os.environ["GWAS_REMOTE_SEARCH"] = "1"
 
     # Optional: seed GWAS cache into this project if it's empty (prevents re-fetching everything).
     def _seed_gwas_cache_if_empty() -> None:

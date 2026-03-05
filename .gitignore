@@ -1,20 +1,33 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# OS
+.DS_Store
+
 # Contract test cache artifacts
 data/_contract_cache_*/
 
 # Local runtime env (operator-specific)
 ai_workflow/.env.local
+.env
+.env.local
 
 # Local workflow state (baseline for scope checks)
 ai_workflow/_state/
 
-# Large local GWAS cache files (runtime)
-data/gwas_cache/*.parquet
-data/gwas_cache/*.meta.json
-data/gwas_cache/.DS_Store
-
-# Large local trait cache (generated at runtime)
-data/trait_list.full.json
-data/trait_list.full.meta.json
-
 # Local runtime logs
 logs/
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# Virtual environments
+venv/
+.venv/

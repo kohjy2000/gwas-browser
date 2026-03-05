@@ -1,0 +1,31 @@
+.git
+.gitignore
+.pytest_cache
+.ruff_cache
+.DS_Store
+__pycache__
+
+# Development / CI artifacts
+ai_workflow/
+contract_tests/
+tests/
+logs/
+*.log
+
+# Unused data
+data/_contract_cache_*/
+
+# Documentation / scripts
+debug.py
+patch_now.py
+create_gwas_cache.py
+gwas_cache_builder.log
+
+# IDE
+.vscode/
+.idea/
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose*.yml

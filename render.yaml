@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: gwas-browser
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: GWAS_REMOTE_SEARCH
+        value: "1"
+      - key: GWAS_TRAIT_LIST_AUTOBOOTSTRAP
+        value: "0"
