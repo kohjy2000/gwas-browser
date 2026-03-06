@@ -1,28 +1,21 @@
 FROM python:3.12-slim
 
-# System dependencies for cyvcf2 (C extension requiring htslib)
+# Minimal runtime libraries only (cyvcf2 wheel bundles htslib)
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    g++ \
-    zlib1g-dev \
-    libbz2-dev \
-    liblzma-dev \
-    libcurl4-openssl-dev \
-    libssl-dev \
-    make \
+    libcurl4 \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Install Python dependencies first (better caching)
+# Install Python dependencies first (better layer caching)
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install gwas_variant_analyzer as editable package
+# Install gwas_variant_analyzer package
 COPY gwas_variant_analyzer/ ./gwas_variant_analyzer/
 RUN pip install --no-cache-dir -e ./gwas_variant_analyzer
 
-# Copy rest of the application
+# Copy application and data
 COPY gwas_dashboard_package/ ./gwas_dashboard_package/
 COPY data/ ./data/
 
