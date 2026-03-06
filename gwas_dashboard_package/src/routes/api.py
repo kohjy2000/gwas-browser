@@ -19,6 +19,7 @@ from gwas_variant_analyzer.utils import load_app_config, get_efo_id_for_trait
 from gwas_variant_analyzer.vcf_parser import load_vcf_reader, extract_user_variants
 from gwas_variant_analyzer.gwas_catalog_handler import fetch_gwas_associations_by_efo, parse_gwas_association_data, load_gwas_data_from_cache, save_gwas_data_to_cache
 from gwas_variant_analyzer.data_processor import merge_variant_data
+from gwas_variant_analyzer.vcf_parser import VariantStore
 from gwas_variant_analyzer.clinvar_matcher import match_user_variants_to_clinvar
 from gwas_variant_analyzer.pgx_parser import parse_pgx_final_tsv
 from gwas_variant_analyzer.pgx_summary import summarize_pgx
@@ -612,38 +613,31 @@ def analyze():
             if not gwas_data_df.empty and config.get('use_local_gwas_cache', False):
                 save_gwas_data_to_cache(gwas_data_df, efo_id, config)
         
-        user_variants_df = UPLOADS[session_id]['variants']
+        variant_store = UPLOADS[session_id]['variants']
 
         if gwas_data_df.empty:
             return jsonify({
-                'success': False, 
+                'success': False,
                 'message': f'No genetic research data found for {trait_name}.'
             }), 404
-        
-        if user_variants_df.empty:
+
+        if variant_store.empty:
             return jsonify({
-                'success': False, 
+                'success': False,
                 'message': 'No analyzable variants found in VCF file.'
             }), 404
-        
-        # 5. DEBUG: Log data before merge to identify SNP ID issue
+
+        # 5. DEBUG: Log data before merge
         current_app.logger.info("=== DEBUG: Data before merge ===")
         current_app.logger.info(f"GWAS data columns: {list(gwas_data_df.columns)}")
-        current_app.logger.info(f"User variants columns: {list(user_variants_df.columns)}")
-        
+        current_app.logger.info(f"User variants: {len(variant_store):,} alleles (parquet-backed)")
+
         if not gwas_data_df.empty:
             current_app.logger.info("GWAS data sample:")
             current_app.logger.info(gwas_data_df.head(3).to_string())
-        
-        if not user_variants_df.empty:
-            current_app.logger.info("User variants sample:")
-            current_app.logger.info(user_variants_df.head(3).to_string())
-        
-        # IMPORTANT: Do NOT rename SNP_ID before merge - preserve original column name
-        # The merge should preserve the SNP_ID column from GWAS data
-        
-        # Merge data
-        merged_data = merge_variant_data(user_variants_df, gwas_data_df)
+
+        # Merge data — chunk-based to avoid loading all WGS variants into memory
+        merged_data = variant_store.merge_with(gwas_data_df, merge_variant_data)
         
         # DEBUG: Log merged data structure
         current_app.logger.info("=== DEBUG: Data after merge ===")
@@ -744,8 +738,8 @@ def clinvar_match():
                 'message': 'Missing or invalid session_id.'
             }), 400
 
-        user_variants_df = UPLOADS[session_id].get('variants')
-        if user_variants_df is None or getattr(user_variants_df, "empty", True):
+        variant_store = UPLOADS[session_id].get('variants')
+        if variant_store is None or variant_store.empty:
             return jsonify({
                 'success': True,
                 'summary': {
@@ -764,11 +758,16 @@ def clinvar_match():
         elif not isinstance(significance_filter, (list, tuple)):
             significance_filter = None
 
-        matches = match_user_variants_to_clinvar(
-            user_variants_df=user_variants_df,
-            clinvar_tsv_path=clinvar_tsv_path,
-            significance_filter=significance_filter,
-        )
+        # Process clinvar matching in chunks to avoid OOM
+        all_matches = []
+        for chunk_df in variant_store.iter_chunks():
+            chunk_matches = match_user_variants_to_clinvar(
+                user_variants_df=chunk_df,
+                clinvar_tsv_path=clinvar_tsv_path,
+                significance_filter=significance_filter,
+            )
+            all_matches.extend(chunk_matches)
+        matches = all_matches
 
         # Store matches in session for chat facts derivation (C5.B3)
         if session_id in UPLOADS:
@@ -778,7 +777,7 @@ def clinvar_match():
             'success': True,
             'summary': {
                 'session_id': session_id,
-                'variants_count': int(len(user_variants_df)),
+                'variants_count': int(len(variant_store)),
                 'matches_count': int(len(matches)),
             },
             'matches': matches,

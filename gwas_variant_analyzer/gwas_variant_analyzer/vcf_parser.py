@@ -32,24 +32,12 @@ CHUNK_SIZE = 500_000  # variants per chunk
 def load_vcf_reader(vcf_file_path: str) -> VCF:
     """
     Load a VCF file and return a cyvcf2.VCF object.
-
-    Args:
-        vcf_file_path (str): Path to the VCF file (can be compressed with .gz)
-
-    Returns:
-        cyvcf2.VCF: A cyvcf2 VCF object for the specified file
-
-    Raises:
-        FileNotFoundError: If the VCF file does not exist
-        ValueError: If the file is not a valid VCF file
     """
     logger.info(f"Loading VCF file: {vcf_file_path}")
 
     try:
-        # cyvcf2 automatically handles both compressed and uncompressed files
         vcf_obj = VCF(vcf_file_path)
 
-        # Validate that it's a proper VCF by checking for samples
         if not vcf_obj.samples:
             raise ValueError("Invalid VCF file format or no samples found")
 
@@ -65,15 +53,17 @@ def load_vcf_reader(vcf_file_path: str) -> VCF:
 
 
 def extract_user_variants(vcf_reader: VCF, target_rsids_set: set = None,
-                          parquet_path: str = None) -> pd.DataFrame:
+                          parquet_path: str = None) -> "VariantStore":
     """
     Extract all variant position and allele information from VCF file.
 
-    For large WGS files, streams variants in chunks to a parquet file on disk
-    to avoid OOM, then returns a lazy-loadable DataFrame wrapper.
-    For small files (< CHUNK_SIZE), returns a regular in-memory DataFrame.
+    Streams variants to a parquet file on disk in chunks to avoid OOM.
+    Returns a VariantStore object that reads from parquet lazily.
     """
     logger.info("Extracting variants from VCF file based on CHROM:POS:REF:ALT.")
+
+    if parquet_path is None:
+        parquet_path = os.path.join(os.path.dirname(os.devnull), 'variants.parquet')
 
     chroms, positions, refs, alts, snp_ids = [], [], [], [], []
     total_records = 0
@@ -104,7 +94,7 @@ def extract_user_variants(vcf_reader: VCF, target_rsids_set: set = None,
                 total_alleles += 1
 
             # Flush chunk to parquet when buffer is full
-            if total_alleles >= CHUNK_SIZE and len(chroms) >= CHUNK_SIZE:
+            if len(chroms) >= CHUNK_SIZE:
                 writer = _flush_chunk(chroms, positions, refs, alts, snp_ids,
                                       writer, parquet_path)
                 chroms.clear()
@@ -122,34 +112,24 @@ def extract_user_variants(vcf_reader: VCF, target_rsids_set: set = None,
     logger.info(f"Processed {total_records:,} VCF records.")
     logger.info(f"Extracted {total_alleles:,} user variant alleles.")
 
-    # If we used chunked writing, flush remaining and read back
+    # Flush remaining
+    if chroms:
+        writer = _flush_chunk(chroms, positions, refs, alts, snp_ids, writer, parquet_path)
+
     if writer is not None:
-        if chroms:
-            _flush_chunk(chroms, positions, refs, alts, snp_ids, writer, parquet_path)
         writer.close()
         logger.info(f"Variants saved to parquet: {parquet_path}")
-        df = pd.read_parquet(parquet_path)
-    else:
-        # Small file — build DataFrame directly in memory
-        if not chroms:
-            logger.warning("No valid variant alleles were extracted from the VCF file.")
-            return pd.DataFrame(columns=_VARIANT_COLUMNS)
+        return VariantStore(parquet_path, total_alleles)
 
-        df = pd.DataFrame({
-            'USER_CHROM': chroms,
-            'USER_POS': positions,
-            'USER_REF': refs,
-            'USER_ALT': alts,
-            'SNP_ID': snp_ids,
-        })
+    # Small file or no variants — no parquet written
+    if total_alleles == 0:
+        logger.warning("No valid variant alleles were extracted from the VCF file.")
+        return VariantStore(None, 0)
 
-    logger.info(f"DataFrame shape: {df.shape}")
-    if not df.empty:
-        for idx, row in df.head(3).iterrows():
-            logger.info(f"Row {idx}: CHROM={row['USER_CHROM']}, POS={row['USER_POS']}, "
-                         f"REF={row['USER_REF']}, ALT={row['USER_ALT']}, SNP_ID={row['SNP_ID']}")
-
-    return df
+    # Edge case: all fit in one chunk but never flushed (< CHUNK_SIZE)
+    writer = _flush_chunk(chroms, positions, refs, alts, snp_ids, None, parquet_path)
+    writer.close()
+    return VariantStore(parquet_path, total_alleles)
 
 
 def _flush_chunk(chroms, positions, refs, alts, snp_ids, writer, parquet_path):
@@ -168,3 +148,66 @@ def _flush_chunk(chroms, positions, refs, alts, snp_ids, writer, parquet_path):
     writer.write_table(table)
     logger.info(f"  Flushed chunk: {len(chroms):,} alleles to {parquet_path}")
     return writer
+
+
+class VariantStore:
+    """
+    Lazy variant store backed by a parquet file.
+
+    Provides DataFrame-like interface but reads from disk on demand,
+    avoiding loading all WGS variants into memory at once.
+    """
+
+    def __init__(self, parquet_path: str | None, count: int):
+        self.parquet_path = parquet_path
+        self._count = count
+
+    def __len__(self):
+        return self._count
+
+    @property
+    def empty(self):
+        return self._count == 0
+
+    @property
+    def columns(self):
+        return _VARIANT_COLUMNS
+
+    def head(self, n=5) -> pd.DataFrame:
+        if self.empty or self.parquet_path is None:
+            return pd.DataFrame(columns=_VARIANT_COLUMNS)
+        pf = pq.ParquetFile(self.parquet_path)
+        batch = next(pf.iter_batches(batch_size=n))
+        return batch.to_pandas()
+
+    def to_dataframe(self) -> pd.DataFrame:
+        """Read entire parquet into memory. Use only for small files."""
+        if self.empty or self.parquet_path is None:
+            return pd.DataFrame(columns=_VARIANT_COLUMNS)
+        return pd.read_parquet(self.parquet_path)
+
+    def iter_chunks(self, chunk_size: int = 500_000) -> "Iterator[pd.DataFrame]":
+        """Iterate over variants in chunks without loading all into memory."""
+        if self.empty or self.parquet_path is None:
+            return
+        pf = pq.ParquetFile(self.parquet_path)
+        for batch in pf.iter_batches(batch_size=chunk_size):
+            yield batch.to_pandas()
+
+    def merge_with(self, other_df: pd.DataFrame, merge_fn) -> pd.DataFrame:
+        """
+        Merge variants with another DataFrame (e.g. GWAS data) chunk by chunk.
+        Only keeps matching rows, so result fits in memory.
+        """
+        if self.empty or other_df.empty:
+            return pd.DataFrame()
+
+        results = []
+        for chunk_df in self.iter_chunks():
+            merged = merge_fn(chunk_df, other_df.copy())
+            if not merged.empty:
+                results.append(merged)
+
+        if not results:
+            return pd.DataFrame()
+        return pd.concat(results, ignore_index=True)
