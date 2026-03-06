@@ -536,7 +536,8 @@ def upload_vcf():
         file.save(temp_path)
         
         vcf_reader = load_vcf_reader(temp_path)
-        variants_df = extract_user_variants(vcf_reader)
+        parquet_path = os.path.join(temp_dir, 'variants.parquet')
+        variants_df = extract_user_variants(vcf_reader, parquet_path=parquet_path)
         
         session_id = os.path.basename(temp_dir)
         UPLOADS[session_id] = {'file_path': temp_path, 'variants': variants_df}
