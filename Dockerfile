@@ -27,5 +27,5 @@ CMD ["gunicorn", \
      "--bind", "0.0.0.0:10000", \
      "--workers", "1", \
      "--threads", "2", \
-     "--timeout", "120", \
+     "--timeout", "600", \
      "gwas_dashboard_package.src.main:app"]
