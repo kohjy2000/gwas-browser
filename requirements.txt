@@ -14,12 +14,3 @@ cyvcf2>=0.30.0
 requests>=2.25.0
 pyyaml>=5.1.0
 python-dotenv
-
-# AI / LLM (optional features)
-openai>=1.0.0
-
-# Database (dashboard)
-Flask-SQLAlchemy==3.1.1
-SQLAlchemy==2.0.40
-cryptography==36.0.2
-PyMySQL==1.1.1
