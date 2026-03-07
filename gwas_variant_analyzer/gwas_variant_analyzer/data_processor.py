@@ -181,7 +181,19 @@ def merge_variant_data(user_variants_df: pd.DataFrame, gwas_data_df: pd.DataFram
         ]
         if not nearby_merge.empty:
             nearby_merge['MATCH_TYPE'] = 'nearby'
-            nearby_merge['MATCH_CONFIDENCE'] = 'very_low'
+            # When GWAS REF is unknown ('N') and ALT matches user alleles,
+            # upgrade confidence: this is likely a valid match with a
+            # coordinate system offset (0-based vs 1-based).
+            def _nearby_confidence(row):
+                gwas_ref = str(row.get('GWAS_REF', ''))
+                gwas_alt = str(row.get('GWAS_ALT', ''))
+                user_alleles = {str(row.get('USER_REF', '')), str(row.get('USER_ALT', ''))}
+                if gwas_ref == 'N' and gwas_alt in user_alleles:
+                    return 'medium'
+                if gwas_ref == 'N':
+                    return 'low'
+                return 'low'
+            nearby_merge['MATCH_CONFIDENCE'] = nearby_merge.apply(_nearby_confidence, axis=1)
             # Original position 복원
             nearby_merge['GWAS_POS'] = nearby_merge['GWAS_POS_ORIGINAL']
             all_matches.append(nearby_merge)

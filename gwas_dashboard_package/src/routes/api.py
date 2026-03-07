@@ -669,11 +669,13 @@ def analyze():
             filtered_data = filtered_data.dropna(subset=['P_Value'])
             filtered_data = filtered_data[filtered_data['P_Value'] <= filters['max_p_value']]
 
-        # Odds Ratio filter
+        # Odds Ratio filter (keep rows with missing OR — many GWAS entries lack it)
         if filters['min_odds_ratio']:
             filtered_data['Odds_Ratio'] = pd.to_numeric(filtered_data['Odds_Ratio'], errors='coerce')
-            filtered_data = filtered_data.dropna(subset=['Odds_Ratio'])
-            filtered_data = filtered_data[filtered_data['Odds_Ratio'] >= filters['min_odds_ratio']]
+            filtered_data = filtered_data[
+                filtered_data['Odds_Ratio'].isna() |
+                (filtered_data['Odds_Ratio'] >= filters['min_odds_ratio'])
+            ]
 
         current_app.logger.info(f"{len(filtered_data)} variants remaining after applying filters.")
 
